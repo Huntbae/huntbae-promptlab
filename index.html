@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUNT PROMPT LAB | 한국형 AI 프롬프트 갤러리 · huntbae.com</title>
+<meta name="description" content="이미지·영상·글쓰기용 한국형 AI 프롬프트 갤러리. 예시를 고르고 내 상황에 맞게 바꿔 복사하세요.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#f7f5ee; --card:#ffffff; --ink:#1c1b18; --mute:#6e6a60; --line:#1c1b18;
+  --accent:#2f5bea; --accent-ink:#ffffff; --chip:#fffdf5; --chip-on:#ffe9a8;
+  --shadow:4px 4px 0 var(--line); --r:14px; --font:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#161614; --card:#222220; --ink:#f1efe8; --mute:#a39f93; --line:#f1efe8;
+  --accent:#8fa8ff; --accent-ink:#101010; --chip:#2a2a27; --chip-on:#5a4a12;
+}}
+:root[data-theme="dark"]{ --bg:#161614; --card:#222220; --ink:#f1efe8; --mute:#a39f93; --line:#f1efe8; --accent:#8fa8ff; --accent-ink:#101010; --chip:#2a2a27; --chip-on:#5a4a12; }
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1360px;margin:0 auto;padding:0 16px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:2px solid var(--line)}
+.hd{display:flex;align-items:center;gap:18px;height:60px}
+.logo{font-weight:900;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:6px}
+.logo .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block}
+.logo small{font-weight:700;font-size:11px;color:var(--mute);letter-spacing:1px;margin-left:4px}
+nav{display:flex;gap:16px;font-weight:700;font-size:14px}
+nav a.on{color:var(--accent)}
+nav .new{font-size:9px;color:#d33;vertical-align:super;margin-left:2px}
+.search{flex:1;max-width:420px;margin-left:auto;position:relative}
+.search input{width:100%;height:36px;border:2px solid var(--line);border-radius:999px;background:var(--card);color:var(--ink);padding:0 38px 0 14px;font-size:14px;outline:none}
+.search input:focus{box-shadow:var(--shadow)}
+.search .ic{position:absolute;right:12px;top:8px;color:var(--mute);font-size:14px}
+.home{border:2px solid var(--line);border-radius:999px;background:var(--chip-on);padding:6px 12px;font-weight:700;font-size:13px;white-space:nowrap}
+@media (max-width:760px){ nav{display:none} .search{max-width:none} .home{display:none} }
+
+/* filter panel */
+.panel{margin:16px 0;border:2px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);padding:12px 14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.row+.row{margin-top:10px;padding-top:10px;border-top:1px dashed var(--mute)}
+.chip{border:1.5px solid var(--line);border-radius:999px;background:var(--chip);color:var(--ink);padding:5px 12px;font-size:13px;font-weight:600;display:inline-flex;gap:6px;align-items:center;transition:transform .08s}
+.chip:hover{transform:translate(-1px,-1px)}
+.chip.on{background:var(--chip-on)}
+.chip .n{font-size:11px;color:var(--mute);font-weight:500}
+.chip.sub{padding:3px 10px;font-size:12px}
+.sort{margin-left:auto;display:flex;gap:6px}
+.sort .chip.on{background:var(--ink);color:var(--bg)}
+.meta{font-size:12px;color:var(--mute);margin:0 4px 8px}
+
+/* grid */
+.grid{columns:4 260px;column-gap:14px}
+.card{break-inside:avoid;margin:0 0 14px;border:2px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden;cursor:pointer;position:relative;transition:transform .1s,box-shadow .1s}
+.card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow)}
+.thumb{position:relative;width:100%;display:block;overflow:hidden}
+.thumb img{width:100%;display:block}
+.ph{width:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.ph .big{font-size:34px;line-height:1;margin-bottom:auto;opacity:.9}
+.ph .t{font-weight:800;font-size:16px;letter-spacing:-.3px}
+.ph .s{font-size:12px;opacity:.9}
+.ref{position:absolute;right:8px;bottom:8px;width:52px;height:64px;border:2px solid #fff;border-radius:8px;background:#e8e2d2 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 64'><circle cx='26' cy='24' r='10' fill='%23b8ad93'/><path d='M8 60c2-14 10-20 18-20s16 6 18 20z' fill='%23b8ad93'/></svg>") center/cover;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.ref::after{content:"참고 사진";position:absolute;left:0;right:0;bottom:-1px;font-size:8px;text-align:center;background:rgba(0,0,0,.55);color:#fff;border-radius:0 0 6px 6px}
+.cap{padding:8px 10px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.cap b{font-weight:700}
+.cap .lk{color:var(--mute)}
+.empty{padding:60px 0;text-align:center;color:var(--mute)}
+
+/* detail */
+.detail{display:none}
+.detail.on{display:block}
+.grid-wrap.off{display:none}
+.back{margin:14px 0}
+.dt{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:18px}
+@media (max-width:860px){ .dt{grid-template-columns:1fr} }
+.pane{border:2px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);overflow:hidden}
+.pane .thumb{border-bottom:2px solid var(--line)}
+.pane .thumb .ph{aspect-ratio:1/1!important}
+.pb{padding:16px}
+.pb h2{margin:0 0 4px;font-size:21px;letter-spacing:-.4px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.like{border:2px solid var(--line);border-radius:999px;background:#d8f3d0;color:#1c1b18;padding:4px 12px;font-weight:800;font-size:13px}
+.like.on{background:#8fe08a}
+.tags{font-size:12px;color:var(--mute);margin-bottom:6px}
+.note{font-size:13px;margin:6px 0 12px}
+.box{border:1.5px solid var(--line);border-radius:10px;background:var(--bg);margin-top:10px}
+.box .bh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-size:12px;font-weight:800;border-bottom:1px dashed var(--mute)}
+.box pre{margin:0;padding:12px;white-space:pre-wrap;word-break:keep-all;font-family:inherit;font-size:13.5px;line-height:1.65}
+.box .bh button{border:1.5px solid var(--line);border-radius:8px;background:var(--accent);color:var(--accent-ink);padding:4px 10px;font-size:12px;font-weight:700}
+.vars{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-top:1px dashed var(--mute)}
+.vars label{font-size:12px;display:flex;flex-direction:column;gap:3px;min-width:120px;flex:1}
+.vars input,.vars select{border:1.5px solid var(--line);border-radius:8px;padding:5px 8px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
+.vars .hint{width:100%;font-size:11px;color:var(--mute)}
+.tool{font-size:12px;color:var(--mute);margin-top:10px}
+.sim h3{margin:4px 0 10px;font-size:19px}
+.sim .grid{columns:3 200px}
+
+/* how-to */
+.howto{margin:30px 0 40px;border:2px solid var(--line);border-radius:var(--r);background:var(--card);padding:18px 20px;box-shadow:var(--shadow)}
+.howto h3{margin:0 0 6px;font-size:18px}
+.howto ol{margin:6px 0 0;padding-left:20px}
+.howto li{margin:3px 0}
+footer{padding:20px 0 40px;font-size:12px;color:var(--mute);text-align:center}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;transition:.2s;pointer-events:none;z-index:50}
+.toast.on{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+
+<header><div class="wrap hd">
+  <a class="logo" href="#"><span class="dot"></span>huntbae<small>PROMPT LAB</small></a>
+  <nav>
+    <a href="#" class="on">갤러리</a>
+    <a href="#howto">사용법<span class="new">NEW</span></a>
+  </nav>
+  <div class="search"><input id="q" type="search" placeholder="프롬프트, 태그, 카테고리 검색…"><span class="ic">⌕</span></div>
+  <a class="home" href="https://huntbae.com/">← huntbae.com</a>
+</div></header>
+
+<main class="wrap">
+  <div class="grid-wrap" id="gridWrap">
+    <section class="panel">
+      <div class="row" id="cats"></div>
+      <div class="row" id="subs"></div>
+    </section>
+    <div class="meta" id="meta"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none">검색 결과가 없습니다. 다른 단어로 찾아보세요.</div>
+
+    <section class="howto" id="howto">
+      <h3>처음이라면 이렇게 시작해보세요</h3>
+      <ol>
+        <li>만들고 싶은 글·이미지·영상과 가까운 예시를 골라 카드를 누르세요.</li>
+        <li>상세 화면의 빈칸(제품명, 분위기 등)을 내 상황에 맞게 바꾸면 프롬프트에 바로 반영됩니다.</li>
+        <li>복사 버튼을 눌러 ChatGPT, Gemini, Midjourney 등 쓰고 있는 AI 도구에 붙여 넣으세요.</li>
+        <li>한 번에 마음에 들지 않으면 “배경을 밝게”, “문구를 더 짧게”처럼 덧붙여 다시 요청하세요.</li>
+      </ol>
+      <p class="tool">참고 사진이 필요한 프롬프트(카드 오른쪽 아래 사진 표시)는 본인 사진이나 제품 사진을 함께 첨부해야 결과가 나옵니다. 외부 AI 도구의 이용 조건과 요금은 각 서비스 기준을 따릅니다.</p>
+    </section>
+  </div>
+
+  <section class="detail" id="detail">
+    <div class="back"><button class="chip" id="back">← 뒤로가기</button></div>
+    <div class="dt">
+      <div class="pane" id="pane"></div>
+      <div class="sim"><h3>비슷한 프롬프트</h3><div class="grid" id="simGrid"></div></div>
+    </div>
+  </section>
+</main>
+
+<footer>© huntbae.com · HUNT PROMPT LAB. 프롬프트는 자유롭게 수정해 사용하셔도 됩니다.</footer>
+<div class="toast" id="toast">복사했습니다</div>
+
+<!-- ===================== 프롬프트 데이터 =====================
+  여기에 항목을 추가하면 갤러리에 자동 반영됩니다.
+  필드: id(고유), cat(카테고리), sub(세부 태그 배열), title, note(안내), prompt(본문),
+        vars(치환 변수: {key, label, default}) — prompt 안의 {{key}} 가 치환됨,
+        ref(true면 참고 사진 필요), refimg(참고 원본 사진 경로, 작은 뱃지에 표시),
+        thumb(결과 이미지 경로, 없으면 색상 카드), tone(색상 번호 0~7),
+        tool(권장 도구), likes(초기 인기), date(YYYY-MM-DD), h(카드 높이 비율 1.0~1.5)
+============================================================ -->
+<script type="application/json" id="prompt-data">
+[
+{"id": "p01", "cat": "매장·업종 홍보", "sub": ["카페·식당", "인스타 피드"], "title": "동네 카페 신메뉴 피드 이미지", "tone": 0, "h": 1.25, "likes": 42, "date": "2026-10-28", "tool": "ChatGPT 이미지 / Gemini", "note": "메뉴명과 카페 분위기만 바꾸면 바로 쓸 수 있습니다.", "vars": [{"key": "menu", "label": "메뉴명", "default": "흑임자 크림 라떼"}, {"key": "mood", "label": "매장 분위기", "default": "원목과 식물이 많은 아늑한"}], "prompt": "{{mood}} 동네 카페의 나무 테이블 위에 놓인 '{{menu}}' 한 잔. 창가에서 들어오는 오후 햇살이 컵 표면에 부드럽게 반사되고, 뒤쪽은 얕은 심도로 흐릿하게 처리. 상단 1/3은 비워 두어 텍스트를 넣을 수 있게 구성. 45도 각도의 스마트폰 촬영 느낌, 과하지 않은 자연스러운 색감. 인스타그램 정사각형(1:1)."},
+{"id": "p02", "cat": "매장·업종 홍보", "sub": ["소매·뷰티", "배너"], "title": "미용실 가을 시즌 할인 배너", "tone": 1, "h": 1.0, "likes": 31, "date": "2026-10-20", "tool": "ChatGPT 이미지 / Canva AI", "note": "문구는 AI가 글자를 틀리기 쉬우니 디자인 툴에서 따로 얹는 것을 권합니다.", "vars": [{"key": "shop", "label": "업종", "default": "헤어살롱"}, {"key": "color", "label": "포인트 색상", "default": "버건디"}], "prompt": "{{shop}} 가을 시즌 프로모션용 가로 배너 배경. {{color}} 톤의 벨벳 질감 배경 위에 마른 단풍잎 두세 장이 자연스럽게 흩어져 있고, 오른쪽에 은은한 금박 느낌의 장식 라인. 왼쪽 60%는 텍스트를 올릴 수 있도록 단색으로 비워 둠. 글자는 넣지 말 것. 고급스럽고 차분한 분위기, 16:9 비율."},
+{"id": "p03", "cat": "매장·업종 홍보", "sub": ["교육·학원", "전단"], "title": "코딩 교육 체험 수업 안내 이미지", "tone": 2, "h": 1.3, "likes": 27, "date": "2026-10-15", "tool": "ChatGPT 이미지", "note": "교육 기관·체험 프로그램 홍보에 응용할 수 있습니다.", "vars": [{"key": "target", "label": "대상", "default": "초등 고학년"}, {"key": "kit", "label": "교구", "default": "아두이노 교육용 카트"}], "prompt": "{{target}} 학생 서너 명이 교실 책상에서 {{kit}}를 조립하며 즐겁게 몰입하는 장면. 밝고 깨끗한 교실, 창문으로 들어오는 자연광, 화이트와 민트 톤의 인테리어. 아이들의 표정은 호기심과 성취감이 느껴지도록. 특정 브랜드 로고나 글자는 넣지 않음. 포스터용 세로 3:4 비율, 밝고 따뜻한 색감."},
+{"id": "p04", "cat": "인물·캐릭터", "sub": ["인물 변신", "일러스트 스타일"], "title": "내 사진을 손그림 연필 스케치로", "tone": 3, "h": 1.35, "likes": 88, "date": "2026-10-30", "ref": true, "tool": "ChatGPT 이미지 / Gemini", "note": "본인 사진을 첨부하고 이 프롬프트를 사용하세요.", "vars": [{"key": "paper", "label": "종이 느낌", "default": "살짝 누런 크로키 종이"}], "prompt": "첨부한 사진 속 인물의 얼굴형, 눈매, 머리 모양, 표정 특징을 유지한 채 {{paper}} 위에 연필로 그린 스케치로 바꿔 주세요. 선은 손으로 그린 듯 약간 거칠고, 명암은 해칭으로 표현. 배경은 비워 두고 인물만 그릴 것. 사진을 그대로 필터 처리한 느낌이 아니라 실제 드로잉처럼 보이도록."},
+{"id": "p05", "cat": "인물·캐릭터", "sub": ["인물 변신", "3D·피규어"], "title": "프로필 사진을 책상 위 미니 피규어로", "tone": 4, "h": 1.2, "likes": 76, "date": "2026-10-26", "ref": true, "tool": "ChatGPT 이미지", "note": "SNS 프로필, 명함 뒷면, 팀 소개 페이지용으로 인기 있는 스타일입니다.", "vars": [{"key": "job", "label": "직업 소품", "default": "노트북과 작은 전기차 모형"}], "prompt": "첨부한 사진의 인물을 10cm 크기의 PVC 피규어로 만들어 나무 책상 위에 세워 둔 장면. 인물 특징(얼굴, 머리, 안경, 옷 색)을 유지. 옆에는 {{job}}이 함께 놓여 있고, 뒤에는 피규어 포장 박스가 살짝 보임. 부드러운 스튜디오 조명, 얕은 심도, 제품 사진 느낌."},
+{"id": "p06", "cat": "인물·캐릭터", "sub": ["캐릭터 생성", "브랜드 마스코트"], "title": "브랜드 마스코트 캐릭터 시트", "tone": 5, "h": 1.1, "likes": 35, "date": "2026-10-12", "tool": "ChatGPT 이미지 / Midjourney", "note": "정면·측면·뒷면이 한 장에 나오도록 하면 나중에 다른 장면에도 쓰기 좋습니다.", "vars": [{"key": "animal", "label": "모티브", "default": "작은 전기 카트를 닮은 로봇"}, {"key": "mood", "label": "성격", "default": "친절하고 든든한"}], "prompt": "{{animal}} 모티브의 {{mood}} 브랜드 마스코트 캐릭터 디자인 시트. 한 장에 정면, 측면, 뒷면 세 가지 각도를 나란히 배치하고 아래에 기쁨·놀람·고민 표정 3종을 작게 추가. 둥글고 단순한 형태, 굵은 외곽선, 3~4가지 색으로 제한된 플랫 일러스트. 흰 배경, 글자 없음."},
+{"id": "p07", "cat": "장면·배경·아트", "sub": ["풍경", "시골 마을"], "title": "농촌 마을 골목을 달리는 소형 마을버스", "tone": 6, "h": 1.0, "likes": 22, "date": "2026-10-08", "tool": "Midjourney / ChatGPT 이미지", "note": "정책 자료·제안서 표지용 장면 이미지 예시입니다.", "vars": [{"key": "season", "label": "계절", "default": "늦가을 저녁"}, {"key": "vehicle", "label": "차량", "default": "귀여운 소형 전기 마을버스"}], "prompt": "{{season}}, 한국 농촌 마을의 좁은 골목길을 {{vehicle}}가 천천히 지나가는 장면. 길가에는 낮은 담장과 감나무, 정류장 벤치에 앉아 기다리는 어르신 두 분. 따뜻한 역광, 길게 늘어진 그림자, 영화의 한 장면 같은 와이드 구도. 사실적인 사진풍, 16:9.", "thumb": "kalli-autumn-road.jpg"},
+{"id": "p08", "cat": "장면·배경·아트", "sub": ["아이소메트릭", "인포그래픽 배경"], "title": "스마트시티 아이소메트릭 도시 블록", "tone": 2, "h": 1.15, "likes": 40, "date": "2026-09-30", "tool": "ChatGPT 이미지 / Midjourney", "note": "PPT 장표 배경이나 사업 개요 다이어그램에 쓰기 좋은 형식입니다.", "vars": [{"key": "elements", "label": "포함 요소", "default": "자율주행 셔틀, 충전소, 공원, 관제센터"}], "prompt": "{{elements}}가 들어간 소도시 한 블록을 아이소메트릭(등각 투영) 시점으로 표현한 일러스트. 깔끔한 벡터 스타일, 파스텔 톤 위주에 포인트 색 하나, 부드러운 그림자. 요소들 사이에는 여백을 두어 나중에 설명 글자를 넣을 수 있게. 흰 배경, 글자 없음, 4:3 비율.", "thumb": "kalli-course-aerial.jpg"},
+{"id": "p09", "cat": "장면·배경·아트", "sub": ["수채화", "감성"], "title": "비 오는 날 창가 감성 수채화", "tone": 0, "h": 1.4, "likes": 19, "date": "2026-09-22", "tool": "ChatGPT 이미지", "note": "유튜브 플레이리스트 썸네일, 블로그 대표 이미지용으로 많이 쓰입니다.", "vars": [{"key": "object", "label": "창가 소품", "default": "김이 나는 머그컵과 펼쳐진 책"}], "prompt": "비가 내리는 창가, {{object}}가 놓인 조용한 오후를 수채화로 표현. 유리창에 맺힌 빗방울과 번진 바깥 풍경, 종이 질감이 살아 있는 번짐 효과. 차분한 회청색과 따뜻한 노랑 조명의 대비. 세로 9:16 비율, 글자 없음."},
+{"id": "p10", "cat": "광고·캠페인", "sub": ["옥외광고", "모빌리티"], "title": "레트로 전기 카트 옥외 광고 비주얼", "tone": 1, "h": 1.0, "likes": 51, "date": "2026-10-24", "tool": "Midjourney / ChatGPT 이미지", "note": "제품 사진을 첨부하면 실제 제품 형태를 유지한 채 장면을 만들어 줍니다.", "ref": true, "vars": [{"key": "place", "label": "장소", "default": "바닷가 해안도로"}, {"key": "copy", "label": "카피 톤", "default": "여유로운 주말 드라이브"}], "prompt": "첨부한 제품 사진의 형태와 색을 그대로 유지한 채, {{place}}를 달리는 장면으로 연출. '{{copy}}' 분위기가 느껴지도록 푸른 하늘과 넓은 여백, 낮은 카메라 앵글로 차량이 당당하게 보이게. 광고 빌보드용으로 오른쪽 1/3은 텍스트 공간으로 비워 둠. 사실적인 광고 사진, 16:9.", "thumb": "kalli-track-wide.jpg", "refimg": "ref-kalli-black.jpg"},
+{"id": "p11", "cat": "광고·캠페인", "sub": ["공익·캠페인", "포스터"], "title": "교통안전 공익 캠페인 포스터", "tone": 3, "h": 1.3, "likes": 18, "date": "2026-10-05", "tool": "ChatGPT 이미지", "note": "기관·지자체 캠페인 시안 단계에서 방향을 잡을 때 유용합니다.", "vars": [{"key": "theme", "label": "주제", "default": "어르신 보행 안전"}, {"key": "style", "label": "스타일", "default": "따뜻한 플랫 일러스트"}], "prompt": "'{{theme}}'를 주제로 한 공익 캠페인 포스터 비주얼. {{style}} 스타일로, 횡단보도 앞에서 서로를 배려하는 운전자와 보행자의 순간을 한 장면에 담을 것. 메시지가 한눈에 읽히도록 구도를 단순하게, 색은 3~4가지로 제한. 상단에 제목이 들어갈 여백 확보. 글자 없음, 세로 2:3.", "thumb": "masil-panel-bus.jpg"},
+{"id": "p12", "cat": "광고·캠페인", "sub": ["숏폼", "스토리보드"], "title": "15초 숏폼 광고 장면 스토리보드", "tone": 7, "h": 1.1, "likes": 29, "date": "2026-09-28", "tool": "ChatGPT / Gemini (텍스트)", "note": "텍스트 프롬프트입니다. 결과를 영상 생성 도구의 장면별 프롬프트로 다시 쓰면 됩니다.", "vars": [{"key": "product", "label": "제품", "default": "시니어용 저속 전기차"}, {"key": "hook", "label": "첫 1초 훅", "default": "'운전면허 없이도 됩니다'"}], "prompt": "'{{product}}' 15초 세로 숏폼 광고의 스토리보드를 5컷으로 작성해 주세요. 1컷은 {{hook}} 라는 훅으로 시작합니다. 각 컷마다 ①화면 설명(구도·카메라 움직임) ②자막 한 줄 ③효과음/음악 느낌 ④길이(초)를 표로 정리하고, 마지막 컷에는 행동 유도 문구를 넣어 주세요. 전체 톤은 담백하고 신뢰감 있게.", "thumb": "kalli-track-cones.jpg"},
+{"id": "p13", "cat": "제품·상품컷", "sub": ["제품 사진", "스튜디오"], "title": "흰 배경 스튜디오 제품컷으로 변환", "tone": 4, "h": 1.0, "likes": 64, "date": "2026-10-29", "ref": true, "tool": "ChatGPT 이미지 / Gemini", "note": "휴대폰으로 찍은 제품 사진을 쇼핑몰 대표 이미지처럼 바꿔 줍니다.", "vars": [{"key": "surface", "label": "바닥 재질", "default": "무광 흰색"}], "prompt": "첨부한 제품 사진의 형태, 비율, 로고 위치, 색상을 바꾸지 말고 배경만 깨끗한 {{surface}} 스튜디오 배경으로 교체해 주세요. 위에서 비추는 소프트박스 조명, 바닥에 자연스러운 그림자와 약한 반사. 제품은 정중앙에, 가장자리 여백은 15% 이상. 1:1 정사각형.", "thumb": "kalli-black-front.jpg", "refimg": "ref-kalli-black.jpg"},
+{"id": "p14", "cat": "제품·상품컷", "sub": ["라이프스타일", "연출컷"], "title": "제품 사용 장면 라이프스타일 컷", "tone": 6, "h": 1.25, "likes": 38, "date": "2026-10-18", "ref": true, "tool": "ChatGPT 이미지", "note": "상세페이지 중간에 들어갈 '사용 장면' 이미지에 적합합니다.", "vars": [{"key": "user", "label": "사용자", "default": "60대 부부"}, {"key": "scene", "label": "장면", "default": "전원주택 마당에서 장 보러 나가는 아침"}], "prompt": "첨부한 제품을 {{user}}가 실제로 사용하는 장면: {{scene}}. 제품의 외형은 사진 그대로 유지하고 사람과 배경만 자연스럽게 합성. 과장되지 않은 일상의 분위기, 자연광, 따뜻한 색감. 사람 얼굴은 특정 인물이 떠오르지 않는 일반적인 인상으로. 가로 4:3.", "thumb": "kalli-track-front.jpg", "refimg": "ref-kalli-red.jpg"},
+{"id": "p15", "cat": "제품·상품컷", "sub": ["분해도", "기술 설명"], "title": "제품 구성 부품 분해도(익스플로디드 뷰)", "tone": 2, "h": 1.15, "likes": 21, "date": "2026-10-02", "tool": "ChatGPT 이미지 / Midjourney", "note": "기술 소개 자료, 투자 IR, 특허 설명 장표에 활용할 수 있습니다.", "vars": [{"key": "product", "label": "제품", "default": "소형 전기 카트"}, {"key": "parts", "label": "주요 부품", "default": "배터리 팩, 모터, 프레임, 제어 보드"}], "prompt": "{{product}}의 주요 부품({{parts}})이 공중에 층층이 분리되어 떠 있는 분해도 스타일 일러스트. 깨끗한 흰 배경, 약간 위에서 내려다보는 3/4 시점, 부품마다 얇은 안내선이 뻗어 나가되 글자는 넣지 않음. 금속·플라스틱 재질감이 느껴지는 반사실적 3D 렌더링, 16:9.", "thumb": "kalli-black-side.jpg"},
+{"id": "p16", "cat": "정보·인포그래픽", "sub": ["카드뉴스", "정책 해설"], "title": "정부 지원사업 요약 카드뉴스 (텍스트)", "tone": 5, "h": 1.0, "likes": 45, "date": "2026-10-22", "tool": "ChatGPT / Claude (텍스트)", "note": "공고문을 붙여 넣으면 카드뉴스 5장 분량으로 정리해 줍니다.", "vars": [{"key": "audience", "label": "독자", "default": "처음 지원사업을 알아보는 소상공인"}], "prompt": "아래에 붙여 넣는 지원사업 공고문을 {{audience}}가 이해할 수 있도록 카드뉴스 5장으로 요약해 주세요. 1장: 한 줄 핵심과 마감일 / 2장: 누가 받을 수 있나 / 3장: 얼마를, 어디에 쓸 수 있나 / 4장: 신청 절차 3단계 / 5장: 자주 하는 실수 3가지. 각 장은 제목 1줄 + 본문 3줄 이내, 어려운 행정 용어는 괄호로 풀이. 과장 없이 사실만.\n\n[공고문 붙여넣기]"},
+{"id": "p17", "cat": "정보·인포그래픽", "sub": ["다이어그램", "프로세스"], "title": "사업 추진 절차 플로우 다이어그램", "tone": 2, "h": 1.0, "likes": 26, "date": "2026-10-10", "tool": "ChatGPT 이미지 / Nano Banana", "note": "글자는 이미지 생성 후 PPT에서 다시 얹는 것이 정확합니다.", "vars": [{"key": "steps", "label": "단계 수", "default": "5"}, {"key": "theme", "label": "색 테마", "default": "네이비와 연회색"}], "prompt": "{{steps}}단계로 이어지는 가로형 프로세스 다이어그램 배경. 둥근 사각형 노드가 화살표로 연결되고, 각 노드 위에는 단순한 선형 아이콘 자리(빈 원)를 둠. {{theme}} 톤, 얇은 선, 넉넉한 여백, 오피스 문서에 어울리는 절제된 스타일. 글자 없음, 16:9."},
+{"id": "p18", "cat": "정보·인포그래픽", "sub": ["데이터", "비교표"], "title": "경쟁 제품 비교표 초안 생성 (텍스트)", "tone": 3, "h": 1.1, "likes": 17, "date": "2026-09-25", "tool": "ChatGPT / Claude (텍스트)", "note": "표 구조를 먼저 받은 뒤, 수치는 반드시 직접 확인해 채우세요.", "vars": [{"key": "category", "label": "제품군", "default": "근거리 저속 전기 이동수단"}, {"key": "n", "label": "비교 대상 수", "default": "4"}], "prompt": "{{category}} 제품 {{n}}종을 비교하는 표의 '틀'을 만들어 주세요. 행은 가격, 최고속도, 주행거리, 충전시간, 탑승 인원, 법적 분류, 보조금 가능 여부, 유지비, 차별점으로 구성하고, 열은 제품명 자리로 비워 두세요. 각 행마다 '구매자가 이 항목을 왜 보는지' 한 줄 설명을 덧붙이고, 수치는 추정하지 말고 [확인 필요]로 표시해 주세요."},
+{"id": "p19", "cat": "썸네일·SNS", "sub": ["유튜브 썸네일", "얼굴 강조"], "title": "유튜브 썸네일용 과장 표정 인물컷", "tone": 1, "h": 1.0, "likes": 57, "date": "2026-10-27", "ref": true, "tool": "ChatGPT 이미지", "note": "얼굴은 본인 사진 첨부, 배경과 표정만 연출합니다.", "vars": [{"key": "emotion", "label": "표정", "default": "깜짝 놀란"}, {"key": "bg", "label": "배경", "default": "노란색 단색에 방사형 집중선"}], "prompt": "첨부한 인물의 얼굴 특징을 유지하면서 {{emotion}} 표정으로 바꾸고, 상반신이 화면 왼쪽 40%를 차지하도록 배치. 배경은 {{bg}}. 오른쪽은 큰 제목을 넣을 수 있도록 비워 둠. 또렷한 윤곽, 높은 대비, 작게 봐도 눈에 띄는 색. 16:9, 글자 없음."},
+{"id": "p20", "cat": "썸네일·SNS", "sub": ["인스타 릴스", "커버"], "title": "릴스 커버용 세로 타이포 배경", "tone": 7, "h": 1.4, "likes": 33, "date": "2026-10-14", "tool": "ChatGPT 이미지 / Canva", "note": "텍스트는 넣지 않고 배경만 만든 뒤 편집 앱에서 글자를 올리세요.", "vars": [{"key": "topic", "label": "주제 분위기", "default": "운전면허 시험 꿀팁"}, {"key": "palette", "label": "색 조합", "default": "검정 바탕에 형광 라임"}], "prompt": "'{{topic}}' 주제의 릴스 커버 배경. {{palette}} 조합, 거친 종이 질감과 스티커를 붙인 듯한 콜라주 느낌. 중앙 60%는 큰 글자를 올릴 수 있도록 비워 두고, 가장자리에 주제와 관련된 작은 아이콘(표지판, 핸들 등)을 흩어 배치. 글자 없음, 9:16."},
+{"id": "p21", "cat": "썸네일·SNS", "sub": ["플레이리스트", "음악 채널"], "title": "음악 플레이리스트 채널 아트 (로파이 감성)", "tone": 0, "h": 1.2, "likes": 48, "date": "2026-10-31", "tool": "Midjourney / ChatGPT 이미지", "note": "장르에 따라 소품과 조명만 바꾸면 시리즈로 통일감을 유지할 수 있습니다.", "vars": [{"key": "genre", "label": "장르", "default": "새벽 작업용 재즈"}, {"key": "room", "label": "공간", "default": "책이 쌓인 작은 작업실"}], "prompt": "'{{genre}}' 플레이리스트의 대표 이미지. {{room}} 안, 창밖은 어두운 새벽이고 책상 스탠드 하나가 공간을 비춤. 턴테이블과 머그컵, 흐트러진 메모. 로파이 애니메이션 배경 스타일의 손그림 느낌, 필름 그레인 약간, 차분한 남색과 주황 조명의 대비. 16:9, 글자 없음."},
+{"id": "p22", "cat": "브랜드·로고", "sub": ["로고", "워드마크"], "title": "모빌리티 스타트업 로고 시안 3종", "tone": 4, "h": 1.0, "likes": 30, "date": "2026-10-06", "tool": "ChatGPT 이미지 / Midjourney", "note": "로고는 AI 시안을 방향 잡기에만 쓰고, 최종본은 벡터로 다시 작업해야 상표 출원·인쇄에 문제가 없습니다.", "vars": [{"key": "name", "label": "브랜드명(영문)", "default": "KALLI"}, {"key": "keyword", "label": "핵심 키워드", "default": "레트로, 전기, 느긋함"}], "prompt": "'{{name}}' 브랜드 로고 시안 3가지를 한 장에 나란히 제시. 키워드는 {{keyword}}. ①심볼+워드마크 ②워드마크 단독 ③원형 엠블럼. 단색(검정)으로, 두께가 일정한 기하학적 산세리프 계열, 작게 줄여도 알아볼 수 있는 단순함. 흰 배경, 그라데이션·그림자 금지.", "thumb": "kalli-lineup-carpet2.jpg"},
+{"id": "p23", "cat": "브랜드·로고", "sub": ["브랜드 무드보드", "컬러"], "title": "브랜드 무드보드 한 장 구성", "tone": 6, "h": 1.15, "likes": 24, "date": "2026-09-18", "tool": "ChatGPT 이미지 / Midjourney", "note": "디자이너나 외주사에 브랜드 느낌을 설명할 때 한 장으로 전달하기 좋습니다.", "vars": [{"key": "brand", "label": "브랜드 성격", "default": "시골 마을과 어르신에게 친근한 공공 모빌리티"}, {"key": "colors", "label": "주요 색", "default": "올리브 그린, 크림, 테라코타"}], "prompt": "{{brand}} 브랜드의 무드보드. {{colors}} 색 칩, 질감 샘플(캔버스 천, 따뜻한 나무), 분위기 사진 4~5장(시골 길, 햇살, 손, 정류장), 서체 느낌을 보여 주는 견본 영역을 격자형 콜라주로 배치. 전체적으로 통일된 톤, 여백 넉넉하게, 글자는 넣지 않음. 4:3.", "thumb": "kalli-lineup-carpet.jpg"},
+{"id": "p24", "cat": "브랜드·로고", "sub": ["명함·굿즈", "목업"], "title": "명함·스티커 굿즈 목업", "tone": 5, "h": 1.05, "likes": 20, "date": "2026-09-12", "ref": true, "tool": "ChatGPT 이미지", "note": "로고 이미지를 첨부하면 굿즈에 자연스럽게 얹어 줍니다.", "vars": [{"key": "items", "label": "굿즈 구성", "default": "명함, 원형 스티커, 에코백"}], "prompt": "첨부한 로고를 {{items}}에 인쇄한 목업 사진. 로고의 비율과 색은 그대로 유지. 연한 회색 테이블 위에 자연스럽게 겹쳐 놓고, 위에서 비스듬히 내려다보는 구도, 부드러운 창가 자연광과 은은한 그림자. 종이와 천의 질감이 느껴지는 사실적인 사진, 4:3."}
+]
+</script>
+
+<script>
+(function(){
+  const DATA = JSON.parse(document.getElementById('prompt-data').textContent);
+  const TONES = [
+    ['#f6d365','#fda085'],['#a18cd1','#fbc2eb'],['#89f7fe','#66a6ff'],['#e0c3a3','#9f8260'],
+    ['#4facfe','#00f2fe'],['#f093fb','#f5576c'],['#96e6a1','#d4fc79'],['#30cfd0','#330867']
+  ];
+  const ICONS = {'매장·업종 홍보':'🏪','인물·캐릭터':'🙂','장면·배경·아트':'🎨','광고·캠페인':'📣','제품·상품컷':'📦','정보·인포그래픽':'📊','썸네일·SNS':'📱','브랜드·로고':'✦'};
+  const CATS = ['전체', ...[...new Set(DATA.map(d=>d.cat))]];
+  let cat='전체', sub='전체', sort='latest', q='';
+  const $ = s=>document.querySelector(s);
+  const grid=$('#grid'), cats=$('#cats'), subs=$('#subs'), meta=$('#meta'), empty=$('#empty');
+
+  let likes={}; try{ likes=JSON.parse(localStorage.getItem('hpl-likes')||'{}'); }catch(e){}
+  const likeOf=d=>(d.likes||0)+(likes[d.id]?1:0);
+
+  function thumbHTML(d, small){
+    const ratio = d.h||1.1;
+    const refBadge = d.ref ? `<span class="ref"${d.refimg?` style="background-image:url('${d.refimg}')"`:''}></span>` : '';
+    if(d.thumb) return `<div class="thumb"><img src="${d.thumb}" alt="${d.title}" loading="lazy">${refBadge}</div>`;
+    const [a,b]=TONES[(d.tone||0)%TONES.length];
+    return `<div class="thumb"><div class="ph" style="aspect-ratio:1/${ratio};background:linear-gradient(135deg,${a},${b})">
+      <div class="big">${ICONS[d.cat]||'✦'}</div>${small?'':`<div class="t">${d.title}</div><div class="s">${d.sub.join(' · ')}</div>`}
+    </div>${refBadge}</div>`;
+  }
+  function cardHTML(d){
+    return `<article class="card" data-id="${d.id}">${thumbHTML(d)}
+      <div class="cap"><b>${d.title}</b><span class="lk">♥ ${likeOf(d)}</span></div></article>`;
+  }
+  function filtered(){
+    const k=q.trim().toLowerCase();
+    let list=DATA.filter(d=>(cat==='전체'||d.cat===cat)&&(sub==='전체'||d.sub.includes(sub)));
+    if(k) list=list.filter(d=>[d.title,d.cat,...d.sub,d.prompt,d.note||''].join(' ').toLowerCase().includes(k));
+    list.sort((x,y)=> sort==='latest' ? (y.date||'').localeCompare(x.date||'') : likeOf(y)-likeOf(x));
+    return list;
+  }
+  function renderCats(){
+    cats.innerHTML = CATS.map(c=>{
+      const n = c==='전체'?DATA.length:DATA.filter(d=>d.cat===c).length;
+      return `<button class="chip ${c===cat?'on':''}" data-cat="${c}">${c}<span class="n">${n}</span></button>`;
+    }).join('') + `<div class="sort">
+      <button class="chip ${sort==='latest'?'on':''}" data-sort="latest">최신순</button>
+      <button class="chip ${sort==='popular'?'on':''}" data-sort="popular">인기순</button></div>`;
+    const pool = DATA.filter(d=>cat==='전체'||d.cat===cat);
+    const subList=['전체', ...new Set(pool.flatMap(d=>d.sub))];
+    subs.innerHTML = subList.map(s=>{
+      const n = s==='전체'?pool.length:pool.filter(d=>d.sub.includes(s)).length;
+      return `<button class="chip sub ${s===sub?'on':''}" data-sub="${s}">${s}<span class="n">${n}</span></button>`;
+    }).join('');
+  }
+  function renderGrid(){
+    const list=filtered();
+    grid.innerHTML=list.map(cardHTML).join('');
+    empty.style.display=list.length?'none':'block';
+    meta.textContent=`${list.length}개의 프롬프트 · ${cat}${sub!=='전체'?' › '+sub:''}${q?' · "'+q+'" 검색':''}`;
+  }
+  function render(){ renderCats(); renderGrid(); }
+
+  document.addEventListener('click',e=>{
+    const c=e.target.closest('[data-cat]'); if(c){cat=c.dataset.cat; sub='전체'; render(); return;}
+    const s=e.target.closest('[data-sub]'); if(s){sub=s.dataset.sub; render(); return;}
+    const o=e.target.closest('[data-sort]'); if(o){sort=o.dataset.sort; render(); return;}
+    const card=e.target.closest('.card'); if(card){ location.hash='p='+card.dataset.id; return; }
+  });
+  $('#q').addEventListener('input',e=>{q=e.target.value; renderGrid();});
+  $('#back').addEventListener('click',()=>{ history.length>1 ? history.back() : (location.hash=''); });
+
+  /* ---------- detail ---------- */
+  function fill(tpl, vals){ return tpl.replace(/\{\{(\w+)\}\}/g,(m,k)=> vals[k] ?? m); }
+  function openDetail(id){
+    const d=DATA.find(x=>x.id===id); if(!d){ closeDetail(); return; }
+    $('#gridWrap').classList.add('off'); $('#detail').classList.add('on'); window.scrollTo(0,0);
+    const vals={}; (d.vars||[]).forEach(v=>vals[v.key]=v.default);
+    const pane=$('#pane');
+    pane.innerHTML = `${thumbHTML(d)}<div class="pb">
+      <h2>${d.title}<button class="like ${likes[d.id]?'on':''}" id="like">♥ ${likeOf(d)}</button></h2>
+      <div class="tags">${d.cat} · ${d.sub.join(' · ')}</div>
+      ${d.ref?'<div class="note">📷 참고 사진이 필요합니다. 본인 사진이나 제품 사진을 첨부하고 아래 프롬프트를 사용하세요.</div>':''}
+      ${d.note?`<div class="note">${d.note}</div>`:''}
+      <div class="box">
+        <div class="bh"><span>프롬프트</span><button id="copy">복사하기</button></div>
+        <pre id="ptext"></pre>
+        ${(d.vars||[]).length?`<div class="vars"><span class="hint">아래 칸을 바꾸면 프롬프트에 바로 반영됩니다.</span>${d.vars.map(v=>`<label>${v.label}<input data-var="${v.key}" value="${v.default.replace(/"/g,'&quot;')}"></label>`).join('')}</div>`:''}
+      </div>
+      <div class="tool">권장 도구: ${d.tool||'ChatGPT, Gemini 등 사용 중인 AI'}</div>
+    </div>`;
+    const pre=$('#ptext');
+    const update=()=>{ pane.querySelectorAll('[data-var]').forEach(i=>vals[i.dataset.var]=i.value); pre.textContent=fill(d.prompt,vals); };
+    update();
+    pane.querySelectorAll('[data-var]').forEach(i=>i.addEventListener('input',update));
+    $('#copy').addEventListener('click',()=>{
+      navigator.clipboard.writeText(pre.textContent).then(()=>toast('프롬프트를 복사했습니다'),()=>toast('복사에 실패했습니다. 직접 드래그해 복사하세요.'));
+    });
+    $('#like').addEventListener('click',e=>{
+      likes[d.id]=!likes[d.id]; if(!likes[d.id]) delete likes[d.id];
+      try{localStorage.setItem('hpl-likes',JSON.stringify(likes));}catch(err){}
+      e.currentTarget.classList.toggle('on',!!likes[d.id]); e.currentTarget.textContent='♥ '+likeOf(d);
+    });
+    const sim=DATA.filter(x=>x.id!==d.id).map(x=>({x,s:(x.cat===d.cat?2:0)+x.sub.filter(t=>d.sub.includes(t)).length}))
+      .sort((a,b)=>b.s-a.s).slice(0,9).map(o=>o.x);
+    $('#simGrid').innerHTML=sim.map(cardHTML).join('');
+  }
+  function closeDetail(){ $('#gridWrap').classList.remove('off'); $('#detail').classList.remove('on'); }
+  function route(){ const m=location.hash.match(/p=([\w-]+)/); m?openDetail(m[1]):closeDetail(); }
+  window.addEventListener('hashchange',route);
+
+  let tt; function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('on'),1600); }
+
+  render(); route();
+})();
+</script>
+</body>
+</html>
