@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HUNT SHORTS STUDIO | 9:16 AI 쇼츠 제작 스튜디오 · huntbae.com</title>
+<meta name="description" content="대본 분할, 억양 녹음, 무음 제거, 자막 싱크, 프레임 체인, 쇼츠 연출 프롬프트, 스토리보드까지 브라우저 하나로 끝내는 9:16 AI 쇼츠 스튜디오.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --bg:#f7f5ee; --card:#ffffff; --ink:#1c1b18; --mute:#6e6a60; --line:#1c1b18;
+  --accent:#2f5bea; --accent-ink:#ffffff; --chip:#fffdf5; --chip-on:#ffe9a8;
+  --ok:#2e9d4f; --warn:#d9822b; --bad:#d33c3c;
+  --shadow:4px 4px 0 var(--line); --r:14px; --font:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){ :root{
+  --bg:#161614; --card:#222220; --ink:#f1efe8; --mute:#a39f93; --line:#f1efe8;
+  --accent:#8fa8ff; --accent-ink:#101010; --chip:#2a2a27; --chip-on:#5a4a12;
+}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:14.5px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font-family:inherit;font-size:13.5px;color:var(--ink)}
+button{cursor:pointer}
+.wrap{max-width:1440px;margin:0 auto;padding:0 16px}
+
+header{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:2px solid var(--line)}
+.hd{display:flex;align-items:center;gap:16px;min-height:60px;flex-wrap:wrap;padding:6px 0}
+.logo{font-weight:900;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:6px}
+.logo .dot{width:9px;height:9px;border-radius:50%;background:var(--bad);display:inline-block}
+.logo small{font-weight:700;font-size:11px;color:var(--mute);letter-spacing:1px;margin-left:4px}
+nav{display:flex;gap:16px;font-weight:700;font-size:14px}
+nav a.on{color:var(--accent)}
+.proj{display:flex;gap:6px;align-items:center;margin-left:auto;flex-wrap:wrap}
+.proj input[type=text]{width:180px}
+.home{border:2px solid var(--line);border-radius:999px;background:var(--chip-on);padding:6px 12px;font-weight:700;font-size:13px;white-space:nowrap}
+
+.btn{border:1.5px solid var(--line);border-radius:9px;background:var(--card);padding:6px 11px;font-weight:700;font-size:13px;white-space:nowrap;transition:transform .08s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:2px 2px 0 var(--line)}
+.btn.pri{background:var(--accent);color:var(--accent-ink)}
+.btn.hot{background:var(--bad);color:#fff}
+.btn.sm{padding:3px 8px;font-size:12px;border-radius:7px}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+input[type=text],input[type=number],select,textarea{border:1.5px solid var(--line);border-radius:8px;padding:6px 9px;background:var(--card);outline:none}
+input:focus,select:focus,textarea:focus{box-shadow:2px 2px 0 var(--accent)}
+textarea{width:100%;resize:vertical;line-height:1.6}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--mute)}
+label.f>*{font-weight:400;color:var(--ink)}
+
+.studio{display:grid;grid-template-columns:340px 1fr;gap:18px;margin:16px auto 30px;align-items:start}
+@media (max-width:980px){ .studio{grid-template-columns:1fr} .player{position:static!important;max-width:380px;margin:0 auto} }
+.pane{border:2px solid var(--line);border-radius:var(--r);background:var(--card);box-shadow:var(--shadow)}
+.player{position:sticky;top:78px;padding:12px}
+.screen{position:relative;width:100%;aspect-ratio:9/16;border:2px solid var(--line);border-radius:12px;overflow:hidden;background:#111}
+.screen canvas{width:100%;height:100%;display:block}
+.pc{display:flex;gap:6px;align-items:center;margin-top:10px}
+.pc input[type=range]{flex:1;accent-color:var(--accent)}
+.tc{font-family:var(--mono);font-size:12px;min-width:86px;text-align:right}
+.pl-opts{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;margin-top:8px;color:var(--mute)}
+.pl-act{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.pl-act .btn{width:100%}
+.renderout{margin-top:10px;font-size:12px}
+.renderout video{width:100%;border-radius:8px;border:1.5px solid var(--line);margin-top:6px}
+
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--line);flex-wrap:wrap}
+.tab{border:none;background:none;padding:12px 16px;font-weight:800;font-size:14px;color:var(--mute);border-bottom:4px solid transparent;margin-bottom:-2px;display:flex;gap:8px;align-items:center}
+.tab .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;font-size:12px}
+.tab.on{color:var(--ink);border-bottom-color:var(--bad)}
+.tp{display:none;padding:16px}
+.tp.on{display:block}
+.lead{font-size:13px;color:var(--mute);margin:0 0 12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row+.row{margin-top:8px}
+.sec{margin-top:18px;padding-top:14px;border-top:1px dashed var(--mute)}
+.sec h3{margin:0 0 6px;font-size:16px}
+.note{font-size:12px;color:var(--mute)}
+.warnbox{border:1.5px dashed var(--warn);border-radius:10px;padding:8px 10px;font-size:12.5px;margin-top:8px}
+
+/* cut editor */
+.grp{border:1.5px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:10px;background:var(--bg)}
+.grp-h{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;margin-bottom:6px}
+.grp-h .cnt{color:var(--mute);font-weight:600}
+.grp-h .sp{margin-left:auto;display:flex;gap:4px}
+.cuts{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.cut{display:inline-flex;align-items:center;gap:4px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);padding:3px 4px 3px 8px;font-size:13.5px}
+.cut .tx{outline:none;min-width:10px}
+.cut .tx[contenteditable=true]{background:var(--chip-on);border-radius:4px;padding:0 3px}
+.cut .len{font-size:10px;color:var(--mute);font-family:var(--mono)}
+.cut .len.over{color:var(--bad);font-weight:700}
+.cut .x{border:none;background:none;color:var(--mute);font-size:13px;padding:0 3px}
+.brk{border:1.5px dashed var(--mute);background:none;border-radius:6px;font-size:11px;color:var(--mute);padding:1px 4px}
+.brk:hover{border-color:var(--bad);color:var(--bad)}
+.tm{font-family:var(--mono);font-size:10px;color:var(--accent)}
+
+.takes{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.take{display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--bg);font-size:13px}
+.take audio{height:30px;flex:1;min-width:120px}
+.rec-dot{width:10px;height:10px;border-radius:50%;background:var(--bad);display:inline-block;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.2}}
+
+.wave{width:100%;height:70px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);display:block}
+.ttab{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+.ttab td,.ttab th{border-bottom:1px dashed var(--mute);padding:4px 6px;text-align:left}
+.ttab th{font-size:11px;color:var(--mute)}
+.ttab tr.cur td{background:var(--chip-on)}
+.ttab input{width:70px;padding:2px 5px;font-family:var(--mono);font-size:12px}
+.tapbig{font-size:18px;padding:14px 20px}
+
+/* video tab */
+.gcard{border:2px solid var(--line);border-radius:14px;padding:12px;margin-top:14px;background:var(--card)}
+.gcard.dirty{box-shadow:4px 4px 0 var(--warn)}
+.gc-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.gc-h b{font-size:15px}
+.gc-h .txt{font-size:13px;color:var(--mute);flex:1;min-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;font-weight:800;border:1.5px solid var(--line);border-radius:999px;padding:1px 8px}
+.badge.dirty{background:var(--warn);color:#fff;border-color:var(--warn)}
+.badge.code{background:var(--chip-on)}
+.gc-body{display:grid;grid-template-columns:1fr 250px;gap:12px;margin-top:10px}
+@media (max-width:1200px){ .gc-body{grid-template-columns:1fr} }
+.selrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (max-width:640px){ .selrow{grid-template-columns:1fr} }
+.skills{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.sk{border:1.5px solid var(--line);border-radius:999px;background:var(--chip);padding:3px 10px;font-size:12px;font-weight:700}
+.sk.on{background:var(--ink);color:var(--bg)}
+.frames{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.slot{position:relative;aspect-ratio:9/16;border:2px dashed var(--mute);border-radius:10px;background:var(--bg) center/cover no-repeat;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;overflow:hidden}
+.slot.has{border-style:solid;border-color:var(--line)}
+.slot.act{outline:3px solid var(--accent);outline-offset:1px}
+.slot .lb{background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;width:100%;text-align:center;padding:3px 0}
+.slot .clr{position:absolute;top:4px;right:4px;border:none;border-radius:50%;width:20px;height:20px;background:rgba(0,0,0,.6);color:#fff;font-size:12px;line-height:20px;padding:0;display:none}
+.slot.has .clr{display:block}
+.slot .hint{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:11px;color:var(--mute);padding:6px}
+.slot.has .hint{display:none}
+.fbtn{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.fbtn .btn{width:100%}
+.prompt{margin-top:10px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg)}
+.prompt .ph{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-size:12px;font-weight:800;border-bottom:1px dashed var(--mute)}
+.prompt pre{margin:0;padding:10px;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12px;line-height:1.55;max-height:220px;overflow:auto}
+.queue{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.q{font-size:12px;border:1.5px solid var(--line);border-radius:8px;padding:2px 8px;background:var(--bg)}
+.q.s1{background:#fff3c4;color:#1c1b18}.q.s2{background:#c9efcf;color:#1c1b18}.q.s0{}
+
+/* board */
+.board{display:flex;flex-wrap:wrap;gap:0;align-items:stretch;margin-top:8px}
+.bc-wrap{display:flex;align-items:center}
+.link{width:34px;display:flex;flex-direction:column;align-items:center;font-size:10px;font-weight:800}
+.link .ln{height:3px;width:100%;background:var(--mute)}
+.link.ok .ln{background:var(--ok)} .link.ok{color:var(--ok)}
+.link.br .ln{background:repeating-linear-gradient(90deg,var(--bad) 0 5px,transparent 5px 9px)} .link.br{color:var(--bad)}
+.bcard{width:170px;border:2px solid var(--line);border-radius:12px;background:var(--card);padding:8px;margin:8px 0;cursor:grab}
+.bcard.drag{opacity:.4}
+.bcard.over{box-shadow:0 0 0 3px var(--accent)}
+.bcard .th{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.bcard .th div{aspect-ratio:9/16;border:1.5px solid var(--line);border-radius:6px;background:var(--bg) center/cover;display:grid;place-items:center;font-size:10px;color:var(--mute)}
+.bcard .t{font-size:12px;font-weight:800;margin-top:6px;display:flex;justify-content:space-between}
+.bcard .d{font-size:11.5px;color:var(--mute);height:36px;overflow:hidden}
+.bcard select{width:100%;margin-top:5px;font-size:12px;padding:3px 6px}
+
+/* kit */
+.kitgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:760px){ .kitgrid{grid-template-columns:1fr} }
+.gt{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.gt th,.gt td{border:1.5px solid var(--line);padding:7px 9px;vertical-align:top;text-align:left}
+.gt th{background:var(--chip-on);font-size:12px}
+.lv{font-family:var(--mono);letter-spacing:2px;font-weight:800}
+
+.howto{margin:0 0 40px;padding:18px 20px}
+.howto h3{margin:0 0 6px;font-size:18px}
+.howto ol{margin:6px 0 0;padding-left:20px}
+footer{padding:20px 0 40px;font-size:12px;color:var(--mute);text-align:center}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-weight:700;font-size:13px;opacity:0;transition:.2s;pointer-events:none;z-index:60;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.hidden{display:none!important}
+.kbd{font-family:var(--mono);border:1.5px solid var(--line);border-radius:5px;padding:0 5px;font-size:11px}
+</style>
+</head>
+<body>
+
+<header><div class="wrap hd">
+  <a class="logo" href="#"><span class="dot"></span>huntbae<small>SHORTS STUDIO</small></a>
+  <nav>
+    <a href="./index.html">Prompt Lab</a>
+    <a href="#" class="on">쇼츠 스튜디오</a>
+    <a href="#howto">사용법</a>
+  </nav>
+  <div class="proj">
+    <select id="projSel" title="프로젝트 선택"></select>
+    <input type="text" id="projName" placeholder="프로젝트 이름">
+    <button class="btn sm" id="bNew">새 프로젝트</button>
+    <button class="btn sm" id="bDup" title="컨셉 키트·장면 구성은 그대로, 대본만 비운 새 편">포맷 복제</button>
+    <button class="btn sm" id="bExport">JSON 저장</button>
+    <label class="btn sm" style="margin:0">JSON 열기<input type="file" id="fImport" accept=".json,application/json" hidden></label>
+    <button class="btn sm" id="bDel">삭제</button>
+  </div>
+  <a class="home" href="https://huntbae.com/">← huntbae.com</a>
+</div></header>
+
+<main class="wrap studio">
+  <!-- PLAYER -->
+  <aside class="player pane">
+    <div class="screen"><canvas id="cv" width="540" height="960"></canvas></div>
+    <div class="pc">
+      <button class="btn sm pri" id="bPlay">재생</button>
+      <input type="range" id="scrub" min="0" max="1000" value="0">
+      <span class="tc" id="tc">0:00.0 / 0:00.0</span>
+    </div>
+    <div class="pl-opts">
+      <label><input type="checkbox" id="oLabel" checked> 그룹 라벨</label>
+      <label><input type="checkbox" id="oSafe"> 안전영역</label>
+      <label><input type="checkbox" id="oSub" checked> 자막</label>
+    </div>
+    <div class="pl-act">
+      <button class="btn hot" id="bRender">최종 렌더 (WebM)</button>
+      <button class="btn" id="bSrt">SRT 저장</button>
+      <button class="btn" id="bSrtCopy">SRT 복사</button>
+      <button class="btn" id="bClaude" title="Claude Code / MCP 파이프라인에 넘길 작업 지시문">Claude 지시문 복사</button>
+    </div>
+    <div class="renderout" id="renderOut"></div>
+    <audio id="narr" preload="auto" class="hidden"></audio>
+  </aside>
+
+  <!-- WORK -->
+  <section class="pane">
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="t1"><span class="n">1</span>자막 · 녹음</button>
+      <button class="tab" data-tab="t2"><span class="n">2</span>오디오</button>
+      <button class="tab" data-tab="t3"><span class="n">3</span>영상</button>
+      <button class="tab" data-tab="t4"><span class="n">4</span>스토리보드</button>
+      <button class="tab" data-tab="t5"><span class="n">+</span>컨셉 키트 · 가이드</button>
+    </div>
+
+    <!-- TAB 1 -->
+    <div class="tp on" id="t1">
+      <p class="lead">대본을 붙여넣고 분할하면 쇼츠 자막 길이 기준으로 컷이 만들어지고, 문단(또는 문장) 단위로 그룹이 묶입니다. 한 그룹 = 한 화면입니다.</p>
+      <textarea id="script" rows="8" placeholder="여기에 대본을 붙여넣으세요. 빈 줄로 문단을 나누면 문단 = 그룹, 빈 줄이 없으면 문장 = 그룹으로 묶입니다."></textarea>
+      <div class="row" style="margin-top:8px">
+        <label class="f">컷 최소 글자<input type="number" id="minC" min="3" max="30" value="8" style="width:80px"></label>
+        <label class="f">컷 최대 글자<input type="number" id="maxC" min="4" max="40" value="12" style="width:80px"></label>
+        <span class="note" style="align-self:end">공백 제외 글자 수 기준</span>
+        <button class="btn pri" id="bSplit" style="align-self:end;margin-left:auto">대본 저장 및 컷 분할</button>
+      </div>
+      <div class="warnbox hidden" id="splitWarn">이미 지정한 장면·프레임 설정이 있습니다. 다시 분할하면 그룹 구성이 새로 만들어집니다. 한 번 더 누르면 실행합니다.</div>
+
+      <div class="sec">
+        <h3>컷 · 그룹 편집</h3>
+        <p class="note" style="margin:0">컷 <b>더블클릭</b> = 글자 수정(Enter로 확정) · <b>∥</b> = 그 자리부터 새 그룹 · <b>⬆ 합치기</b> = 앞 그룹과 병합 · <b>×</b> = 컷 삭제</p>
+        <div id="cutEditor"><p class="note">아직 컷이 없습니다.</p></div>
+      </div>
+
+      <div class="sec">
+        <h3>억양 레퍼런스 녹음</h3>
+        <p class="note" style="margin:0 0 8px">대본을 소리 내어 읽어 두면 그 말투·쉼·호흡이 기준이 됩니다. 이 녹음을 그대로 나레이션으로 쓰거나, 음성 클론 서비스에 억양 참고용으로 넘깁니다. 여러 번 녹음해 두고 골라 쓰세요.</p>
+        <div class="row">
+          <button class="btn hot" id="bRec">녹음 시작</button>
+          <span id="recState" class="note"></span>
+          <label class="btn" style="margin-left:auto">오디오 파일 추가<input type="file" id="fTake" accept="audio/*" hidden></label>
+        </div>
+        <div class="takes" id="takes"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div class="tp" id="t2">
+      <p class="lead">나레이션을 고르고 빈 공간 제거 · 음량 통일을 한 뒤, 자막 싱크를 맞춥니다. 싱크 결과가 그대로 미리보기와 SRT에 들어갑니다.</p>
+      <div class="row">
+        <label class="f" style="flex:1;min-width:220px">나레이션 소스<select id="srcSel"></select></label>
+        <button class="btn pri" id="bUseSrc" style="align-self:end">이 소스로 나레이션 설정</button>
+      </div>
+      <canvas class="wave" id="wave" width="1200" height="140" style="margin-top:10px"></canvas>
+      <div class="row" style="margin-top:6px"><span class="note" id="narrInfo">나레이션이 없습니다. 오디오 없이도 글자 수 기준 예상 길이로 미리보기가 됩니다.</span></div>
+
+      <div class="sec">
+        <h3>빈 공간 제거 · 음량 통일</h3>
+        <div class="row">
+          <label class="f">무음 기준(dB)<input type="number" id="thDb" value="-42" step="1" style="width:90px"></label>
+          <label class="f">이 길이 이상 무음 압축(ms)<input type="number" id="minSil" value="250" step="10" style="width:120px"></label>
+          <label class="f">남길 쉼(ms)<input type="number" id="keepSil" value="120" step="10" style="width:100px"></label>
+          <label class="f">목표 피크(dBFS)<input type="number" id="peakDb" value="-1" step="0.5" style="width:100px"></label>
+          <button class="btn pri" id="bTrim" style="align-self:end">무음 제거 + 음량 통일</button>
+          <button class="btn" id="bWav" style="align-self:end">WAV 저장</button>
+        </div>
+        <p class="note" id="trimInfo"></p>
+      </div>
+
+      <div class="sec">
+        <h3>자막 싱크</h3>
+        <div class="row">
+          <button class="btn pri" id="bAutoSync">자동 싱크 (발화 구간 × 글자 수)</button>
+          <button class="btn" id="bTap">탭 싱크 시작</button>
+          <button class="btn tapbig hidden" id="bTapNext">다음 컷 <span class="kbd">Space</span></button>
+          <button class="btn hidden" id="bTapStop">탭 싱크 종료</button>
+        </div>
+        <p class="note">자동 싱크는 오디오에서 찾은 발화 구간에 글자 수 비율로 컷을 배치합니다(추정값). 정확히 맞추려면 탭 싱크로 재생하면서 각 컷이 시작될 때 Space를 누르세요. 표의 시작 시간은 직접 고칠 수도 있습니다.</p>
+        <table class="ttab" id="ttab"></table>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div class="tp" id="t3">
+      <p class="lead">그룹마다 장면 종류 · 등장 애니메이션 · 쇼츠 연출 배지 · 첫 장면/끝 장면을 지정합니다. 프롬프트는 컨셉 키트와 합쳐져 자동 생성됩니다. 이미지 칸을 클릭해 선택한 뒤 <span class="kbd">Ctrl/Cmd+V</span>로 캡처 이미지를 붙여넣을 수도 있습니다.</p>
+      <div class="row">
+        <button class="btn pri" id="bApplyAll">수정 전체 반영</button>
+        <button class="btn" id="bCopyDirty">재생성 대상 프롬프트 복사</button>
+        <button class="btn" id="bCopyAll">전체 프롬프트 복사</button>
+        <button class="btn" id="bAutoChain" title="각 그룹의 끝 장면을 다음 그룹 첫 장면으로 일괄 연결">프레임 체인 일괄 연결</button>
+      </div>
+      <div class="queue" id="queue"></div>
+      <div id="gcards"></div>
+    </div>
+
+    <!-- TAB 4 -->
+    <div class="tp" id="t4">
+      <p class="lead">그룹을 카드로 늘어놓고 흐름과 프레임 체인을 봅니다. 초록 선 = 앞 컷 끝 장면과 다음 컷 첫 장면이 같은 이미지(체인 연결), 빨간 점선 = 끊김. 카드를 끌어 순서를 바꾸고, 카드마다 생성 모델을 지정합니다.</p>
+      <div class="board" id="board"></div>
+      <p class="note" id="boardSum"></p>
+    </div>
+
+    <!-- TAB 5 -->
+    <div class="tp" id="t5">
+      <p class="lead">컨셉 키트는 모든 컷 프롬프트 앞에 붙는 고정 문장입니다. 캐릭터 비율·색감·배경·카메라를 한 번 정해 두면 짧게 끊어 만들어도 컷마다 결과가 흔들리지 않습니다.</p>
+      <div class="kitgrid">
+        <label class="f">스타일<input type="text" data-kit="style"></label>
+        <label class="f">캐릭터 고정 특징<input type="text" data-kit="character" placeholder="예: 둥근 몸, 노란 헬멧, 파란 조끼 — 비율과 색 고정"></label>
+        <label class="f">배경<input type="text" data-kit="bg"></label>
+        <label class="f">카메라<input type="text" data-kit="camera"></label>
+        <label class="f">조명<input type="text" data-kit="light"></label>
+        <label class="f">모션 규칙<input type="text" data-kit="motion"></label>
+        <label class="f" style="grid-column:1/-1">금지 요소 (네거티브)<input type="text" data-kit="ban"></label>
+      </div>
+      <div class="prompt"><div class="ph">컨셉 키트 (스타일 락) 미리보기 <button class="btn sm pri" id="bCopyKit">복사</button></div><pre id="kitOut"></pre></div>
+
+      <div class="sec">
+        <h3>모델 목록</h3>
+        <p class="note" style="margin:0 0 6px">스토리보드·영상 탭에서 고를 모델 이름입니다. 한 줄에 하나씩, 실제 쓰는 서비스 이름으로 바꾸세요.</p>
+        <textarea id="models" rows="5"></textarea>
+      </div>
+
+      <div class="sec">
+        <h3>스타일별 모델 등급 가이드</h3>
+        <p class="note" style="margin:0">비싼 모델이 항상 낫지 않습니다. 기준은 “그 컷에서 무엇이 깨지면 안 되는가”입니다. 등급: <span class="lv">○</span> 생성 없음(코드 렌더) · <span class="lv">●</span> 저가 · <span class="lv">●●</span> 중급 · <span class="lv">●●●</span> 상급</p>
+        <table class="gt">
+          <tr><th style="width:22%">쇼츠 유형</th><th style="width:12%">권장 등급</th><th>깨지면 안 되는 것</th><th>비용 절약 포인트</th></tr>
+          <tr><td>정보 · 요약형</td><td class="lv">○</td><td>도식 · 숫자 · 자막의 정확성</td><td>텍스트·검색·터미널·칠판·비교 장면은 코드로 렌더. 생성 영상은 오프닝 1컷 정도만.</td></tr>
+          <tr><td>양산형 리스트</td><td class="lv">●</td><td>업로드 개수와 속도</td><td>배경 화면만 저가 모델로 뽑고 제목띠·번호·배지는 전부 후합성. 글자를 모델에 그리게 하지 않음.</td></tr>
+          <tr><td>캐릭터 스토리형</td><td class="lv">●●</td><td>컷마다 같은 캐릭터</td><td>컨셉 키트 + 첫 장면 이미지 고정(I2V). 재생성 비용의 대부분이 캐릭터 흔들림에서 나옴.</td></tr>
+          <tr><td>동물 · 자연형</td><td class="lv">●●</td><td>같은 개체로 보이는 일관성</td><td>해상도·길이 옵션을 낮춰 시안을 고른 뒤 확정 컷만 업스케일.</td></tr>
+          <tr><td>실험 · 결과형</td><td class="lv">● + ●●●</td><td>결과가 드러나는 한 방</td><td>준비·과정 컷은 저가, 결과 컷만 상급. 컷별 등급을 다르게.</td></tr>
+          <tr><td>제품 · 메커니즘 분해형</td><td class="lv">●●●</td><td>부품이 제자리로 돌아오는 물리</td><td>참조 이미지 고정 + 길이 고정. 양끝 잠금으로 실패 컷 수를 줄임.</td></tr>
+          <tr><td>공간 · 건축형</td><td class="lv">●●●</td><td>컷 사이 공간 일관성</td><td>공간 참조 이미지를 따로 걸고 프레임 체인으로 이어서 한 공간처럼 보이게.</td></tr>
+        </table>
+        <p class="note">원칙 3가지: ① 글자·숫자·로고는 생성하지 말고 후합성 ② 상급 모델은 “결과 한 방” 컷에만 ③ 시안은 낮은 해상도로, 확정본만 업스케일.</p>
+      </div>
+
+      <div class="sec">
+        <h3>이 페이지와 로컬 파이프라인의 역할 분담</h3>
+        <table class="gt">
+          <tr><th style="width:30%">기능</th><th style="width:20%">이 페이지</th><th>비고</th></tr>
+          <tr><td>대본 → 컷/그룹 분할, 편집</td><td>가능</td><td>브라우저 저장 + JSON 내보내기</td></tr>
+          <tr><td>억양 녹음 · 무음 제거 · 음량 통일</td><td>가능</td><td>WAV로 저장. 녹음은 마이크 권한이 필요</td></tr>
+          <tr><td>내 목소리 클론 TTS</td><td>외부 연동</td><td>클론 서비스에서 만든 오디오를 2번 탭에 올려 사용</td></tr>
+          <tr><td>단어 단위 자막 싱크</td><td>추정 / 탭 싱크</td><td>정밀 싱크는 Claude 지시문 → 로컬 STT(Whisper 등)</td></tr>
+          <tr><td>프레임 체인(끝 프레임 추출 → 다음 첫 장면)</td><td>가능</td><td>생성된 클립을 올리면 끝 프레임을 뽑아 연결</td></tr>
+          <tr><td>영상 생성 · 대기열</td><td>프롬프트 생성 · 상태 관리</td><td>실제 생성은 Higgsfield·Kling 등에서. 상태는 카드에서 관리</td></tr>
+          <tr><td>부분 재렌더</td><td>재생성 대상 추적</td><td>고친 그룹만 표시하고 그 프롬프트만 복사</td></tr>
+          <tr><td>최종 렌더</td><td>WebM 미리보기 렌더</td><td>MP4 최종본은 Claude 지시문으로 ffmpeg 파이프라인에서</td></tr>
+          <tr><td>웹 화면 캡처</td><td>붙여넣기</td><td>캡처한 이미지를 칸에 Ctrl/Cmd+V</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="wrap"><div class="pane howto" id="howto">
+  <h3>처음이라면 이렇게 시작해보세요</h3>
+  <ol>
+    <li><b>컨셉 키트</b> 탭에서 스타일·캐릭터·배경을 먼저 정합니다. 모든 프롬프트 앞에 붙습니다.</li>
+    <li><b>1. 자막 · 녹음</b>에 대본을 붙여넣고 [대본 저장 및 컷 분할]. 필요하면 ∥ 와 합치기로 그룹(화면 단위)을 다듬고, 대본을 읽어 녹음합니다.</li>
+    <li><b>2. 오디오</b>에서 녹음본이나 클론 음성 파일을 나레이션으로 정하고 [무음 제거 + 음량 통일] → [자동 싱크] 또는 탭 싱크.</li>
+    <li><b>3. 영상</b>에서 그룹마다 장면 종류와 연출 배지를 고르고, 만들어진 프롬프트를 복사해 영상 생성 서비스에 넣습니다. 받은 클립을 올리고 [끝 프레임 추출 → 다음 그룹 첫 장면]으로 체인을 잇습니다.</li>
+    <li><b>4. 스토리보드</b>에서 체인 끊김과 순서를 확인한 뒤, 왼쪽 [최종 렌더]로 자막·오디오가 합쳐진 미리보기 영상을 뽑습니다.</li>
+  </ol>
+  <p class="note">작업은 이 브라우저에 자동 저장됩니다(클립 영상·녹음 파일은 용량 때문에 저장되지 않으니 원본을 따로 보관하세요). 다른 기기로 옮길 때는 [JSON 저장]을 쓰세요.</p>
+</div></section>
+
+<footer>© huntbae.com · HUNT SHORTS STUDIO — 모든 처리는 이 브라우저 안에서만 이루어지며 서버로 전송되지 않습니다.</footer>
+<div class="toast" id="toast"></div>
+<input type="file" id="fSlot" accept="image/*,video/*" hidden>
+<input type="file" id="fClip" accept="video/*" hidden>
+
+<script>
+(()=>{
+'use strict';
+/* ---------- constants ---------- */
+const SCENES=[
+  ['oneTake','AI 원테이크 영상',0],['talk','말하는 캐릭터',0],['liveMG','실사 모션그래픽',0],['illust','일러스트',0],['vector','벡터 모션',0],
+  ['motionFont','모션 폰트',1],['text','텍스트',1],['icon','아이콘',1],['search','검색 화면',1],['typing','타이핑',1],['ai','AI 답변',1],
+  ['compare','좌우 비교',1],['terminal','터미널',1],['board','칠판 요약',1],['capture','캡처 이미지',1],['map','지도',1],['comment','댓글',1]
+];
+const SCENE_EN={oneTake:'cinematic one-take AI video shot',talk:'a talking character speaking to camera, clear mouth movement',liveMG:'live-action footage with motion-graphic overlays',illust:'animated illustration',vector:'flat vector motion graphics'};
+const ANIMS=[['auto','자동(다양하게)'],['pop','팝'],['fade','페이드'],['move','이동'],['zoom','다가오기'],['fly','날아오기'],['roll','굴러오기'],['flip','뒤집기'],['none','없음']];
+const SKILLS=[
+  ['orbit','궤도 무빙','Camera moves on a slow, smooth orbit around the subject at a constant distance.'],
+  ['multiview','멀티뷰(오빗)','Show the same subject from three quick angles (front, three-quarter, top) in one continuous shot.'],
+  ['travel','공간 이동','Camera travels forward through the space and arrives in the next area in one continuous move.'],
+  ['spike','스파이크','A sudden energy spike at the key moment: fast push-in with brief motion blur, then settle.'],
+  ['crash','크래시줌(디지털)','Keep the framing static and centered so a digital crash zoom can be added in edit.'],
+  ['loop','무한 루프','Seamless loop: the final frame matches the first frame in pose and framing.'],
+  ['seam','원테이크 · 이음새 은폐','Hide the cut: end on an object passing close to the lens so the next shot can start from it.'],
+  ['holo','홀로그램 스캔','A thin holographic scan line sweeps over the subject and reveals its inner structure.'],
+  ['lock','양끝 잠금','Both ends locked: start exactly on the first frame and finish exactly on the last frame.'],
+  ['sub','구독 유도','In the final second leave clean empty space at the lower center for a subscribe button overlay.'],
+  ['enter','캐릭터 등장','The character enters from the side and stops at the center within the first second.'],
+  ['sfx','SFX 위계','(edit) Only the key action gets a strong sound effect; all other sounds stay low.']
+];
+const DEF_MODELS=['코드 렌더 (생성 없음)','Higgsfield 원테이크','Kling (이미지→영상)','Veo','Seedance','Hailuo'];
+const DEF_KIT={style:'Soft matte 3D clay look, like a miniature diorama photograph',character:'',bg:'One solid pastel background, no gradient, no clutter',camera:'Locked-off static camera unless the shot says otherwise, vertical 9:16',light:'Soft key light from the upper left, gentle contact shadow only',motion:'One clear action per shot; finish the action and hold still for the last 0.5s',ban:'no text, no captions, no letters, no numbers, no logos, no watermark, no extra limbs'};
+const CPS=5.2; // chars per second (no spaces) for estimate
+const LS='hss.v1.';
+
+/* ---------- utils ---------- */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const uid=()=>Math.random().toString(36).slice(2,9);
+const nchar=s=>(s||'').replace(/\s/g,'').length;
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=t=>{t=Math.max(0,t||0);const m=Math.floor(t/60),s=t-m*60;return m+':'+(s<10?'0':'')+s.toFixed(1)};
+const srtT=t=>{t=Math.max(0,t);const h=Math.floor(t/3600),m=Math.floor(t%3600/60),s=Math.floor(t%60),ms=Math.round((t-Math.floor(t))*1000);const p=(n,l=2)=>String(n).padStart(l,'0');return `${p(h)}:${p(m)}:${p(s)},${p(Math.min(ms,999),3)}`};
+let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2200)}
+async function copy(txt,msg){try{await navigator.clipboard.writeText(txt);toast(msg||'복사했습니다')}catch(e){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?(msg||'복사했습니다'):'복사가 막혀 있습니다. 직접 선택해 복사하세요')}}
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast(name+' 저장을 시작했습니다')}
+const lsGet=k=>{try{return JSON.parse(localStorage.getItem(LS+k))}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(LS+k,JSON.stringify(v));return true}catch(e){return false}};
+const lsDel=k=>{try{localStorage.removeItem(LS+k)}catch(e){}};
+
+/* ---------- state ---------- */
+const S={proj:null,takes:[],narr:null,clips:{},vids:{},imgs:{},playing:false,t:0,t0:0,activeSlot:null,tap:null,splitArm:false,rec:null};
+function newProject(name){return{id:uid(),name:name||'새 쇼츠',updated:Date.now(),script:'',minC:8,maxC:12,groups:[],kit:{...DEF_KIT},models:[...DEF_MODELS],sync:'est'}}
+function newGroup(cuts){return{id:uid(),cuts,scene:'oneTake',anim:'auto',skills:[],model:'',desc:'',sfx:'',sfxLv:'보조',first:null,last:null,status:0,dirty:true}}
+const P=()=>S.proj;
+
+/* ---------- persistence ---------- */
+let saveT;function save(){P().updated=Date.now();clearTimeout(saveT);saveT=setTimeout(()=>{const ok=lsSet('p.'+P().id,P());let idx=lsGet('index')||[];idx=idx.filter(x=>x.id!==P().id);idx.unshift({id:P().id,name:P().name,updated:P().updated});lsSet('index',idx);lsSet('last',P().id);if(!ok)toast('브라우저 저장 공간이 부족합니다. JSON 저장을 이용하세요');renderProjSel()},400)}
+function loadProject(id){const p=lsGet('p.'+id);if(!p)return false;S.proj=Object.assign(newProject(),p);S.proj.kit=Object.assign({...DEF_KIT},p.kit||{});resetMedia();renderAll();return true}
+function resetMedia(){Object.values(S.clips).forEach(u=>URL.revokeObjectURL(u));S.clips={};S.vids={};S.imgs={};setNarr(null);stop();S.t=0;$('#renderOut').innerHTML=''}
+function renderProjSel(){const idx=lsGet('index')||[];const sel=$('#projSel');sel.innerHTML=idx.map(x=>`<option value="${x.id}" ${x.id===P().id?'selected':''}>${esc(x.name)}</option>`).join('')||`<option>${esc(P().name)}</option>`}
+
+/* ---------- script splitting ---------- */
+function sentences(p){return(p.match(/[^.!?。…]+[.!?。…]*["”’')]*\s*/g)||[p]).map(s=>s.trim()).filter(Boolean)}
+function chunk(s,min,max){
+  const words=s.split(/\s+/).filter(Boolean),out=[];let cur='';
+  for(const w of words){
+    const pieces=nchar(w)>max?w.match(new RegExp('.{1,'+max+'}','g')):[w];
+    for(const p of pieces){
+      const cand=cur?cur+' '+p:p;
+      if(cur&&nchar(cand)>max){out.push(cur);cur=p}else cur=cand;
+      if(nchar(cur)>=min&&/[,.!?…。,]["”’')]*$/.test(cur)){out.push(cur);cur=''}
+    }
+  }
+  if(cur){const last=out[out.length-1];if(last&&nchar(cur)<Math.ceil(min/2)&&nchar(last+cur)<=max+2)out[out.length-1]=last+' '+cur;else out.push(cur)}
+  return out;
+}
+function splitScript(text,min,max){
+  const paras=text.replace(/\r/g,'').split(/\n\s*\n/).map(p=>p.replace(/\s*\n\s*/g,' ').trim()).filter(Boolean);
+  const units=paras.length===1?sentences(paras[0]):paras;
+  return units.map(u=>newGroup(chunk(u,min,max).map(t=>({id:uid(),t,s:null}))));
+}
+
+/* ---------- timeline ---------- */
+function allCuts(){const r=[];P().groups.forEach((g,gi)=>g.cuts.forEach((c,ci)=>r.push({g,gi,c,ci})));return r}
+function autoTime(){
+  const cuts=allCuts();if(!cuts.length)return;
+  const total=cuts.reduce((a,x)=>a+Math.max(1,nchar(x.c.t)),0);
+  if(S.narr&&S.narr.speech&&S.narr.speech.length){
+    const sp=S.narr.speech,spTot=sp.reduce((a,x)=>a+(x.e-x.s),0);
+    const map=v=>{let acc=0;for(const x of sp){const d=x.e-x.s;if(acc+d>=v)return x.s+(v-acc);acc+=d}return sp[sp.length-1].e};
+    let acc=0;cuts.forEach(x=>{x.c.s=+map(acc/total*spTot+1e-4).toFixed(3);acc+=Math.max(1,nchar(x.c.t))});
+    P().sync='auto';
+  }else{
+    let t=0.2;cuts.forEach(x=>{x.c.s=+t.toFixed(3);t+=Math.max(0.7,nchar(x.c.t)/CPS)+0.12});P().sync='est';
+  }
+}
+function duration(){const cuts=allCuts();if(S.narr&&S.narr.dur)return Math.max(S.narr.dur,cuts.length?cuts[cuts.length-1].c.s+0.5:0);if(!cuts.length)return 3;const l=cuts[cuts.length-1];return l.c.s+Math.max(0.7,nchar(l.c.t)/CPS)+0.6}
+function timeline(){
+  const cuts=allCuts(),D=duration();
+  return cuts.map((x,i)=>({...x,s:x.c.s??0,e:i<cuts.length-1?(cuts[i+1].c.s??D):D}));
+}
+function groupSpans(tl){const m={};tl.forEach(x=>{const id=x.g.id;if(!m[id])m[id]={s:x.s,e:x.e,gi:x.gi};else m[id].e=x.e});return m}
+function needsTime(){return allCuts().some(x=>x.c.s==null)}
+
+/* ---------- TAB 1: cut editor ---------- */
+function renderCuts(){
+  const el=$('#cutEditor'),G=P().groups;
+  if(!G.length){el.innerHTML='<p class="note">아직 컷이 없습니다.</p>';return}
+  const max=P().maxC;
+  el.innerHTML=G.map((g,gi)=>`<div class="grp" data-gi="${gi}">
+    <div class="grp-h">G${gi+1} <span class="cnt">${g.cuts.length}컷 · ${nchar(g.cuts.map(c=>c.t).join(''))}자</span>
+      <span class="sp">${gi>0?`<button class="btn sm" data-act="merge" data-gi="${gi}">⬆ 합치기</button>`:''}</span></div>
+    <div class="cuts">${g.cuts.map((c,ci)=>`${ci>0?`<button class="brk" title="여기서 새 그룹" data-act="brk" data-gi="${gi}" data-ci="${ci}">∥</button>`:''}<span class="cut" data-gi="${gi}" data-ci="${ci}"><span class="tx" title="더블클릭해 수정">${esc(c.t)}</span><span class="len ${nchar(c.t)>max?'over':''}">${nchar(c.t)}</span>${c.s!=null?`<span class="tm">${fmt(c.s)}</span>`:''}<button class="x" data-act="delcut" data-gi="${gi}" data-ci="${ci}" title="컷 삭제">×</button></span>`).join('')}</div>
+  </div>`).join('');
+}
+function structChanged(){P().groups=P().groups.filter(g=>g.cuts.length);if(P().sync!=='tap'||needsTime())autoTime();save();renderCuts();renderSync();renderVideo();renderBoard();draw()}
+$('#cutEditor').addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;const gi=+b.dataset.gi,ci=+b.dataset.ci,G=P().groups;
+  if(b.dataset.act==='brk'){const g=G[gi];const ng=newGroup(g.cuts.splice(ci));G.splice(gi+1,0,ng);g.dirty=true}
+  else if(b.dataset.act==='merge'){const g=G[gi];G[gi-1].cuts.push(...g.cuts);G[gi-1].dirty=true;G.splice(gi,1)}
+  else if(b.dataset.act==='delcut'){G[gi].cuts.splice(ci,1);G[gi].dirty=true}
+  structChanged();
+});
+$('#cutEditor').addEventListener('dblclick',e=>{
+  const tx=e.target.closest('.tx');if(!tx)return;tx.contentEditable='true';tx.focus();
+  const r=document.createRange();r.selectNodeContents(tx);const s=getSelection();s.removeAllRanges();s.addRange(r);
+  const done=()=>{tx.contentEditable='false';const cut=tx.closest('.cut'),g=P().groups[+cut.dataset.gi],c=g.cuts[+cut.dataset.ci];const v=tx.textContent.trim();if(!v){g.cuts.splice(+cut.dataset.ci,1)}else if(v!==c.t){c.t=v}g.dirty=true;structChanged()};
+  tx.addEventListener('blur',done,{once:true});
+  tx.addEventListener('keydown',ev=>{if(ev.key==='Enter'){ev.preventDefault();tx.blur()}if(ev.key==='Escape'){tx.textContent=P().groups[+tx.closest('.cut').dataset.gi].cuts[+tx.closest('.cut').dataset.ci].t;tx.blur()}});
+});
+$('#bSplit').addEventListener('click',()=>{
+  const txt=$('#script').value.trim();if(!txt){toast('대본을 먼저 붙여넣으세요');return}
+  const hasWork=P().groups.some(g=>g.first||g.last||g.desc||g.skills.length);
+  if(hasWork&&!S.splitArm){S.splitArm=true;$('#splitWarn').classList.remove('hidden');setTimeout(()=>{S.splitArm=false;$('#splitWarn').classList.add('hidden')},6000);return}
+  S.splitArm=false;$('#splitWarn').classList.add('hidden');
+  const min=Math.max(2,+$('#minC').value||8),max=Math.max(min+1,+$('#maxC').value||12);
+  Object.assign(P(),{script:$('#script').value,minC:min,maxC:max,sync:'est'});
+  P().groups=splitScript(txt,min,max);autoTime();save();renderAll();
+  toast(`${P().groups.length}개 그룹 · ${allCuts().length}개 컷으로 나눴습니다`);
+});
+$('#script').addEventListener('input',()=>{P().script=$('#script').value;save()});
+
+/* ---------- recording / takes ---------- */
+async function addTake(blob,name){
+  const url=URL.createObjectURL(blob);let dur=0;
+  try{const b=await decodeBlob(blob);dur=b.duration}catch(e){}
+  S.takes.push({id:uid(),name,blob,url,dur});renderTakes();renderSrc();
+}
+function renderTakes(){
+  $('#takes').innerHTML=S.takes.map(t=>`<div class="take"><b>${esc(t.name)}</b><span class="note">${fmt(t.dur)}</span><audio controls src="${t.url}"></audio><button class="btn sm pri" data-tk="use" data-id="${t.id}">나레이션으로</button><button class="btn sm" data-tk="del" data-id="${t.id}">삭제</button></div>`).join('')||'<p class="note">녹음된 테이크가 없습니다. (녹음·파일은 새로고침하면 사라지니 쓸 테이크는 WAV로 저장해 두세요)</p>';
+}
+$('#takes').addEventListener('click',async e=>{const b=e.target.closest('[data-tk]');if(!b)return;const t=S.takes.find(x=>x.id===b.dataset.id);if(!t)return;
+  if(b.dataset.tk==='del'){URL.revokeObjectURL(t.url);S.takes=S.takes.filter(x=>x!==t);renderTakes();renderSrc()}
+  else{await useSource(t);switchTab('t2')}});
+$('#bRec').addEventListener('click',async()=>{
+  if(S.rec){S.rec.stop();return}
+  let stream;try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}})}catch(e){toast('마이크를 쓸 수 없습니다. huntbae.com 게시본에서 권한을 허용하거나 오디오 파일을 추가하세요');return}
+  const chunks=[];const mr=new MediaRecorder(stream);S.rec=mr;const st=Date.now();
+  mr.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+  mr.onstop=()=>{stream.getTracks().forEach(t=>t.stop());clearInterval(S.recTick);S.rec=null;$('#bRec').textContent='녹음 시작';$('#recState').innerHTML='';addTake(new Blob(chunks,{type:mr.mimeType||'audio/webm'}),'녹음 '+(S.takes.length+1))};
+  mr.start();$('#bRec').textContent='녹음 정지';
+  S.recTick=setInterval(()=>{$('#recState').innerHTML=`<span class="rec-dot"></span> 녹음 중 ${fmt((Date.now()-st)/1000)}`},200);
+});
+$('#fTake').addEventListener('change',e=>{[...e.target.files].forEach(f=>addTake(f,f.name));e.target.value=''});
+
+/* ---------- audio processing ---------- */
+let AC;const actx=()=>AC||(AC=new(window.AudioContext||window.webkitAudioContext)());
+async function decodeBlob(blob){const ab=await blob.arrayBuffer();return await actx().decodeAudioData(ab)}
+function mono(buf){const n=buf.length,out=new Float32Array(n);for(let c=0;c<buf.numberOfChannels;c++){const d=buf.getChannelData(c);for(let i=0;i<n;i++)out[i]+=d[i]/buf.numberOfChannels}return out}
+function frames(x,sr,thDb){const F=Math.round(sr*0.02),n=Math.ceil(x.length/F),v=new Uint8Array(n);for(let f=0;f<n;f++){let s=0;const a=f*F,b=Math.min(x.length,a+F);for(let i=a;i<b;i++)s+=x[i]*x[i];const db=10*Math.log10(s/Math.max(1,b-a)+1e-12);v[f]=db>thDb?1:0}return{F,v}}
+function speechOf(x,sr,thDb){const{F,v}=frames(x,sr,thDb),segs=[];let st=-1;for(let f=0;f<=v.length;f++){if(v[f]&&st<0)st=f;if(!v[f]&&st>=0){segs.push({s:st*F/sr,e:f*F/sr});st=-1}}const m=[];segs.forEach(s=>{const l=m[m.length-1];if(l&&s.s-l.e<0.18)l.e=s.e;else m.push({...s})});return m.filter(s=>s.e-s.s>0.06)}
+function trim(buf,thDb,minSil,keep,peakDb){
+  const sr=buf.sampleRate,x=mono(buf),{F,v}=frames(x,sr,thDb),n=v.length;
+  const keepF=new Uint8Array(n),minF=Math.round(minSil/20),kF=Math.max(1,Math.round(keep/20)),edge=3;
+  let f=0;while(f<n){if(v[f]){keepF[f]=1;f++;continue}let g=f;while(g<n&&!v[g])g++;const len=g-f,lead=f===0,tail=g>=n;
+    if(lead){for(let i=Math.max(f,g-edge);i<g;i++)keepF[i]=1}
+    else if(tail){for(let i=f;i<Math.min(g,f+edge);i++)keepF[i]=1}
+    else if(len<=minF){for(let i=f;i<g;i++)keepF[i]=1}
+    else{const h=Math.ceil(kF/2);for(let i=f;i<f+h;i++)keepF[i]=1;for(let i=g-h;i<g;i++)keepF[i]=1}
+    f=g}
+  let cnt=0;for(let i=0;i<n;i++)if(keepF[i])cnt+=Math.min(F,x.length-i*F);
+  const out=new Float32Array(cnt);let o=0,peak=0;
+  for(let i=0;i<n;i++)if(keepF[i]){const a=i*F,b=Math.min(x.length,a+F);for(let j=a;j<b;j++){const s=x[j];out[o++]=s;const ab=Math.abs(s);if(ab>peak)peak=ab}}
+  const gain=peak>0?Math.pow(10,peakDb/20)/peak:1;for(let i=0;i<out.length;i++)out[i]*=gain;
+  const nb=actx().createBuffer(1,out.length,sr);nb.copyToChannel(out,0);return{buf:nb,gain}
+}
+function wav(buf){const ch=buf.numberOfChannels,sr=buf.sampleRate,n=buf.length,ab=new ArrayBuffer(44+n*2*ch),dv=new DataView(ab);const ws=(o,s)=>{for(let i=0;i<s.length;i++)dv.setUint8(o+i,s.charCodeAt(i))};
+  ws(0,'RIFF');dv.setUint32(4,36+n*2*ch,true);ws(8,'WAVE');ws(12,'fmt ');dv.setUint32(16,16,true);dv.setUint16(20,1,true);dv.setUint16(22,ch,true);dv.setUint32(24,sr,true);dv.setUint32(28,sr*2*ch,true);dv.setUint16(32,2*ch,true);dv.setUint16(34,16,true);ws(36,'data');dv.setUint32(40,n*2*ch,true);
+  const d=[];for(let c=0;c<ch;c++)d.push(buf.getChannelData(c));let o=44;for(let i=0;i<n;i++)for(let c=0;c<ch;c++){const s=Math.max(-1,Math.min(1,d[c][i]));dv.setInt16(o,s<0?s*0x8000:s*0x7fff,true);o+=2}return new Blob([ab],{type:'audio/wav'})}
+function setNarr(n){
+  if(S.narr&&S.narr.own)URL.revokeObjectURL(S.narr.url);S.narr=n;const a=$('#narr');
+  if(n){a.src=n.url;$('#narrInfo').textContent=`나레이션: ${n.name} · ${fmt(n.dur)} · 발화 구간 ${n.speech.length}개`}else{a.removeAttribute('src');$('#narrInfo').textContent='나레이션이 없습니다. 오디오 없이도 글자 수 기준 예상 길이로 미리보기가 됩니다.'}
+  drawWave();
+}
+async function useSource(t){
+  try{const buf=await decodeBlob(t.blob);const sp=speechOf(mono(buf),buf.sampleRate,+$('#thDb').value||-42);
+    setNarr({name:t.name,blob:t.blob,url:t.url,buf,dur:buf.duration,speech:sp,own:false});
+    if(P().sync!=='tap'){autoTime();save()}renderSync();renderCuts();draw();toast('나레이션을 설정했습니다')}
+  catch(e){toast('이 오디오를 읽지 못했습니다')}
+}
+function renderSrc(){$('#srcSel').innerHTML=S.takes.map(t=>`<option value="${t.id}">${esc(t.name)} (${fmt(t.dur)})</option>`).join('')||'<option value="">1번 탭에서 녹음하거나 오디오 파일을 추가하세요</option>'}
+$('#bUseSrc').addEventListener('click',()=>{const t=S.takes.find(x=>x.id===$('#srcSel').value);if(t)useSource(t);else toast('먼저 테이크를 추가하세요')});
+$('#bTrim').addEventListener('click',()=>{
+  if(!S.narr){toast('먼저 나레이션 소스를 설정하세요');return}
+  const before=S.narr.dur,th=+$('#thDb').value||-42;
+  const{buf,gain}=trim(S.narr.buf,th,+$('#minSil').value||250,+$('#keepSil').value||120,+$('#peakDb').value||-1);
+  const blob=wav(buf),url=URL.createObjectURL(blob),sp=speechOf(mono(buf),buf.sampleRate,th);
+  const name=S.narr.name.replace(/( · 정리됨)?$/,' · 정리됨');
+  setNarr({name,blob,url,buf,dur:buf.duration,speech:sp,own:true});
+  S.takes.push({id:uid(),name,blob,url,dur:buf.duration});renderTakes();renderSrc();$('#srcSel').value=S.takes[S.takes.length-1].id;
+  if(P().sync!=='tap'){autoTime();save()}renderSync();renderCuts();draw();
+  $('#trimInfo').textContent=`길이 ${fmt(before)} → ${fmt(buf.duration)} (${Math.round((1-buf.duration/before)*100)}% 단축) · 음량 ${(20*Math.log10(gain)).toFixed(1)} dB 보정`;
+});
+$('#bWav').addEventListener('click',()=>{if(!S.narr){toast('나레이션이 없습니다');return}download(S.narr.blob.type==='audio/wav'?S.narr.blob:wav(S.narr.buf),(P().name||'narration')+'.wav')});
+function drawWave(){
+  const c=$('#wave'),x=c.getContext('2d'),W=c.width,H=c.height,cs=getComputedStyle(document.documentElement);x.clearRect(0,0,W,H);
+  if(!S.narr){x.fillStyle=cs.getPropertyValue('--mute');x.font='24px sans-serif';x.fillText('파형 없음',20,H/2+8);return}
+  const d=S.narr.buf.getChannelData(0),st=Math.max(1,Math.floor(d.length/W)),D=S.narr.dur;
+  x.fillStyle='rgba(47,91,234,.12)';S.narr.speech.forEach(s=>x.fillRect(s.s/D*W,0,(s.e-s.s)/D*W,H));
+  x.fillStyle=cs.getPropertyValue('--ink');for(let i=0;i<W;i++){let m=0;for(let j=i*st;j<(i+1)*st&&j<d.length;j+=4)m=Math.max(m,Math.abs(d[j]));const h=Math.max(1,m*H*.9);x.fillRect(i,(H-h)/2,1,h)}
+  x.strokeStyle='#d33c3c';x.lineWidth=2;allCuts().forEach(a=>{if(a.c.s==null)return;const px=a.c.s/D*W;x.beginPath();x.moveTo(px,0);x.lineTo(px,H);x.stroke()});
+}
+
+/* ---------- sync table / tap ---------- */
+function renderSync(){
+  const tl=timeline();
+  $('#ttab').innerHTML='<tr><th>#</th><th>그룹</th><th>자막</th><th>시작(초)</th><th>길이</th></tr>'+tl.map((x,i)=>`<tr data-i="${i}" class="${S.tap&&S.tap.i===i?'cur':''}"><td>${i+1}</td><td>G${x.gi+1}</td><td>${esc(x.c.t)}</td><td><input type="number" step="0.05" value="${(x.s).toFixed(2)}" data-cid="${x.c.id}"></td><td class="note">${(x.e-x.s).toFixed(2)}s</td></tr>`).join('');
+  drawWave();
+}
+$('#ttab').addEventListener('change',e=>{const id=e.target.dataset.cid;if(!id)return;const x=allCuts().find(a=>a.c.id===id);x.c.s=Math.max(0,+e.target.value);P().sync='tap';save();renderSync();renderCuts();draw()});
+$('#bAutoSync').addEventListener('click',()=>{autoTime();save();renderSync();renderCuts();draw();toast(S.narr?'발화 구간 기준으로 싱크를 맞췄습니다':'오디오가 없어 글자 수 기준 예상 시간으로 배치했습니다')});
+$('#bTap').addEventListener('click',()=>{
+  if(!S.narr){toast('탭 싱크는 나레이션이 있어야 합니다');return}if(!allCuts().length){toast('컷이 없습니다');return}
+  stop();S.tap={i:0};const a=$('#narr');a.currentTime=0;allCuts()[0].c.s=0;a.play().catch(()=>{});S.playing=true;S.t0=0;$('#bPlay').textContent='일시정지';loop();
+  $('#bTapNext').classList.remove('hidden');$('#bTapStop').classList.remove('hidden');$('#bTap').classList.add('hidden');renderSync();
+});
+function tapNext(){if(!S.tap)return;const cuts=allCuts();S.tap.i++;if(S.tap.i>=cuts.length){endTap();return}cuts[S.tap.i].c.s=+$('#narr').currentTime.toFixed(3);P().sync='tap';renderSync();renderCuts()}
+function endTap(){S.tap=null;$('#bTapNext').classList.add('hidden');$('#bTapStop').classList.add('hidden');$('#bTap').classList.remove('hidden');stop();save();renderSync();renderCuts();draw();toast('탭 싱크를 저장했습니다')}
+$('#bTapNext').addEventListener('click',tapNext);$('#bTapStop').addEventListener('click',endTap);
+document.addEventListener('keydown',e=>{if(S.tap&&e.code==='Space'&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();tapNext()}});
+
+/* ---------- prompts ---------- */
+function kitText(k=P().kit){
+  const L=['Keep the same character design, proportions, colors and outfit in every shot.'];
+  if(k.style)L.push('Style: '+k.style+'.');if(k.character)L.push('Character (locked): '+k.character+'.');if(k.bg)L.push('Background: '+k.bg+'.');
+  if(k.camera)L.push('Camera: '+k.camera+'.');if(k.light)L.push('Lighting: '+k.light+'.');if(k.motion)L.push('Motion: '+k.motion+'.');if(k.ban)L.push('Avoid: '+k.ban+'.');
+  return L.join('\n');
+}
+const isCode=sc=>(SCENES.find(s=>s[0]===sc)||[])[2]===1;
+function groupDur(g){const sp=groupSpans(timeline())[g.id];return sp?Math.max(1,sp.e-sp.s):3}
+function groupPrompt(g,gi){
+  const txt=g.cuts.map(c=>c.t).join(' '),sc=SCENES.find(s=>s[0]===g.scene)||SCENES[0],d=groupDur(g);
+  if(isCode(g.scene)){return `[G${gi+1}] 코드/템플릿 렌더 장면 — 영상 생성 불필요\n장면: ${sc[1]}\n화면 문구: ${g.desc||txt}\n자막: ${txt}\n길이: 약 ${d.toFixed(1)}초`+(g.sfx?`\nSFX: ${g.sfx} (${g.sfxLv})`:'')}
+  const L=[`[G${gi+1}] ${sc[1]} · 약 ${d.toFixed(1)}초 · 9:16 세로`+(g.model?` · 모델: ${g.model}`:''),'','# STYLE LOCK',kitText(),'','# SHOT',`Type: ${SCENE_EN[g.scene]||sc[1]}.`,`Action: ${g.desc||'(장면 설명을 입력하세요)'}`,`Narration context (Korean, do not render as text): "${txt}"`,`Length: about ${Math.min(10,Math.max(3,Math.round(d)))} seconds, vertical 9:16.`];
+  const sk=g.skills.map(id=>SKILLS.find(s=>s[0]===id)).filter(Boolean).filter(s=>!/^\(edit\)/.test(s[2]));
+  if(sk.length){L.push('','# DIRECTION');sk.forEach(s=>L.push('- '+s[2]))}
+  const cont=[];if(g.first)cont.push('Start exactly on the supplied FIRST frame image; keep its framing for the first 0.3s.');if(g.last||g.skills.includes('lock'))cont.push('End exactly on the supplied LAST frame image and hold still for the final 0.5s.');
+  if(cont.length){L.push('','# CONTINUITY (frame chain)');cont.forEach(c=>L.push('- '+c))}
+  const ed=[];if(g.skills.includes('crash'))ed.push('크래시줌: 편집에서 1.0→1.35 디지털 줌 펀치');if(g.skills.includes('sfx')||g.sfx)ed.push(`SFX: ${g.sfx||'(미지정)'} · 위계 ${g.sfxLv}`);if(g.skills.includes('sub'))ed.push('구독 버튼 오버레이: 마지막 1초');
+  if(ed.length){L.push('','# EDIT NOTES (후합성)');ed.forEach(c=>L.push('- '+c))}
+  return L.join('\n');
+}
+
+/* ---------- TAB 3: video ---------- */
+function opts(list,val){return list.map(o=>Array.isArray(o)?`<option value="${o[0]}" ${o[0]===val?'selected':''}>${esc(o[1])}</option>`:`<option ${o===val?'selected':''}>${esc(o)}</option>`).join('')}
+function renderVideo(){
+  const G=P().groups,el=$('#gcards');
+  if(!G.length){el.innerHTML='<p class="note" style="margin-top:12px">1번 탭에서 대본을 분할하면 그룹 카드가 생깁니다.</p>';renderQueue();return}
+  el.innerHTML=G.map((g,gi)=>{const code=isCode(g.scene);return `<div class="gcard ${g.dirty?'dirty':''}" data-gid="${g.id}" id="gc-${g.id}">
+    <div class="gc-h"><b>G${gi+1}</b><span class="txt">${esc(g.cuts.map(c=>c.t).join(' '))}</span>
+      ${code?'<span class="badge code">코드 렌더</span>':''}${g.dirty?'<span class="badge dirty">수정됨</span>':''}
+      <select data-k="status" title="생성 상태">${opts([[0,'대기'],[1,'생성 중'],[2,'완료']].map(o=>[String(o[0]),o[1]]),String(g.status))}</select>
+      <button class="btn sm pri" data-a="apply">반영</button></div>
+    <div class="gc-body"><div>
+      <div class="selrow">
+        <label class="f">장면 종류<select data-k="scene">${opts(SCENES.map(s=>[s[0],s[1]]),g.scene)}</select></label>
+        <label class="f">등장 애니메이션<select data-k="anim">${opts(ANIMS,g.anim)}</select></label>
+        <label class="f">생성 모델<select data-k="model"><option value="">(미지정)</option>${opts(P().models,g.model)}</select></label>
+      </div>
+      <div class="skills">${SKILLS.map(s=>`<button class="sk ${g.skills.includes(s[0])?'on':''}" data-sk="${s[0]}" title="${esc(s[2])}">${s[1]}</button>`).join('')}</div>
+      <label class="f" style="margin-top:8px">${code?'화면 문구 (비우면 자막 사용 · 비교는 “A | B”, 칠판은 줄바꿈)':'장면 설명 (프롬프트용 동작 묘사, 영어 권장)'}<textarea data-k="desc" rows="2" placeholder="${code?'예: 전기차 vs 내연기관':'예: The clay robot lifts the battery cell and it splits into three layers'}">${esc(g.desc)}</textarea></label>
+      <div class="row" style="margin-top:6px"><label class="f" style="flex:1">효과음<input type="text" data-k="sfx" value="${esc(g.sfx)}" placeholder="예: whoosh, pop, 띵"></label><label class="f">위계<select data-k="sfxLv">${opts(['주','보조','없음'],g.sfxLv)}</select></label></div>
+      <div class="prompt"><div class="ph">프롬프트 <button class="btn sm pri" data-a="copyp">복사</button></div><pre>${esc(groupPrompt(g,gi))}</pre></div>
+    </div><div>
+      <div class="frames">
+        ${['first','last'].map(sl=>`<div class="slot ${g[sl]?'has':''} ${S.activeSlot&&S.activeSlot.gid===g.id&&S.activeSlot.sl===sl?'act':''}" data-slot="${sl}" style="${g[sl]?`background-image:url(${g[sl]})`:''}"><span class="hint">클릭: 이미지/영상 올리기<br>선택 후 Ctrl/Cmd+V</span><button class="clr" data-a="clr" data-sl="${sl}" title="지우기">×</button><span class="lb">${sl==='first'?'첫 장면':'끝 장면'}</span></div>`).join('')}
+      </div>
+      <div class="fbtn">
+        ${gi>0?'<button class="btn sm" data-a="prevlast">앞 그룹 끝 장면 → 첫 장면</button>':''}
+        <button class="btn sm" data-a="clip">${S.clips[g.id]?'클립 교체':'생성된 클립 올리기'}</button>
+        ${S.clips[g.id]?'<button class="btn sm" data-a="grabfirst">클립 첫 프레임 → 첫 장면</button><button class="btn sm pri" data-a="grablast">클립 끝 프레임 → 끝 장면 + 다음 첫 장면</button><button class="btn sm" data-a="unclip">클립 제거</button>':''}
+      </div>
+    </div></div></div>`}).join('');
+  renderQueue();
+}
+function renderQueue(){
+  const G=P().groups,n=[0,0,0];G.forEach(g=>n[g.status]++);const d=G.filter(g=>g.dirty).length;
+  $('#queue').innerHTML=G.length?`<span class="q s0">대기 ${n[0]}</span><span class="q s1">생성 중 ${n[1]}</span><span class="q s2">완료 ${n[2]}</span><span class="q">수정됨 ${d}</span>`+G.map((g,i)=>`<a class="q s${g.status}" href="#gc-${g.id}">G${i+1}${g.dirty?'*':''}</a>`).join(''):'';
+}
+function gOf(el){const c=el.closest('[data-gid]');return c?P().groups.find(g=>g.id===c.dataset.gid):null}
+function refreshCard(g){const gi=P().groups.indexOf(g),card=$('#gc-'+g.id);if(!card)return;card.classList.toggle('dirty',g.dirty);card.querySelector('pre').textContent=groupPrompt(g,gi);const hb=card.querySelector('.gc-h');let b=hb.querySelector('.badge.dirty');if(g.dirty&&!b){b=document.createElement('span');b.className='badge dirty';b.textContent='수정됨';hb.querySelector('select').before(b)}else if(!g.dirty&&b)b.remove();renderQueue()}
+$('#gcards').addEventListener('input',e=>{const k=e.target.dataset.k;if(!k)return;const g=gOf(e.target);if(!g)return;
+  if(k==='status'){g.status=+e.target.value}else{g[k]=e.target.value;g.dirty=true}
+  save();if(k==='scene'){renderVideo();renderBoard()}else refreshCard(g);if(k!=='desc')draw();else drawSoon()});
+let dsT;function drawSoon(){clearTimeout(dsT);dsT=setTimeout(draw,200)}
+$('#gcards').addEventListener('click',async e=>{
+  const g=gOf(e.target);if(!g)return;const gi=P().groups.indexOf(g);
+  const sk=e.target.closest('[data-sk]');if(sk){const id=sk.dataset.sk;g.skills=g.skills.includes(id)?g.skills.filter(x=>x!==id):[...g.skills,id];g.dirty=true;sk.classList.toggle('on');save();refreshCard(g);draw();return}
+  const slot=e.target.closest('[data-slot]');const a=e.target.closest('[data-a]');
+  if(a){const act=a.dataset.a;e.stopPropagation();
+    if(act==='apply'){g.dirty=false;save();refreshCard(g);seekGroup(g);play();return}
+    if(act==='copyp'){copy(groupPrompt(g,gi),'G'+(gi+1)+' 프롬프트를 복사했습니다');return}
+    if(act==='clr'){g[a.dataset.sl]=null;g.dirty=true;save();renderVideo();renderBoard();draw();return}
+    if(act==='prevlast'){const p=P().groups[gi-1];if(!p.last){toast('앞 그룹에 끝 장면이 없습니다');return}g.first=p.last;g.dirty=true;save();renderVideo();renderBoard();draw();toast('프레임 체인을 연결했습니다');return}
+    if(act==='clip'){S.clipTarget=g.id;$('#fClip').click();return}
+    if(act==='unclip'){URL.revokeObjectURL(S.clips[g.id]);delete S.clips[g.id];delete S.vids[g.id];renderVideo();draw();return}
+    if(act==='grabfirst'||act==='grablast'){try{const which=act==='grabfirst'?'first':'last';const img=await grabFrame(S.clips[g.id],which);g[which]=img;
+        if(which==='last'&&P().groups[gi+1]){P().groups[gi+1].first=img;P().groups[gi+1].dirty=true}save();renderVideo();renderBoard();draw();toast(which==='last'&&P().groups[gi+1]?`끝 프레임을 G${gi+2} 첫 장면으로 넘겼습니다`:'프레임을 추출했습니다')}catch(err){toast('프레임을 추출하지 못했습니다')}return}
+  }
+  if(slot){S.activeSlot={gid:g.id,sl:slot.dataset.slot};$$('.slot.act').forEach(x=>x.classList.remove('act'));slot.classList.add('act');$('#fSlot').click()}
+});
+$('#gcards').addEventListener('dragover',e=>{if(e.target.closest('[data-slot]'))e.preventDefault()});
+$('#gcards').addEventListener('drop',e=>{const slot=e.target.closest('[data-slot]');if(!slot)return;e.preventDefault();const g=gOf(slot),f=e.dataTransfer.files[0];if(g&&f)putSlot(g,slot.dataset.slot,f)});
+$('#fSlot').addEventListener('change',e=>{const f=e.target.files[0];e.target.value='';if(!f||!S.activeSlot)return;const g=P().groups.find(x=>x.id===S.activeSlot.gid);if(g)putSlot(g,S.activeSlot.sl,f)});
+$('#fClip').addEventListener('change',e=>{const f=e.target.files[0];e.target.value='';const g=P().groups.find(x=>x.id===S.clipTarget);if(f&&g)setClip(g,f)});
+document.addEventListener('paste',e=>{if(!S.activeSlot||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;const it=[...(e.clipboardData||{}).items||[]].find(i=>i.type.startsWith('image/'));if(!it)return;const g=P().groups.find(x=>x.id===S.activeSlot.gid);if(g){e.preventDefault();putSlot(g,S.activeSlot.sl,it.getAsFile())}});
+async function putSlot(g,sl,f){
+  try{if(f.type.startsWith('video/')){setClip(g,f);const img=await grabFrame(S.clips[g.id],sl);g[sl]=img}else{g[sl]=await fileToFrame(f)}
+    g.dirty=true;save();renderVideo();renderBoard();draw()}catch(e){toast('파일을 읽지 못했습니다')}
+}
+function setClip(g,f){if(S.clips[g.id])URL.revokeObjectURL(S.clips[g.id]);S.clips[g.id]=URL.createObjectURL(f);delete S.vids[g.id];renderVideo();draw();toast('클립을 올렸습니다. 끝 프레임을 추출해 체인을 이으세요')}
+function coverDraw(x,src,W,H,sc=1){const iw=src.videoWidth||src.naturalWidth||src.width,ih=src.videoHeight||src.naturalHeight||src.height;if(!iw||!ih)return;const r=Math.max(W/iw,H/ih)*sc,w=iw*r,h=ih*r;x.drawImage(src,(W-w)/2,(H-h)/2,w,h)}
+function toFrame(src){const c=document.createElement('canvas');c.width=540;c.height=960;const x=c.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,540,960);coverDraw(x,src,540,960);return c.toDataURL('image/jpeg',0.84)}
+function fileToFrame(f){return new Promise((res,rej)=>{const u=URL.createObjectURL(f),im=new Image();im.onload=()=>{res(toFrame(im));URL.revokeObjectURL(u)};im.onerror=rej;im.src=u})}
+function grabFrame(url,which){return new Promise((res,rej)=>{const v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='auto';v.src=url;
+  v.onloadedmetadata=()=>{v.currentTime=which==='first'?0.01:Math.max(0,v.duration-0.05)};v.onseeked=()=>{try{res(toFrame(v))}catch(e){rej(e)}};v.onerror=rej;setTimeout(()=>rej('timeout'),15000)})}
+$('#bApplyAll').addEventListener('click',()=>{const d=P().groups.filter(g=>g.dirty);if(!d.length){toast('수정된 그룹이 없습니다');return}
+  d.forEach(g=>{g.dirty=false;if(!isCode(g.scene))g.status=0});save();renderVideo();renderBoard();draw();
+  toast(`${d.length}개 그룹을 반영했습니다. 영상 장면 ${d.filter(g=>!isCode(g.scene)).length}개를 재생성 대기열에 올렸습니다`)});
+$('#bCopyDirty').addEventListener('click',()=>{const G=P().groups,d=G.filter(g=>(g.dirty||g.status===0)&&!isCode(g.scene));if(!d.length){toast('재생성할 영상 장면이 없습니다');return}copy(d.map(g=>groupPrompt(g,G.indexOf(g))).join('\n\n----------\n\n'),`${d.length}개 그룹 프롬프트를 복사했습니다`)});
+$('#bCopyAll').addEventListener('click',()=>{const G=P().groups;if(!G.length)return;copy(G.map((g,i)=>groupPrompt(g,i)).join('\n\n----------\n\n'),'전체 프롬프트를 복사했습니다')});
+$('#bAutoChain').addEventListener('click',()=>{const G=P().groups;let n=0;for(let i=1;i<G.length;i++){if(G[i-1].last&&G[i].first!==G[i-1].last){G[i].first=G[i-1].last;G[i].dirty=true;n++}}save();renderVideo();renderBoard();draw();toast(n?`${n}곳을 연결했습니다`:'연결할 끝 장면이 없거나 이미 모두 연결되어 있습니다')});
+
+/* ---------- TAB 4: board ---------- */
+function renderBoard(){
+  const G=P().groups,el=$('#board');if(!G.length){el.innerHTML='<p class="note">그룹이 없습니다.</p>';$('#boardSum').textContent='';return}
+  let ok=0,br=0;
+  el.innerHTML=G.map((g,i)=>{let link='';if(i>0){const p=G[i-1],c=p.last&&g.first&&p.last===g.first;if(c)ok++;else br++;link=`<div class="link ${c?'ok':'br'}"><div class="ln"></div>${c?'체인':'끊김'}</div>`}
+    const sc=(SCENES.find(s=>s[0]===g.scene)||SCENES[0])[1];
+    return `<div class="bc-wrap">${link}<div class="bcard" draggable="true" data-bi="${i}"><div class="th"><div style="${g.first?`background-image:url(${g.first})`:''}">${g.first?'':'첫'}</div><div style="${g.last?`background-image:url(${g.last})`:''}">${g.last?'':'끝'}</div></div>
+      <div class="t"><span>G${i+1} · ${esc(sc)}</span><span class="note">${groupDur(g).toFixed(1)}s</span></div><div class="d">${esc(g.cuts.map(c=>c.t).join(' '))}</div>
+      <select data-bm="${i}"><option value="">모델 미지정</option>${opts(P().models,g.model)}</select></div></div>`}).join('');
+  $('#boardSum').textContent=`총 ${G.length}개 그룹 · 약 ${fmt(duration())} · 체인 연결 ${ok} / 끊김 ${br} · 코드 렌더 ${G.filter(g=>isCode(g.scene)).length}개 (생성 비용 없음)`;
+}
+let dragI=null;
+$('#board').addEventListener('dragstart',e=>{const c=e.target.closest('.bcard');if(!c)return;dragI=+c.dataset.bi;c.classList.add('drag');e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',String(dragI))}catch(_){}});
+$('#board').addEventListener('dragend',()=>{$$('.bcard').forEach(c=>c.classList.remove('drag','over'))});
+$('#board').addEventListener('dragover',e=>{const c=e.target.closest('.bcard');if(!c)return;e.preventDefault();$$('.bcard.over').forEach(x=>x.classList.remove('over'));c.classList.add('over')});
+$('#board').addEventListener('drop',e=>{const c=e.target.closest('.bcard');if(!c||dragI==null)return;e.preventDefault();const to=+c.dataset.bi,G=P().groups;if(to===dragI)return;const[g]=G.splice(dragI,1);G.splice(to,0,g);dragI=null;
+  // keep timing order: re-time if not tapped
+  autoTime();save();renderAll();toast('순서를 바꿨습니다. 자막 싱크를 다시 확인하세요')});
+$('#board').addEventListener('change',e=>{const i=e.target.dataset.bm;if(i==null)return;const g=P().groups[+i];g.model=e.target.value;g.dirty=true;save();renderVideo()});
+$('#board').addEventListener('dblclick',e=>{const c=e.target.closest('.bcard');if(!c)return;const g=P().groups[+c.dataset.bi];switchTab('t3');setTimeout(()=>{const el=$('#gc-'+g.id);el&&el.scrollIntoView({behavior:'smooth',block:'start'})},50)});
+
+/* ---------- TAB 5: kit ---------- */
+function renderKit(){$$('[data-kit]').forEach(i=>i.value=P().kit[i.dataset.kit]||'');$('#kitOut').textContent=kitText();$('#models').value=P().models.join('\n')}
+document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.kit;if(!k)return;P().kit[k]=e.target.value;$('#kitOut').textContent=kitText();P().groups.forEach(g=>{if(!isCode(g.scene))g.dirty=true});save()});
+$('#models').addEventListener('change',()=>{P().models=$('#models').value.split('\n').map(s=>s.trim()).filter(Boolean);save();renderVideo();renderBoard()});
+$('#bCopyKit').addEventListener('click',()=>copy(kitText(),'컨셉 키트를 복사했습니다'));
+
+/* ---------- tabs ---------- */
+function switchTab(id){$$('.tab').forEach(t=>t.classList.toggle('on',t.dataset.tab===id));$$('.tp').forEach(p=>p.classList.toggle('on',p.id===id));if(id==='t2')drawWave();try{sessionStorage.setItem(LS+'tab',id)}catch(e){}}
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{switchTab(t.dataset.tab);if(t.dataset.tab==='t3'||t.dataset.tab==='t4'){renderVideo();renderBoard()}}));
+
+/* ---------- player ---------- */
+const cv=$('#cv'),cx=cv.getContext('2d'),W=540,H=960;
+function img(src){if(!src)return null;let i=S.imgs[src];if(!i){i=new Image();i.onload=()=>draw();i.src=src;S.imgs[src]=i}return i.complete&&i.naturalWidth?i:null}
+function vid(gid){const u=S.clips[gid];if(!u)return null;let v=S.vids[gid];if(!v){v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='auto';v.src=u;v.addEventListener('seeked',()=>{if(!S.playing)draw()});v.addEventListener('loadeddata',()=>draw());S.vids[gid]=v}return v}
+const PAL=['#2f5bea','#d33c3c','#2e9d4f','#d9822b','#7b4fd6','#1d8a99','#b8397a'];
+function wrapLines(x,t,maxW){const out=[];t.split('\n').forEach(par=>{let line='';for(const ch of par.split(/(\s+)/)){const tst=line+ch;if(x.measureText(tst).width>maxW&&line.trim()){out.push(line.trim());line=ch.trimStart()}else line=tst}if(line.trim())out.push(line.trim())});return out}
+function rr(x,X,Y,w,h,r){x.beginPath();x.roundRect?x.roundRect(X,Y,w,h,r):x.rect(X,Y,w,h)}
+const ease=p=>1-Math.pow(1-Math.min(1,Math.max(0,p)),3);
+function drawCode(g,gi,txt,p){
+  const k=g.scene;const F='"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  const bg={text:'#151515',motionFont:'#1b1b2b',icon:PAL[gi%PAL.length],search:'#f4f4f4',typing:'#fafafa',ai:'#f1f0eb',compare:'#222',terminal:'#0d0f0d',board:'#1f4a3a',capture:'#222',map:'#e9efe5',comment:'#f6f6f6'}[k]||'#222';
+  cx.fillStyle=bg;cx.fillRect(0,0,W,H);
+  const T=p;cx.textBaseline='middle';
+  if(k==='text'||k==='motionFont'){const s=k==='motionFont'?0.7+0.3*ease(T*3):1;cx.save();cx.translate(W/2,H*0.42);cx.scale(s,s);cx.fillStyle='#fff';cx.font=`900 64px ${F}`;cx.textAlign='center';const ls=wrapLines(cx,txt,W-90);ls.forEach((l,i)=>cx.fillText(l,0,(i-(ls.length-1)/2)*80));cx.restore()}
+  else if(k==='icon'){cx.fillStyle='rgba(255,255,255,.95)';cx.beginPath();cx.arc(W/2,H*0.4,130*ease(T*3),0,7);cx.fill();cx.fillStyle=bg;cx.font=`900 140px ${F}`;cx.textAlign='center';cx.fillText((txt.trim()[0]||'?'),W/2,H*0.4+6)}
+  else if(k==='search'||k==='typing'){const n=Math.floor(txt.length*Math.min(1,T*2.2));cx.fillStyle='#fff';rr(cx,40,H*0.38,W-80,90,45);cx.fill();cx.strokeStyle='#bbb';cx.lineWidth=3;cx.stroke();cx.strokeStyle='#555';cx.lineWidth=6;cx.beginPath();cx.arc(100,H*0.38+42,18,0,7);cx.stroke();cx.beginPath();cx.moveTo(113,H*0.38+56);cx.lineTo(128,H*0.38+71);cx.stroke();
+    cx.fillStyle='#222';cx.font=`600 34px ${F}`;cx.textAlign='left';const s=txt.slice(0,n);let shown=s;while(cx.measureText(shown).width>W-220&&shown.length)shown=shown.slice(1);cx.fillText(shown+((Date.now()/400|0)%2?'|':''),150,H*0.38+45)}
+  else if(k==='ai'){const n=Math.floor(txt.length*Math.min(1,T*1.8));cx.font=`600 30px ${F}`;cx.textAlign='left';cx.fillStyle='#2f5bea';rr(cx,W-330,H*0.22,290,70,26);cx.fill();cx.fillStyle='#fff';cx.fillText('질문할게요',W-305,H*0.22+36);
+    const ls=wrapLines(cx,txt.slice(0,n),W-160);const bh=Math.max(80,ls.length*44+36);cx.fillStyle='#fff';rr(cx,40,H*0.33,W-100,bh,26);cx.fill();cx.fillStyle='#222';ls.forEach((l,i)=>cx.fillText(l,70,H*0.33+40+i*44));cx.fillStyle='#d9822b';cx.beginPath();cx.arc(40,H*0.33-24,16,0,7);cx.fill()}
+  else if(k==='compare'){const parts=txt.split(/\s*(?:\||vs\.?|VS)\s*/);const A=parts[0]||'A',B=parts[1]||'B';const sl=ease(T*2.5);cx.fillStyle='#2f5bea';cx.fillRect(0,0,W/2*sl,H);cx.fillStyle='#d33c3c';cx.fillRect(W-W/2*sl,0,W/2*sl,H);cx.fillStyle='#fff';cx.font=`900 44px ${F}`;cx.textAlign='center';
+    wrapLines(cx,A,W/2-40).forEach((l,i)=>cx.fillText(l,W/4,H*0.4+i*54));wrapLines(cx,B,W/2-40).forEach((l,i)=>cx.fillText(l,W*3/4,H*0.4+i*54));cx.fillStyle='#111';cx.beginPath();cx.arc(W/2,H*0.4,46,0,7);cx.fill();cx.fillStyle='#fff';cx.font=`900 36px ${F}`;cx.fillText('VS',W/2,H*0.4+2)}
+  else if(k==='terminal'){cx.fillStyle='#1d1f1d';rr(cx,30,H*0.25,W-60,H*0.36,16);cx.fill();['#ff5f57','#febc2e','#28c840'].forEach((c,i)=>{cx.fillStyle=c;cx.beginPath();cx.arc(62+i*28,H*0.25+28,9,0,7);cx.fill()});
+    const n=Math.floor(txt.length*Math.min(1,T*2));cx.fillStyle='#43e06a';cx.font='600 28px ui-monospace,Menlo,monospace';cx.textAlign='left';wrapLines(cx,'$ '+txt.slice(0,n)+((Date.now()/400|0)%2?'_':''),W-130).forEach((l,i)=>cx.fillText(l,60,H*0.25+80+i*40))}
+  else if(k==='board'){cx.strokeStyle='#8a6a3a';cx.lineWidth=18;cx.strokeRect(24,H*0.18,W-48,H*0.5);cx.fillStyle='#f4f1e6';cx.font=`700 36px ${F}`;cx.textAlign='left';const items=txt.split(/\n|·|•/).map(s=>s.trim()).filter(Boolean);
+    items.forEach((it,i)=>{if(T*items.length*1.5<i)return;wrapLines(cx,'– '+it,W-130).forEach((l,j)=>cx.fillText(l,64,H*0.18+70+i*90+j*44))})}
+  else if(k==='comment'){cx.fillStyle='#fff';rr(cx,30,H*0.32,W-60,220,24);cx.fill();cx.fillStyle=PAL[gi%PAL.length];cx.beginPath();cx.arc(84,H*0.32+60,30,0,7);cx.fill();cx.fillStyle='#111';cx.font=`800 28px ${F}`;cx.textAlign='left';cx.fillText('@시청자',130,H*0.32+50);cx.fillStyle='#888';cx.font=`500 22px ${F}`;cx.fillText('방금 전',130,H*0.32+80);
+    cx.fillStyle='#222';cx.font=`600 30px ${F}`;wrapLines(cx,txt,W-130).slice(0,3).forEach((l,i)=>cx.fillText(l,64,H*0.32+130+i*40))}
+  else if(k==='map'){cx.strokeStyle='#cfd8c8';cx.lineWidth=2;for(let i=0;i<W;i+=60){cx.beginPath();cx.moveTo(i,0);cx.lineTo(i,H);cx.stroke()}for(let i=0;i<H;i+=60){cx.beginPath();cx.moveTo(0,i);cx.lineTo(W,i);cx.stroke()}cx.strokeStyle='#f2c94c';cx.lineWidth=14;cx.beginPath();cx.moveTo(-10,H*0.6);cx.quadraticCurveTo(W*0.5,H*0.3,W+10,H*0.5);cx.stroke();
+    const y=H*0.4-30*(1-ease(T*3));cx.fillStyle='#d33c3c';cx.beginPath();cx.arc(W/2,y,28,Math.PI,0);cx.lineTo(W/2,y+56);cx.closePath();cx.fill();cx.fillStyle='#fff';cx.beginPath();cx.arc(W/2,y,10,0,7);cx.fill();
+    cx.fillStyle='#1c1b18';cx.font=`800 34px ${F}`;cx.textAlign='center';cx.fillText(txt.slice(0,18),W/2,y+100)}
+  else if(k==='capture'){const im=img(g.first);if(im){cx.fillStyle='#111';cx.fillRect(0,0,W,H);const s=1+0.08*T;cx.save();cx.translate(W/2,H/2);cx.scale(s,s);cx.translate(-W/2,-H/2);coverDraw(cx,im,W,H);cx.restore()}else{cx.fillStyle='#aaa';cx.font=`700 30px ${F}`;cx.textAlign='center';cx.fillText('첫 장면 칸에 캡처 이미지를',W/2,H*0.42);cx.fillText('붙여넣으세요',W/2,H*0.42+44)}}
+}
+function draw(){
+  const tl=timeline(),D=duration(),t=Math.min(S.t,D);
+  cx.setTransform(1,0,0,1,0,0);cx.fillStyle='#111';cx.fillRect(0,0,W,H);
+  const F='"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Noto Sans KR",sans-serif';
+  if(!tl.length){cx.fillStyle='#777';cx.font=`700 30px ${F}`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText('대본을 분할하면',W/2,H/2-24);cx.fillText('여기서 미리보기가 됩니다',W/2,H/2+24);updTC(t,D);return}
+  let cur=tl.findIndex(x=>t>=x.s&&t<x.e);if(cur<0)cur=t<tl[0].s?0:tl.length-1;const c=tl[cur],g=c.g,gi=c.gi,spans=groupSpans(tl),sp=spans[g.id],gp=(t-sp.s)/Math.max(0.01,sp.e-sp.s);
+  const cutStart=c.s;const sinceCut=t-cutStart;
+  let punch=1;if(g.skills.includes('crash')&&sinceCut<0.35)punch=1+0.35*(1-ease(sinceCut/0.35));else if(g.skills.includes('spike')&&sinceCut<0.25)punch=1+0.12*(1-ease(sinceCut/0.25));
+  cx.save();cx.translate(W/2,H/2);cx.scale(punch,punch);cx.translate(-W/2,-H/2);
+  if(isCode(g.scene)){drawCode(g,gi,g.desc||g.cuts.map(x=>x.t).join(' '),gp)}
+  else{
+    const v=vid(g.id);let drawn=false;
+    if(v&&v.readyState>=2){const local=t-sp.s;if(S.playing){if(local<v.duration-0.05){if(v.paused||Math.abs(v.currentTime-local)>0.35){v.currentTime=local;v.play().catch(()=>{})}}else if(!v.paused)v.pause()}else{const want=Math.min(local,v.duration-0.05);if(Math.abs(v.currentTime-want)>0.04)v.currentTime=want}
+      Object.entries(S.vids).forEach(([id,o])=>{if(id!==g.id&&!o.paused)o.pause()});coverDraw(cx,v,W,H);drawn=true}
+    if(!drawn){const a=img(g.first),b=img(g.last);
+      if(a&&b){coverDraw(cx,a,W,H,1+0.04*gp);cx.globalAlpha=ease(Math.max(0,(gp-0.55)/0.45));coverDraw(cx,b,W,H);cx.globalAlpha=1;drawn=true}
+      else if(a||b){coverDraw(cx,a||b,W,H,1+0.06*gp);drawn=true}}
+    if(!drawn){const col=PAL[gi%PAL.length];const gr=cx.createLinearGradient(0,0,W,H);gr.addColorStop(0,col);gr.addColorStop(1,'#111');cx.fillStyle=gr;cx.fillRect(0,0,W,H);cx.fillStyle='rgba(255,255,255,.85)';cx.font=`800 30px ${F}`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText((SCENES.find(s=>s[0]===g.scene)||SCENES[0])[1],W/2,H*0.3);cx.font=`500 22px ${F}`;cx.fillStyle='rgba(255,255,255,.6)';cx.fillText('첫 장면 / 클립을 넣으면 여기에 표시',W/2,H*0.3+40)}
+  }
+  cx.restore();
+  // subscribe overlay
+  if(g.skills.includes('sub')&&sp.e-t<1.2){const p=ease((1.2-(sp.e-t))/0.3);cx.save();cx.globalAlpha=p;cx.fillStyle='#e62117';rr(cx,W/2-110,H*0.8,220,64,14);cx.fill();cx.fillStyle='#fff';cx.font=`800 30px ${F}`;cx.textAlign='center';cx.textBaseline='middle';cx.fillText('구독',W/2,H*0.8+33);cx.restore()}
+  // subtitle
+  if($('#oSub').checked&&t>=c.s-0.001){const anim=g.anim==='auto'?['pop','move','zoom','fade','fly','flip'][(gi*3+c.ci)%6]:g.anim;const p=ease(sinceCut/0.22);
+    cx.save();cx.translate(W/2,H*0.66);let a=1;
+    if(anim==='pop')cx.scale(0.6+0.4*p+0.08*Math.sin(Math.min(1,sinceCut/0.22)*Math.PI),0.6+0.4*p+0.08*Math.sin(Math.min(1,sinceCut/0.22)*Math.PI));
+    else if(anim==='fade')a=p;else if(anim==='move')cx.translate(0,40*(1-p));else if(anim==='zoom'){const s=1.5-0.5*p;cx.scale(s,s);a=p}
+    else if(anim==='fly')cx.translate(-W*(1-p),0);else if(anim==='roll'){cx.translate(-W*0.6*(1-p),0);cx.rotate(-Math.PI*2*(1-p))}else if(anim==='flip')cx.scale(1,Math.max(0.02,p));
+    cx.globalAlpha=a;let fs=62;cx.font=`900 ${fs}px ${F}`;while(cx.measureText(c.c.t).width>W-50&&fs>30){fs-=2;cx.font=`900 ${fs}px ${F}`}
+    cx.textAlign='center';cx.textBaseline='middle';cx.lineJoin='round';cx.lineWidth=12;cx.strokeStyle='#000';cx.strokeText(c.c.t,0,0);cx.fillStyle=c.ci===0&&gi===0?'#ffe14d':'#fff';cx.fillText(c.c.t,0,0);cx.restore()}
+  if($('#oLabel').checked){cx.font=`700 20px ${F}`;cx.textAlign='left';cx.textBaseline='top';const lb=`G${gi+1} · ${(SCENES.find(s=>s[0]===g.scene)||SCENES[0])[1]}${g.dirty?' · 수정됨':''}`;const w=cx.measureText(lb).width+20;cx.fillStyle='rgba(0,0,0,.55)';rr(cx,14,14,w,32,8);cx.fill();cx.fillStyle='#fff';cx.fillText(lb,24,20)}
+  if($('#oSafe').checked){cx.strokeStyle='rgba(255,225,77,.8)';cx.setLineDash([10,8]);cx.lineWidth=2;cx.strokeRect(36,H*0.12,W-72-60,H*0.70);cx.setLineDash([])}
+  updTC(t,D);
+}
+function updTC(t,D){$('#tc').textContent=`${fmt(t)} / ${fmt(D)}`;if(!S.scrubbing)$('#scrub').value=Math.round(t/Math.max(0.01,D)*1000)}
+function loop(){if(!S.playing)return;const a=$('#narr');if(S.narr&&!a.paused&&!a.ended&&a.currentTime>=S.t-0.05){S.t=a.currentTime;S.t0=performance.now()-S.t*1000}else S.t=(performance.now()-S.t0)/1000;
+  if(S.t>=duration()){if(S.tap){endTap();return}if(S.rendering){finishRender();return}stop();S.t=duration();draw();return}draw();requestAnimationFrame(loop)}
+function play(){if(!P().groups.length)return;if(S.t>=duration()-0.05)S.t=0;S.playing=true;$('#bPlay').textContent='일시정지';const a=$('#narr');S.t0=performance.now()-S.t*1000;if(S.narr&&S.t<S.narr.dur){a.currentTime=S.t;a.play().catch(()=>{})}loop()}
+function stop(){S.playing=false;$('#bPlay').textContent='재생';const a=$('#narr');try{a.pause()}catch(e){}Object.values(S.vids).forEach(v=>{try{v.pause()}catch(e){}})}
+function seekGroup(g){const sp=groupSpans(timeline())[g.id];if(sp){S.t=sp.s;draw()}}
+$('#bPlay').addEventListener('click',()=>S.playing?stop():play());
+$('#scrub').addEventListener('input',e=>{S.scrubbing=true;const D=duration();S.t=+e.target.value/1000*D;if(S.narr)$('#narr').currentTime=S.t;if(S.playing&&!S.narr)S.t0=performance.now()-S.t*1000;draw()});
+$('#scrub').addEventListener('change',()=>{S.scrubbing=false});
+['oLabel','oSafe','oSub'].forEach(id=>$('#'+id).addEventListener('change',draw));
+
+/* ---------- render ---------- */
+let mediaSrc=null,mediaDest=null;
+$('#bRender').addEventListener('click',()=>{
+  if(S.rendering){finishRender();return}if(!P().groups.length){toast('렌더할 컷이 없습니다');return}
+  if(!window.MediaRecorder||!cv.captureStream){toast('이 브라우저는 미리보기 렌더를 지원하지 않습니다. Claude 지시문으로 로컬에서 렌더하세요');return}
+  stop();const vs=cv.captureStream(30),tracks=[...vs.getVideoTracks()];
+  if(S.narr){try{const ac=actx();if(ac.state==='suspended')ac.resume();if(!mediaSrc){mediaSrc=ac.createMediaElementSource($('#narr'));mediaDest=ac.createMediaStreamDestination();mediaSrc.connect(ac.destination);mediaSrc.connect(mediaDest)}tracks.push(...mediaDest.stream.getAudioTracks())}catch(e){}}
+  const mt=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].find(m=>MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m))||'';
+  let rec;try{rec=new MediaRecorder(new MediaStream(tracks),mt?{mimeType:mt,videoBitsPerSecond:6e6}:undefined)}catch(e){toast('렌더를 시작하지 못했습니다');return}
+  const ch=[];rec.ondataavailable=e=>e.data.size&&ch.push(e.data);
+  rec.onstop=()=>{const type=rec.mimeType||'video/webm',blob=new Blob(ch,{type}),ext=type.includes('mp4')?'mp4':'webm',url=URL.createObjectURL(blob),name=(P().name||'shorts')+'.'+ext;
+    $('#renderOut').innerHTML=`<b>렌더 완료</b> · ${(blob.size/1048576).toFixed(1)}MB · 540×960<video controls src="${url}"></video><div class="row" style="margin-top:6px"><a class="btn sm pri" href="${url}" download="${esc(name)}">다운로드</a></div>`;toast('렌더가 끝났습니다')};
+  S.recorder=rec;S.rendering=true;S.t=0;$('#bRender').textContent='렌더 중단';$('#renderOut').innerHTML='<span class="rec-dot"></span> 실시간 렌더 중… (영상 길이만큼 걸립니다)';rec.start(200);play();
+});
+function finishRender(){S.rendering=false;stop();$('#bRender').textContent='최종 렌더 (WebM)';try{S.recorder.state!=='inactive'&&S.recorder.stop()}catch(e){}}
+
+/* ---------- SRT / Claude brief ---------- */
+function srt(){return timeline().map((x,i)=>`${i+1}\n${srtT(x.s)} --> ${srtT(Math.max(x.s+0.2,x.e-0.02))}\n${x.c.t}\n`).join('\n')}
+$('#bSrt').addEventListener('click',()=>{if(!allCuts().length){toast('컷이 없습니다');return}download(new Blob([srt()],{type:'text/plain'}),(P().name||'shorts')+'.srt')});
+$('#bSrtCopy').addEventListener('click',()=>{if(!allCuts().length){toast('컷이 없습니다');return}copy(srt(),'SRT를 복사했습니다')});
+function leanJSON(){const p=JSON.parse(JSON.stringify(P()));p.groups.forEach(g=>{g.first=g.first?'(이미지 있음)':null;g.last=g.last?'(이미지 있음)':null});return p}
+$('#bClaude').addEventListener('click',()=>{
+  const p=P();if(!p.groups.length){toast('컷이 없습니다');return}
+  const brief=`# 쇼츠 제작 지시 — ${p.name}
+아래 프로젝트(huntbae.com SHORTS STUDIO에서 내보냄)를 로컬 파이프라인(Python + ffmpeg)으로 완성해줘.
+
+## 작업 순서
+1. 나레이션 파일: ./narration.wav (스튜디오에서 [WAV 저장]한 파일)
+2. 음성인식(Whisper 등)으로 단어 단위 타임코드를 뽑아 아래 컷 자막과 정렬하고, 정렬된 SRT를 만들어줘. 현재 싱크 방식: ${p.sync==='tap'?'탭 싱크(사람이 맞춤 — 그대로 우선 사용)':p.sync==='auto'?'발화 구간 비례 추정':'글자 수 기준 예상'}.
+3. 그룹별 영상: ./clips/G{번호}.mp4 를 사용. 없는 그룹 중 "코드 렌더" 장면은 템플릿으로 직접 렌더하고, 나머지는 첫 장면 이미지(./frames/G{번호}_first.jpg)로 정지 화면 + 느린 줌 처리.
+4. 각 그룹 길이는 아래 컷 타임라인에 맞추고, 클립이 짧으면 마지막 프레임을 유지.
+5. 자막: 하단 34% 위치, 굵은 흰 글씨 + 검은 외곽선, 컷 단위 등장 애니메이션은 그룹 설정 참고.
+6. 편집 노트(크래시줌·SFX·구독 오버레이)를 적용하고 1080×1920 H.264 MP4로 출력.
+
+## 컷 타임라인 (초)
+${timeline().map((x,i)=>`${i+1}. G${x.gi+1} ${x.s.toFixed(2)}–${x.e.toFixed(2)} "${x.c.t}"`).join('\n')}
+
+## 그룹별 프롬프트
+${p.groups.map((g,i)=>groupPrompt(g,i)).join('\n\n')}
+
+## 프로젝트 JSON (이미지는 생략 표시)
+\`\`\`json
+${JSON.stringify(leanJSON(),null,1)}
+\`\`\``;
+  copy(brief,'Claude 지시문을 복사했습니다');
+});
+
+/* ---------- project actions ---------- */
+$('#projName').addEventListener('input',e=>{P().name=e.target.value||'이름 없음';save()});
+$('#projSel').addEventListener('change',e=>{if(e.target.value&&e.target.value!==P().id)loadProject(e.target.value)});
+$('#bNew').addEventListener('click',()=>{S.proj=newProject('새 쇼츠 '+new Date().toLocaleDateString('ko-KR'));resetMedia();save();renderAll();toast('새 프로젝트를 만들었습니다')});
+$('#bDup').addEventListener('click',()=>{const o=P(),n=newProject(o.name+' (포맷 복제)');n.kit={...o.kit};n.models=[...o.models];n.minC=o.minC;n.maxC=o.maxC;
+  n.template=o.groups.map(g=>({scene:g.scene,anim:g.anim,skills:[...g.skills],model:g.model,sfx:g.sfx,sfxLv:g.sfxLv}));S.proj=n;resetMedia();save();renderAll();toast('컨셉 키트와 장면 구성을 복제했습니다. 새 대본을 분할하면 같은 순서로 장면이 입혀집니다')});
+$('#bExport').addEventListener('click',()=>download(new Blob([JSON.stringify(P(),null,1)],{type:'application/json'}),(P().name||'shorts')+'.json'));
+$('#fImport').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;try{const p=JSON.parse(await f.text());if(!Array.isArray(p.groups))throw 0;p.id=uid();S.proj=Object.assign(newProject(),p);S.proj.kit=Object.assign({...DEF_KIT},p.kit||{});resetMedia();save();renderAll();toast('프로젝트를 불러왔습니다')}catch(err){toast('올바른 프로젝트 JSON이 아닙니다')}});
+let delArm=false;$('#bDel').addEventListener('click',()=>{if(!delArm){delArm=true;$('#bDel').textContent='한 번 더 누르면 삭제';setTimeout(()=>{delArm=false;$('#bDel').textContent='삭제'},3000);return}
+  delArm=false;$('#bDel').textContent='삭제';lsDel('p.'+P().id);let idx=(lsGet('index')||[]).filter(x=>x.id!==P().id);lsSet('index',idx);if(idx.length&&loadProject(idx[0].id)){}else{S.proj=newProject();resetMedia();save();renderAll()}toast('프로젝트를 삭제했습니다')});
+// apply format template when splitting a duplicated project
+const _split=splitScript;
+splitScript=function(t,a,b){const gs=_split(t,a,b),tp=P().template;if(tp&&tp.length)gs.forEach((g,i)=>{const s=tp[i%tp.length];Object.assign(g,{scene:s.scene,anim:s.anim,skills:[...s.skills],model:s.model,sfx:s.sfx,sfxLv:s.sfxLv})});return gs};
+
+function renderAll(){$('#projName').value=P().name;$('#script').value=P().script||'';$('#minC').value=P().minC;$('#maxC').value=P().maxC;
+  if(P().groups.length&&needsTime())autoTime();renderProjSel();renderCuts();renderTakes();renderSrc();renderSync();renderVideo();renderBoard();renderKit();draw()}
+
+/* ---------- boot ---------- */
+const SAMPLE=`전기차 배터리, 사실 겨울에 약해지는 이유가 따로 있습니다.
+
+배터리 안의 리튬 이온은 추위에 느려집니다. 그래서 같은 충전량이어도 꺼낼 수 있는 힘이 줄어듭니다.
+
+해결법은 간단합니다. 출발 전에 충전기에 꽂은 채로 예열하세요.
+
+끝까지 보셨다면 구독으로 다음 편도 받아보세요.`;
+(function boot(){
+  const last=lsGet('last');if(!(last&&loadProject(last))){S.proj=newProject('샘플 · 겨울철 전기차 배터리');S.proj.script=SAMPLE;S.proj.groups=splitScript(SAMPLE,8,12);
+    const G=S.proj.groups;if(G[0]){G[0].scene='motionFont';G[0].skills=['crash']}if(G[1]){G[1].scene='oneTake';G[1].skills=['holo','lock'];G[1].desc='A clay battery cell on a snowy table slowly frosts over; tiny glowing ions inside move slower and slower'}
+    if(G[2]){G[2].scene='board';G[2].desc='출발 전 예열\n충전기 연결 상태 유지\n주행거리 손실 감소'}if(G[3]){G[3].scene='comment';G[3].skills=['sub']}
+    autoTime();save();renderAll()}
+  try{const tb=sessionStorage.getItem(LS+'tab');if(tb)switchTab(tb)}catch(e){}
+  document.fonts&&document.fonts.ready.then(draw);
+})();
+})();
+</script>
+</body>
+</html>
