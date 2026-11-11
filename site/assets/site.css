@@ -149,7 +149,7 @@ a.card:hover,.card.hov:hover{transform:translateY(-4px);box-shadow:var(--shadow)
 /* footer */
 html.dz body{display:flex;flex-direction:column}
 html.dz body>main,html.dz body>section:last-of-type{flex:0 0 auto}
-html.dz .foot{margin-top:auto}
+html.dz .foot{display:none}
 .foot{background:#0a1426;color:#8c97ab;font-size:13px;padding:40px 0}
 .foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .foot a{color:#c9d1de}
