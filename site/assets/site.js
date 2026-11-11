@@ -9,6 +9,10 @@
     diag:'https://forms.gle/ULVEKNKtoLuwAPKq9', member:'https://forms.gle/GNgbYhEbgsZnZ8yV9', mail:'mailto:huntbae@huntbae.com'
   };
   window.HB={LINKS:LINKS,SITE:SITE};
+  // Google Sites 삽입 블록은 너비에 비례해 높이가 정해지므로, 데스크톱에서는 1154px 기준으로 확대·축소한다
+  var embedded=(function(){try{return window.self!==window.top}catch(e){return true}})();
+  function fit(){var d=document.documentElement,w=window.innerWidth;if(embedded&&w>760){d.style.zoom=(w/1154).toFixed(4);d.classList.add('dz')}else{d.style.zoom='';d.classList.remove('dz')}}
+  fit();window.addEventListener('resize',fit);
   var NAMES={home:'홈',services:'서비스',gov:'정부지원사업',areas:'업무 영역',talks:'강연·자문',community:'커뮤니티',library:'자료실',mobility:'모빌리티',about:'About·문의'};
 
   function topbar(){

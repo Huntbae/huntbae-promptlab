@@ -65,6 +65,8 @@
 .outl li{margin:0 0 14px;padding-left:4px}
 .outl li a{font-size:12.5px;color:var(--mute);text-decoration:underline;text-underline-offset:2px}
 .src{font-size:12px;color:var(--mute);word-break:break-all}
+html.dz .panels{height:1900px;overflow-y:auto;overscroll-behavior:contain;padding-right:6px}
+.gcat{display:none}.gcat.on{display:block}
 </style>
 </head>
 <body data-page="gov">
@@ -95,6 +97,7 @@
     <button class="tab" data-tab="consult">컨설팅 안내</button>
   </nav>
 
+  <div class="panels" id="panels">
   <!-- LIVE -->
   <section class="panel on" id="p-live" style="padding:0">
     <div class="filters">
@@ -164,6 +167,7 @@
       </div>
     </div>
   </section>
+  </div>
 </main>
 
 <footer class="foot" data-footer></footer>
@@ -234,7 +238,7 @@ $('#fw').addEventListener('change',function(e){set('week',e.target.checked)});
 $('#fa').addEventListener('change',function(e){set('always',e.target.checked)});
 $('#fn').addEventListener('change',function(e){set('fresh',e.target.checked)});
 $('#fc').addEventListener('click',function(e){var b=e.target.closest('[data-c]');if(b)set('cat',b.dataset.c)});
-$('#pager').addEventListener('click',function(e){var b=e.target.closest('[data-p]');if(b&&!b.disabled){S.page=+b.dataset.p;render();$('#p-live').scrollIntoView({behavior:'smooth'})}});
+$('#pager').addEventListener('click',function(e){var b=e.target.closest('[data-p]');if(b&&!b.disabled){S.page=+b.dataset.p;render();var pn=$('#panels');if(document.documentElement.classList.contains('dz'))pn.scrollTop=0;else $('#p-live').scrollIntoView({behavior:'smooth'})}});
 $('#freset').addEventListener('click',function(){S={q:'',cat:'',reg:'',lvl:'',src:'',sort:'dday',week:false,always:true,fresh:false,page:1};$('#fq').value='';['#fr','#fl','#fs'].forEach(function(s){$(s).value=''});$('#fo').value='dday';$('#fw').checked=false;$('#fa').checked=true;$('#fn').checked=false;render()});
 
 fetch('data/gov-live.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
@@ -254,8 +258,9 @@ fetch('data/gov-curated.json',{cache:'no-cache'}).then(function(r){return r.json
   var P=c.programs||[];$('#kGuide').textContent=P.length;$('#tGuide').textContent=P.length;
   var by={};P.forEach(function(p){(by[p.category]=by[p.category]||[]).push(p)});
   var keys=Object.keys(GCATS).filter(function(k){return by[k]}).concat(Object.keys(by).filter(function(k){return !GCATS[k]}));
-  $('#gnav').innerHTML=keys.map(function(k){return '<a class="chip" href="#g-'+k+'">'+esc(GCATS[k]||k)+'<span class="n">'+by[k].length+'</span></a>'}).join('');
-  $('#gbody').innerHTML=keys.map(function(k){return '<div class="gcat" id="g-'+k+'"><h3>'+esc(GCATS[k]||k)+' <small>'+by[k].length+'개 사업</small></h3><div class="grid g3">'+by[k].map(function(p){
+  $('#gnav').innerHTML=keys.map(function(k,i){return '<button class="chip'+(i?'':' on')+'" data-g="'+k+'">'+esc(GCATS[k]||k)+'<span class="n">'+by[k].length+'</span></button>'}).join('');
+  $('#gnav').addEventListener('click',function(e){var b=e.target.closest('[data-g]');if(!b)return;[].forEach.call(document.querySelectorAll('#gnav .chip'),function(x){x.classList.toggle('on',x===b)});[].forEach.call(document.querySelectorAll('.gcat'),function(x){x.classList.toggle('on',x.id==='g-'+b.dataset.g)});$('#panels').scrollTop=0});
+  $('#gbody').innerHTML=keys.map(function(k,i){return '<div class="gcat'+(i?'':' on')+'" id="g-'+k+'"><h3>'+esc(GCATS[k]||k)+' <small>'+by[k].length+'개 사업</small></h3><div class="grid g3">'+by[k].map(function(p){
     var dl=[['대상',p.target],['지원',p.support],['시기',p.schedule]].filter(function(r){return r[1]}).map(function(r){return '<dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd>'}).join('');
     return '<div class="pcard"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h4>'+esc(p.name)+'</h4>'+(p.status2026?'<span class="badge '+(/상시|모집|접수 ?중/.test(p.status2026)?'green':/예정/.test(p.status2026)?'gold':'line')+'">'+esc(p.status2026)+'</span>':'')+'</div><div class="org">'+esc([p.agency,p.operator].filter(Boolean).join(' · '))+'</div><dl>'+dl+'</dl>'+(p.note?'<div class="small muted">'+esc(p.note)+'</div>':'')+'<div class="ft"><span>확인 '+esc(p.verified_at||c.verified_at||'')+'</span>'+(p.url?'<a href="'+esc(p.url)+'" target="_blank" rel="noopener">공식 안내 ↗</a>':'')+'</div></div>'}).join('')+'</div></div>'}).join('');
   var cal=c.calendar||[],now=new Date().getMonth()+1;
