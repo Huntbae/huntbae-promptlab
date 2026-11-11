@@ -19,8 +19,8 @@
   function topbar(){
     var el=document.querySelector('[data-topbar]'); if(!el) return;
     var key=document.body.dataset.page||'home', trail=(el.dataset.topbar||'').split('/').filter(Boolean);
-    var crumb='<a href="'+LINKS.home+'" target="_top">HOME</a>'+trail.map(function(k){return ' <span>/</span> '+(k===key?'<b>'+(NAMES[k]||k)+'</b>':'<a href="'+(LINKS[k]||'#')+'" target="_top">'+(NAMES[k]||k)+'</a>')}).join('');
-    el.innerHTML='<div class="wrap"><div class="crumb">'+crumb+'</div><div class="sp"><a href="'+LINKS.gov+'" target="_top">진행 중 공고</a><a href="'+LINKS.services+'" target="_top">서비스·가격</a><a class="btn btn-gold btn-sm" href="'+LINKS.diag+'" target="_blank" rel="noopener">무료 AI 진단</a></div></div>';
+    var crumb='<a href="'+LINKS.home+'" target="_blank" rel="noopener">HOME</a>'+trail.map(function(k){return ' <span>/</span> '+(k===key?'<b>'+(NAMES[k]||k)+'</b>':'<a href="'+(LINKS[k]||'#')+'" target="_blank" rel="noopener">'+(NAMES[k]||k)+'</a>')}).join('');
+    el.innerHTML='<div class="wrap"><div class="crumb">'+crumb+'</div><div class="sp"><a href="'+LINKS.gov+'" target="_blank" rel="noopener">진행 중 공고</a><a href="'+LINKS.services+'" target="_blank" rel="noopener">서비스·가격</a><a class="btn btn-gold btn-sm" href="'+LINKS.diag+'" target="_blank" rel="noopener">무료 AI 진단</a></div></div>';
   }
   function footer(){
     var el=document.querySelector('[data-footer]'); if(!el) return;
@@ -33,10 +33,11 @@
     els.forEach(function(e){io.observe(e)});
   }
   function links(){
-    // 사이트 내부 링크는 Google Sites 상위 창에서 열리도록
-    [].slice.call(document.querySelectorAll('a[href^="'+SITE+'"]')).forEach(function(a){if(!a.target)a.target='_top'});
+    // Google Sites 삽입 블록은 상위 창 이동을 막으므로, 사이트 내부 링크도 새 탭에서 연다(삽입 밖에서 직접 열었을 때는 같은 탭)
+    var inner=embedded?'_blank':'_self';
+    [].slice.call(document.querySelectorAll('a[href^="'+SITE+'"]')).forEach(function(a){if(!a.target||a.target==='_top'){a.target=inner;a.rel='noopener'}});
     [].slice.call(document.querySelectorAll('a[href^="http"]:not([href^="'+SITE+'"])')).forEach(function(a){if(!a.target){a.target='_blank';a.rel='noopener'}});
-    [].slice.call(document.querySelectorAll('[data-link]')).forEach(function(a){var k=a.dataset.link;if(LINKS[k]){a.href=LINKS[k];a.target=/^https?:\/\/forms|mailto/.test(LINKS[k])?'_blank':'_top'}});
+    [].slice.call(document.querySelectorAll('[data-link]')).forEach(function(a){var k=a.dataset.link;if(LINKS[k]){a.href=LINKS[k];a.target=/^https?:\/\/forms|mailto/.test(LINKS[k])?'_blank':inner}});
   }
   var tt;window.toast=function(m){var t=document.querySelector('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on')},2200)};
   document.addEventListener('DOMContentLoaded',function(){topbar();footer();links();reveal()});
