@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서비스·가격 | Hunt Bae's Works</title>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.snav{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
+.prod{display:grid;grid-template-columns:320px 1fr;gap:48px;padding:72px 0;border-top:1px solid var(--line)}
+.prod:first-of-type{border-top:0}
+@media (max-width:900px){.prod{grid-template-columns:1fr;gap:24px}}
+.prod .no{font-family:var(--mono);font-size:56px;font-weight:800;color:#e4dccb;line-height:1}
+.prod h2{font-size:32px;margin:10px 0 8px}
+.prod .hook{color:var(--red);font-weight:700;font-size:17px;margin-bottom:22px}
+.prod .acts{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.prod .desc{font-size:17px;color:var(--ink-2);margin:0 0 22px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-page="services">
+<div class="topbar" data-topbar="services"></div>
+<header class="phero">
+  <div class="wrap">
+    <span class="eyebrow">Services &amp; Pricing</span>
+    <h1 class="h-xl">필요한 것만, 고정가로.</h1>
+    <p>모든 서비스는 무료 진단으로 시작하고, 산출물과 납기를 먼저 확정한 뒤 선결제로 진행합니다. 계약·결제·세금계산서는 클랜헌트 유한회사 명의로 발행됩니다.</p>
+    <div class="chips"><span class="chip-d">무료 진단으로 시작</span><span class="chip-d">산출물·납기 사전 확정</span><span class="chip-d">선결제</span><span class="chip-d">세금계산서 발행</span></div>
+    <div class="snav"><a class="btn btn-gold btn-sm" href="#p1">01 모의평가실</a><a class="btn btn-ghost btn-sm" href="#p2">02 공고레이더</a><a class="btn btn-ghost btn-sm" href="#p3">03 AI비서세팅</a><a class="btn btn-ghost btn-sm" href="#p4">04 사장님장부</a><a class="btn btn-ghost btn-sm" data-link="gov" href="#">정부지원사업 허브 ↗</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <article class="prod rv" id="p1">
+    <div><div class="no">01</div><h2>모의평가실</h2><div class="hook">제출 전에 떨어질 이유를<br>먼저 듣는다</div>
+      <div class="acts"><a class="btn btn-navy" data-link="diag" href="#">채점 리뷰 신청 →</a><a class="small muted" data-link="diag" href="#">진단 먼저 받기 →</a></div></div>
+    <div>
+      <p class="desc">정부지원사업 사업계획서는 심사표로 읽힙니다. 평가위원의 눈으로 채점표를 만들어 드리고, 점수가 깎이는 문장을 고칩니다. 예비·초기창업패키지, 청년창업사관학교, R&amp;D 과제, 지자체 공모에 모두 적용됩니다.</p>
+      <table class="tbl"><tr><th>상품</th><th>포함</th><th>납기</th><th>가격(안)</th></tr>
+        <tr><td><b>채점 리뷰</b></td><td>평가항목별 점수표, 탈락 사유 10개, 수정 우선순위</td><td>3영업일</td><td class="price">30~60만 원</td></tr>
+        <tr><td><b>작성 코칭</b></td><td>채점 리뷰 + 구조 재설계 + 2회 수정본 검토 + 발표 Q&amp;A 20문항</td><td>2주</td><td class="price">100~150만 원</td></tr>
+        <tr><td><b>발표 리허설</b></td><td>15분 모의 발표와 질의, 녹화 피드백</td><td>1회</td><td class="price">20만 원</td></tr></table>
+      <div class="two"><div class="note"><b>제출 전 필요한 것</b><br>공고문 링크(또는 사업명), 사업계획서 초안(없으면 아이템 메모 1쪽)</div><div class="note red"><b>수행하지 않는 것</b><br>정책자금(융자) 신청 대행, 성공수수료 계약, 당해 연도 평가위원으로 위촉된 기관·사업의 과제. 대필은 하지 않으며 직접 쓰실 수 있게 코칭합니다.</div></div>
+    </div>
+  </article>
+
+  <article class="prod rv" id="p2">
+    <div><div class="no">02</div><h2>공고레이더</h2><div class="hook">맞는 공고만,<br>매주 아침</div>
+      <div class="acts"><a class="btn btn-navy" data-link="diag" href="#">맞춤판 시작 →</a><a class="btn btn-line btn-sm" data-link="gov" href="#">지금 열린 공고 보기 ↗</a></div></div>
+    <div>
+      <p class="desc">기업마당·K-Startup·소상공인24·NIPA·지자체 공고를 매일 수집해, 업종·업력·지역·규모에 맞는 것만 골라 마감 역순으로 보내 드립니다. 자격 요건은 미리 확인해 두니 공고문을 처음부터 읽을 필요가 없습니다.</p>
+      <table class="tbl"><tr><th>상품</th><th>포함</th><th>가격(안)</th></tr>
+        <tr><td><b>무료판</b></td><td>주 1회 전체 공고 요약 뉴스레터</td><td class="price">무료</td></tr>
+        <tr><td><b>맞춤판</b></td><td>내 프로필 기준 적합도 매핑, 월~금 아침 메일, 주 1회 ‘추천 3건’ 코멘트, 마감 7일 전 알림</td><td class="price">월 3만 원</td></tr>
+        <tr><td><b>팀판</b></td><td>맞춤판 + 최대 5개 프로필, 지원기관·액셀러레이터용</td><td class="price">월 10만 원</td></tr></table>
+    </div>
+  </article>
+
+  <article class="prod rv" id="p3">
+    <div><div class="no">03</div><h2>AI비서세팅</h2><div class="hook">매일 아침 브리핑이<br>오는 회사</div>
+      <div class="acts"><a class="btn btn-navy" data-link="diag" href="#">진단 신청 →</a></div></div>
+    <div>
+      <p class="desc">메일·일정·드라이브를 연결해 매일 아침 ‘오늘 할 일·마감·답장 대기’를 정리해 보내는 AI 비서를 세팅합니다. 제가 5개 법인을 혼자 돌리며 쓰는 설정을 고객 환경에 맞게 복제하고, 문서 초안·회의록·메일 분류까지 자동화합니다.</p>
+      <table class="tbl"><tr><th>상품</th><th>포함</th><th>가격(안)</th></tr>
+        <tr><td><b>기본 세팅</b></td><td>계정 연결, 모닝 브리핑, 메일 분류, 문서 템플릿 3종, 1시간 사용 교육</td><td class="price">50만 원</td></tr>
+        <tr><td><b>확장 세팅</b></td><td>기본 + 공고레이더 연동 + 고객 응대 초안 + SNS 예약 발행</td><td class="price">100만 원</td></tr>
+        <tr><td><b>월 관리</b></td><td>월 1회 점검, 자동화 수정, 새 기능 반영</td><td class="price">월 10~30만 원</td></tr></table>
+      <div class="note" style="margin-top:16px"><b>준비물</b> 구글 워크스페이스 또는 MS365 계정, 현재 쓰는 문서 양식</div>
+    </div>
+  </article>
+
+  <article class="prod rv" id="p4">
+    <div><div class="no">04</div><h2>사장님장부</h2><div class="hook">매출·지출·송장·재고를<br>한 화면에</div>
+      <div class="acts"><a class="btn btn-navy" data-link="diag" href="#">세팅 신청 →</a><a class="btn btn-line btn-sm" data-link="mail" href="#">템플릿 구매 문의</a></div></div>
+    <div>
+      <p class="desc">카드·계좌 내역을 자동 분류해 월 결산을 만들고, 견적·송장·세금계산서 발행 현황과 재고 입출고를 한 엑셀 파일에서 관리합니다. 월말이면 세무사에게 넘길 자료가 자동으로 정리됩니다. ‘가게 매출’이 아니라 제조소공인·지식서비스 1인 기업의 ‘거래처별 송장과 지출’에 맞췄습니다.</p>
+      <table class="tbl"><tr><th>상품</th><th>포함</th><th>가격(안)</th></tr>
+        <tr><td><b>템플릿</b></td><td>매출·지출·송장·재고 엑셀 4종 + 사용 가이드 영상</td><td class="price">5만 원</td></tr>
+        <tr><td><b>세팅</b></td><td>템플릿 + 내 거래 데이터 이관 + 자동 분류 규칙 + 월 결산 리포트</td><td class="price">50~80만 원</td></tr>
+        <tr><td><b>월 관리</b></td><td>월 결산 점검, 이상 거래 알림, 세무사 전달용 요약</td><td class="price">월 10만 원</td></tr></table>
+    </div>
+  </article>
+
+  <section class="tight" style="padding-bottom:88px">
+    <div class="cta rv"><div><h2>찾는 서비스가 없나요?</h2><p>사업기획, 법인 설립, SNS 운영, R&amp;D 전주기, 해외 진출 등은 업무 영역 전체에서 확인하거나 진단 신청 시 적어 주시면 됩니다.</p></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-ghost" data-link="areas" href="#">업무 영역 전체</a><a class="btn btn-gold arrow" data-link="diag" href="#">무료 AI 진단</a></div></div>
+  </section>
+</main>
+<footer class="foot" data-footer></footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

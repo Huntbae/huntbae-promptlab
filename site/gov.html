@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>정부지원사업 컨설팅 | 진행 중 공고·핵심 사업 가이드 · Hunt Bae's Works</title>
+<meta name="description" content="기업마당·K-Startup 진행 중 정부지원사업 공고를 매일 자동 수집해 분야·지역·마감일로 분류하고, 창업·R&D·정책자금·바우처·인증 핵심 사업 가이드를 함께 제공합니다.">
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+.kpis div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px}
+.kpis b{display:block;font-size:30px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.kpis span{font-size:13px;color:#aab4c6}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.stick{position:sticky;top:0;z-index:20;background:var(--bg);padding-top:6px}
+.filters{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;display:flex;flex-direction:column;gap:14px;margin-bottom:18px}
+.frow{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.frow .field{flex:1;min-width:140px}
+.frow .field.q{flex:3;min-width:220px}
+.toggles{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.resbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:6px 0 12px;font-size:14px;color:var(--mute);flex-wrap:wrap}
+.resbar b{color:var(--ink)}
+.list{display:flex;flex-direction:column;gap:10px}
+.row{display:grid;grid-template-columns:84px 1fr 150px;gap:18px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 20px;transition:.15s}
+.row:hover{border-color:var(--navy);box-shadow:0 8px 20px -14px rgba(14,27,51,.4)}
+.row .dd{text-align:center;border-right:1px solid var(--line);padding-right:12px}
+.row .dd b{display:block;font-family:var(--mono);font-size:17px;color:var(--navy)}
+.row .dd.hot b{color:var(--red)}
+.row .dd span{font-size:11px;color:var(--mute)}
+.row .tt{font-weight:700;font-size:16px;line-height:1.45}
+.row .tt a:hover{text-decoration:underline;text-underline-offset:3px}
+.row .mt{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center;font-size:13px;color:var(--mute)}
+.row .side{text-align:right;font-size:13px;color:var(--mute);display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+@media (max-width:760px){.row{grid-template-columns:64px 1fr}.row .side{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}}
+.pager{display:flex;gap:6px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.pager button{min-width:38px;height:38px;border-radius:10px;border:1px solid var(--line-2);background:#fff;font-weight:700}
+.pager button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pager button:disabled{opacity:.4}
+.empty{padding:50px;text-align:center;color:var(--mute);background:#fff;border:1px dashed var(--line-2);border-radius:16px}
+/* guide */
+.gnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.gcat{margin-bottom:44px}
+.gcat h3{font-size:22px;display:flex;gap:10px;align-items:baseline;margin-bottom:6px}
+.gcat h3 small{font-size:13px;color:var(--mute);font-weight:600}
+.gcat>p{margin:0 0 16px;color:var(--mute);font-size:14px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.pcard h4{font-size:18px}
+.pcard .org{font-size:13px;color:var(--mute)}
+.pcard dl{margin:0;display:grid;grid-template-columns:56px 1fr;gap:6px 10px;font-size:14px}
+.pcard dt{color:var(--gold);font-weight:800;font-size:12.5px;padding-top:2px}
+.pcard dd{margin:0;color:var(--ink-2)}
+.pcard .ft{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mute)}
+.pcard .ft a{font-weight:700;color:var(--navy)}
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:900px){.cal{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.cal{grid-template-columns:1fr}}
+.mon{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}
+.mon.now{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,164,92,.2)}
+.mon h4{font-size:15px;display:flex;justify-content:space-between}
+.mon h4 span{font-family:var(--mono);color:var(--gold)}
+.mon ul{margin:10px 0 0;padding-left:16px;font-size:14px;color:var(--ink-2)}
+.mon li{margin:4px 0}
+.outl li{margin:0 0 14px;padding-left:4px}
+.outl li a{font-size:12.5px;color:var(--mute);text-decoration:underline;text-underline-offset:2px}
+.src{font-size:12px;color:var(--mute);word-break:break-all}
+</style>
+</head>
+<body data-page="gov">
+<div class="topbar" data-topbar="services/gov"></div>
+
+<header class="phero">
+  <div class="wrap">
+    <span class="eyebrow">Government Support Hub</span>
+    <h1 class="h-xl">정부지원사업,<br>찾는 데서 끝나지 않게.</h1>
+    <p>기업마당과 K-Startup의 진행 중 공고를 매일 자동으로 모아 분야·지역·마감일로 정리합니다. 창업·R&amp;D·정책자금·바우처·인증 핵심 사업은 공식 출처를 확인해 따로 정리했습니다.</p>
+    <div class="kpis">
+      <div><b id="kTotal">—</b><span>진행 중 공고</span></div>
+      <div><b id="kWeek">—</b><span>7일 안에 마감</span></div>
+      <div><b id="kNew">—</b><span>최근 7일 신규 등록</span></div>
+      <div><b id="kGuide">—</b><span>핵심 사업 가이드</span></div>
+    </div>
+    <div class="chips" style="margin-top:22px"><span class="chip-d" id="kUpd">갱신 시각 확인 중</span><span class="chip-d">공고 매일 2회 자동 갱신</span><span class="chip-d">가이드 매주 검증</span></div>
+  </div>
+</header>
+
+<main class="wrap" style="padding:40px 24px 80px">
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="live">진행 중 공고<span class="cnt" id="tLive"></span></button>
+    <button class="tab" data-tab="guide">핵심 사업 가이드<span class="cnt" id="tGuide"></span></button>
+    <button class="tab" data-tab="cal">연간 일정</button>
+    <button class="tab" data-tab="out">2027 전망</button>
+    <button class="tab" data-tab="portal">공식 포털</button>
+    <button class="tab" data-tab="consult">컨설팅 안내</button>
+  </nav>
+
+  <!-- LIVE -->
+  <section class="panel on" id="p-live" style="padding:0">
+    <div class="filters">
+      <div class="frow">
+        <label class="field q">검색<input id="fq" type="search" placeholder="사업명, 기관명, 키워드 (예: 바우처, 수출, 청년, 스마트공장)"></label>
+        <label class="field">지역<select id="fr"><option value="">전체 지역</option></select></label>
+        <label class="field">범위<select id="fl"><option value="">전체</option><option value="national">전국(중앙부처·전국기관)</option><option value="local">지자체·지역기관</option></select></label>
+        <label class="field">출처<select id="fs"><option value="">전체</option><option value="bizinfo">기업마당</option><option value="kstartup">K-Startup</option></select></label>
+        <label class="field">정렬<select id="fo"><option value="dday">마감 임박순</option><option value="reg">최근 등록순</option><option value="title">사업명순</option></select></label>
+      </div>
+      <div class="chips" id="fc"></div>
+      <div class="toggles">
+        <label class="toggle"><input type="checkbox" id="fw"> 7일 안에 마감만</label>
+        <label class="toggle"><input type="checkbox" id="fa" checked> 상시·예산소진 공고 포함</label>
+        <label class="toggle"><input type="checkbox" id="fn"> 최근 7일 신규만</label>
+        <button class="btn btn-line btn-sm" id="freset" style="margin-left:auto">필터 초기화</button>
+      </div>
+    </div>
+    <div class="resbar"><span>검색 결과 <b id="rc">0</b>건</span><span id="rsrc"></span></div>
+    <div class="list" id="list"></div>
+    <div class="pager" id="pager"></div>
+    <p class="note" style="margin-top:28px"><b>안내</b> 공고 목록은 기업마당(bizinfo.go.kr)과 K-Startup(k-startup.go.kr)에 게시된 진행 중 공고를 자동으로 수집해 분류한 것입니다. 분야 분류는 사업명·분야 정보를 기준으로 한 자동 분류라 실제와 다를 수 있습니다. 신청 자격·기간·서류는 반드시 원문 공고에서 확인하세요.</p>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="panel" id="p-guide" style="padding:0">
+    <p class="lead" style="margin:0 0 18px">해마다 반복되는 전국 단위 핵심 사업을 분야별로 정리했습니다. 각 카드의 확인일과 출처를 함께 적었습니다.</p>
+    <div class="gnav" id="gnav"></div>
+    <div id="gbody"><div class="empty">핵심 사업 가이드를 불러오는 중입니다.</div></div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section class="panel" id="p-cal" style="padding:0">
+    <p class="lead" style="margin:0 0 18px">주요 사업이 보통 어느 달에 공고되는지 정리한 연간 흐름입니다. 해마다 조금씩 달라지니 준비 일정을 잡는 기준으로만 쓰세요.</p>
+    <div class="cal" id="cal"></div>
+  </section>
+
+  <!-- OUTLOOK -->
+  <section class="panel" id="p-out" style="padding:0">
+    <div class="grid g2" style="gap:40px;align-items:start">
+      <div><span class="eyebrow tone">2027 Outlook</span><h2 class="h-lg" style="margin:12px 0 14px">2027년 정부지원사업,<br>무엇이 달라지나</h2><p class="lead">정부 예산안과 부처 발표를 기준으로 정리했습니다. 국회 심의로 바뀔 수 있으며, 확정되면 다시 고칩니다.</p>
+      <div class="note" style="margin-top:22px"><b>준비 팁</b> 상반기 대형 사업(예비·초기창업패키지, 창업도약패키지, R&amp;D 신규과제)은 1~3월에 몰립니다. 11~12월에 사업계획서 초안과 증빙(재무제표, 인증서, 특허)을 미리 갖춰 두면 공고가 뜬 뒤 2~3주 안에 제출할 수 있습니다.</div></div>
+      <ul class="outl" id="outl" style="padding-left:18px"></ul>
+    </div>
+  </section>
+
+  <!-- PORTALS -->
+  <section class="panel" id="p-portal" style="padding:0">
+    <div class="grid g3" id="portals"></div>
+  </section>
+
+  <!-- CONSULT -->
+  <section class="panel" id="p-consult" style="padding:0">
+    <div class="grid g2" style="gap:40px;align-items:start">
+      <div>
+        <span class="eyebrow tone">Consulting</span>
+        <h2 class="h-lg" style="margin:12px 0 14px">공고를 찾은 다음,<br>선정까지의 일을 돕습니다.</h2>
+        <p class="lead">정부 R&amp;D·창업지원사업 평가위원으로 활동하며 본 기준으로 준비를 돕습니다. 모든 서비스는 무료 진단으로 시작하고, 산출물과 납기를 먼저 확정합니다.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px"><a class="btn btn-navy arrow" data-link="diag" href="#">무료 AI 진단 받기</a><a class="btn btn-line" data-link="services" href="#">서비스·가격 보기</a></div>
+        <div class="note red" style="margin-top:26px"><b>이해충돌 공지</b> 당해 연도 평가위원으로 위촉된 기관·사업의 과제는 유료 리뷰·코칭 대상에서 제외합니다. 정책자금(융자) 신청 대행과 성공수수료 계약은 하지 않으며, 대필 없이 직접 쓰실 수 있게 코칭합니다.</div>
+      </div>
+      <div class="grid" style="gap:14px">
+        <div class="card"><span class="num">01 · 모의평가실</span><h3>사업계획서 채점 리뷰·코칭</h3><p>평가항목별 점수표, 탈락 사유 10개, 수정 우선순위. 예비·초기창업패키지, 청년창업사관학교, R&amp;D, 지자체 공모.</p><div class="chips" style="margin-top:12px"><span class="badge gold">채점 리뷰 30~60만 원</span><span class="badge gold">작성 코칭 100~150만 원</span><span class="badge gold">발표 리허설 20만 원</span></div></div>
+        <div class="card"><span class="num">02 · 공고레이더</span><h3>내 조건에 맞는 공고만</h3><p>업종·업력·지역·규모 기준 적합도 매핑, 월~금 아침 메일, 마감 7일 전 알림.</p><div class="chips" style="margin-top:12px"><span class="badge green">무료판</span><span class="badge gold">맞춤판 월 3만 원</span><span class="badge gold">팀판 월 10만 원</span></div></div>
+        <div class="card"><span class="num">03 · R&amp;D 전주기</span><h3>과제 발굴부터 정산까지</h3><p>연구개발계획서, 컨소시엄 구성, 사업비 집행·정산, 평가 대응. 1998년부터 부처별 R&amp;D를 기획·수주·수행했습니다.</p><div class="chips" style="margin-top:12px"><span class="badge line">진단 후 견적</span></div></div>
+        <div class="card"><span class="num">04 · 조직·법인</span><h3>협회·조합·비영리법인 설립</h3><p>정관·총회 서류, 주무관청 인가, 연구조합 설립. 과기부·산업부·경찰청·행안부 인가 단체를 직접 세웠습니다.</p><div class="chips" style="margin-top:12px"><span class="badge line">진단 후 견적</span></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" data-footer></footer>
+<script src="assets/site.js"></script>
+<script>
+(function(){
+'use strict';
+var CATS={startup:'창업·사업화',rnd:'R&D·기술',fund:'정책자금·금융',voucher:'바우처',cert:'인증·지식재산',export:'수출·글로벌',hr:'인력·고용',ai_digital:'AI·디지털',smallbiz:'소상공인·지역',mgmt:'경영·판로',edu:'교육·행사',etc:'기타'};
+var GCATS={startup:'창업·사업화',rnd:'R&D',fund:'정책자금·보증',voucher:'바우처',cert:'인증·확인',export:'수출·해외진출',hr:'인력·고용',smallbiz:'소상공인·지역',ai_digital:'AI·디지털 전환'};
+var REG=['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'];
+var PER=20,S={q:'',cat:'',reg:'',lvl:'',src:'',sort:'dday',week:false,always:true,fresh:false,page:1},ALL=[],TODAY=new Date();
+var $=function(s){return document.querySelector(s)},esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+function daysSince(d){if(!d)return 9999;var t=new Date(d+'T00:00:00+09:00');return Math.floor((TODAY-t)/864e5)}
+
+/* tabs (해시 #guide 등으로 바로 열기) */
+function tab(id){[].forEach.call(document.querySelectorAll('.tab'),function(b){b.classList.toggle('on',b.dataset.tab===id)});[].forEach.call(document.querySelectorAll('.panel'),function(p){p.classList.toggle('on',p.id==='p-'+id)});try{history.replaceState(null,'','#'+id)}catch(e){}}
+[].forEach.call(document.querySelectorAll('.tab'),function(b){b.addEventListener('click',function(){tab(b.dataset.tab)})});
+var h=(location.hash||'').slice(1);if(['live','guide','cal','out','portal','consult'].indexOf(h)>=0)tab(h);
+
+/* live */
+REG.forEach(function(r){var o=document.createElement('option');o.value=r;o.textContent=r;$('#fr').appendChild(o)});
+function filtered(){
+  var q=S.q.trim().toLowerCase(),qs=q?q.split(/\s+/):[];
+  var r=ALL.filter(function(x){
+    if(S.cat&&x.cats.indexOf(S.cat)<0)return false;
+    if(S.reg&&x.region!==S.reg)return false;
+    if(S.lvl&&x.level!==S.lvl)return false;
+    if(S.src&&x.src!==S.src)return false;
+    if(S.week&&!(x.dday!=null&&x.dday<=7))return false;
+    if(!S.always&&x.dday==null)return false;
+    if(S.fresh&&daysSince(x.reg)>7)return false;
+    if(qs.length){var hay=(x.title+' '+(x.agency||'')+' '+(x.operator||'')+' '+(x.program||'')+' '+(x.field||'')).toLowerCase();for(var i=0;i<qs.length;i++)if(hay.indexOf(qs[i])<0)return false}
+    return true});
+  if(S.sort==='reg')r.sort(function(a,b){return (b.reg||'').localeCompare(a.reg||'')});
+  else if(S.sort==='title')r.sort(function(a,b){return a.title.localeCompare(b.title,'ko')});
+  else r.sort(function(a,b){return (a.dday==null?9999:a.dday)-(b.dday==null?9999:b.dday)||(b.reg||'').localeCompare(a.reg||'')});
+  return r;
+}
+function chips(){
+  var base=ALL.filter(function(x){return (!S.reg||x.region===S.reg)&&(!S.lvl||x.level===S.lvl)&&(!S.src||x.src===S.src)});
+  var cnt={};base.forEach(function(x){x.cats.forEach(function(c){cnt[c]=(cnt[c]||0)+1})});
+  $('#fc').innerHTML='<button class="chip'+(S.cat?'':' on')+'" data-c="">전체 분야<span class="n">'+base.length+'</span></button>'+Object.keys(CATS).filter(function(k){return cnt[k]}).map(function(k){return '<button class="chip'+(S.cat===k?' on':'')+'" data-c="'+k+'">'+CATS[k]+'<span class="n">'+cnt[k]+'</span></button>'}).join('');
+}
+function render(){
+  chips();
+  var r=filtered(),pages=Math.max(1,Math.ceil(r.length/PER));if(S.page>pages)S.page=pages;
+  $('#rc').textContent=r.length.toLocaleString();
+  var slice=r.slice((S.page-1)*PER,S.page*PER);
+  $('#list').innerHTML=slice.length?slice.map(function(x){
+    var dd=x.dday==null?'<b>상시</b><span>예산 소진 시</span>':(x.dday===0?'<b>D-DAY</b><span>오늘 마감</span>':'<b>D-'+x.dday+'</b><span>~'+esc((x.end||'').slice(5).replace('-','.'))+'</span>');
+    var org=[x.agency,x.operator].filter(Boolean).filter(function(v,i,a){return a.indexOf(v)===i}).join(' · ');
+    return '<article class="row"><div class="dd'+(x.dday!=null&&x.dday<=7?' hot':'')+'">'+dd+'</div><div><div class="tt"><a href="'+esc(x.url)+'" target="_blank" rel="noopener">'+esc(x.title)+'</a></div><div class="mt">'+x.cats.map(function(c){return '<span class="badge">'+(CATS[c]||c)+'</span>'}).join('')+'<span>'+esc(org)+'</span>'+(x.period?'<span>· '+esc(x.period)+'</span>':'')+'</div></div><div class="side"><span class="badge '+(x.src==='kstartup'?'gold':'navy')+'">'+(x.src==='kstartup'?'K-Startup':'기업마당')+'</span><span>'+(x.region!=='전국'?esc(x.region)+' · 지역':(x.level==='local'?'지역기관':'전국'))+'</span>'+(daysSince(x.reg)<=3?'<span class="badge red">NEW</span>':'')+'</div></article>'}).join(''):'<div class="empty">조건에 맞는 공고가 없습니다. 필터를 줄이거나 다른 검색어를 써 보세요.</div>';
+  var p='',from=Math.max(1,S.page-3),to=Math.min(pages,from+6);
+  p+='<button data-p="'+(S.page-1)+'"'+(S.page<=1?' disabled':'')+'>‹</button>';
+  if(from>1)p+='<button data-p="1">1</button>'+(from>2?'<button disabled>…</button>':'');
+  for(var i=from;i<=to;i++)p+='<button data-p="'+i+'"'+(i===S.page?' class="on"':'')+'>'+i+'</button>';
+  if(to<pages)p+=(to<pages-1?'<button disabled>…</button>':'')+'<button data-p="'+pages+'">'+pages+'</button>';
+  p+='<button data-p="'+(S.page+1)+'"'+(S.page>=pages?' disabled':'')+'>›</button>';
+  $('#pager').innerHTML=pages>1?p:'';
+}
+function set(k,v){S[k]=v;S.page=1;render()}
+var qt;$('#fq').addEventListener('input',function(e){clearTimeout(qt);qt=setTimeout(function(){set('q',e.target.value)},180)});
+$('#fr').addEventListener('change',function(e){set('reg',e.target.value)});
+$('#fl').addEventListener('change',function(e){set('lvl',e.target.value)});
+$('#fs').addEventListener('change',function(e){set('src',e.target.value)});
+$('#fo').addEventListener('change',function(e){set('sort',e.target.value)});
+$('#fw').addEventListener('change',function(e){set('week',e.target.checked)});
+$('#fa').addEventListener('change',function(e){set('always',e.target.checked)});
+$('#fn').addEventListener('change',function(e){set('fresh',e.target.checked)});
+$('#fc').addEventListener('click',function(e){var b=e.target.closest('[data-c]');if(b)set('cat',b.dataset.c)});
+$('#pager').addEventListener('click',function(e){var b=e.target.closest('[data-p]');if(b&&!b.disabled){S.page=+b.dataset.p;render();$('#p-live').scrollIntoView({behavior:'smooth'})}});
+$('#freset').addEventListener('click',function(){S={q:'',cat:'',reg:'',lvl:'',src:'',sort:'dday',week:false,always:true,fresh:false,page:1};$('#fq').value='';['#fr','#fl','#fs'].forEach(function(s){$(s).value=''});$('#fo').value='dday';$('#fw').checked=false;$('#fa').checked=true;$('#fn').checked=false;render()});
+
+fetch('data/gov-live.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(d){
+  ALL=(d.items||[]).map(function(x){x.cats=x.cats||['etc'];return x});
+  $('#kTotal').textContent=ALL.length.toLocaleString();
+  $('#kWeek').textContent=ALL.filter(function(x){return x.dday!=null&&x.dday<=7}).length;
+  $('#kNew').textContent=ALL.filter(function(x){return daysSince(x.reg)<=7}).length;
+  $('#tLive').textContent=ALL.length.toLocaleString();
+  var st=d.status||{};
+  $('#kUpd').textContent=d.updated_at?'공고 갱신 '+d.updated_at.replace('T',' ').slice(0,16)+' KST':'공고 데이터 준비 중';
+  $('#rsrc').textContent=['bizinfo','kstartup'].map(function(k){var s=st[k];return s?((k==='bizinfo'?'기업마당 ':'K-Startup ')+(s.ok?s.count+'건':'수집 실패(이전 데이터)')):''}).filter(Boolean).join(' · ');
+  render();
+}).catch(function(){$('#list').innerHTML='<div class="empty">공고 데이터를 불러오지 못했습니다. 잠시 뒤 다시 열어 주세요.</div>'});
+
+/* curated */
+fetch('data/gov-curated.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(c){
+  var P=c.programs||[];$('#kGuide').textContent=P.length;$('#tGuide').textContent=P.length;
+  var by={};P.forEach(function(p){(by[p.category]=by[p.category]||[]).push(p)});
+  var keys=Object.keys(GCATS).filter(function(k){return by[k]}).concat(Object.keys(by).filter(function(k){return !GCATS[k]}));
+  $('#gnav').innerHTML=keys.map(function(k){return '<a class="chip" href="#g-'+k+'">'+esc(GCATS[k]||k)+'<span class="n">'+by[k].length+'</span></a>'}).join('');
+  $('#gbody').innerHTML=keys.map(function(k){return '<div class="gcat" id="g-'+k+'"><h3>'+esc(GCATS[k]||k)+' <small>'+by[k].length+'개 사업</small></h3><div class="grid g3">'+by[k].map(function(p){
+    var dl=[['대상',p.target],['지원',p.support],['시기',p.schedule]].filter(function(r){return r[1]}).map(function(r){return '<dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd>'}).join('');
+    return '<div class="pcard"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h4>'+esc(p.name)+'</h4>'+(p.status2026?'<span class="badge '+(/상시|모집|접수 ?중/.test(p.status2026)?'green':/예정/.test(p.status2026)?'gold':'line')+'">'+esc(p.status2026)+'</span>':'')+'</div><div class="org">'+esc([p.agency,p.operator].filter(Boolean).join(' · '))+'</div><dl>'+dl+'</dl>'+(p.note?'<div class="small muted">'+esc(p.note)+'</div>':'')+'<div class="ft"><span>확인 '+esc(p.verified_at||c.verified_at||'')+'</span>'+(p.url?'<a href="'+esc(p.url)+'" target="_blank" rel="noopener">공식 안내 ↗</a>':'')+'</div></div>'}).join('')+'</div></div>'}).join('');
+  var cal=c.calendar||[],now=new Date().getMonth()+1;
+  $('#cal').innerHTML=cal.length?cal.map(function(m){var mm=parseInt(m.month,10);return '<div class="mon'+(mm===now?' now':'')+'"><h4>'+esc(m.label||(mm+'월'))+'<span>'+String(mm).padStart(2,'0')+'</span></h4><ul>'+(m.items||[]).map(function(i){return '<li>'+esc(typeof i==='string'?i:i.text||i.name)+'</li>'}).join('')+'</ul></div>'}).join(''):'<div class="empty">연간 일정을 준비 중입니다.</div>';
+  $('#outl').innerHTML=(c.outlook2027||[]).map(function(o){var t=typeof o==='string'?o:o.text;var s=typeof o==='object'&&o.source?' <a href="'+esc(o.source)+'" target="_blank" rel="noopener">출처</a>':'';return '<li>'+esc(t)+s+'</li>'}).join('')||'<li>2027 전망을 준비 중입니다.</li>';
+  $('#portals').innerHTML=(c.portals||[]).map(function(p){return '<a class="card hov" href="'+esc(p.url)+'" target="_blank" rel="noopener"><span class="num">PORTAL</span><h3>'+esc(p.name)+'</h3><p>'+esc(p.purpose||p.desc||'')+'</p><span class="go">바로가기 ↗</span></a>'}).join('');
+}).catch(function(){$('#gbody').innerHTML='<div class="empty">핵심 사업 가이드를 불러오지 못했습니다.</div>'});
+})();
+</script>
+</body>
+</html>

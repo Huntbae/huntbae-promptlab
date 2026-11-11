@@ -44,16 +44,16 @@ CAT_RULES = [
     ("ai_digital", r"AI|인공지능|디지털|스마트공장|스마트상점|데이터|클라우드|플랫폼|DX|메타버스"),
     ("smallbiz", r"소상공인|자영업|전통시장|상권|골목|점포|가게|상인"),
     ("edu", r"교육|멘토링|컨설팅|아카데미|캠프|세미나|설명회|포럼|네트워킹|데모데이|행사"),
-    ("market", r"판로|마케팅|홍보|브랜드|온라인|쇼핑|입점|전시|공공구매|조달"),
+    ("mgmt", r"판로|마케팅|홍보|브랜드|온라인|쇼핑|입점|공공구매|조달|경영|컨설팅|ESG|안전|환경개선"),
 ]
 FIELD_MAP = {  # 원본 분야 → 기본 분류
-    "금융": "fund", "기술": "rnd", "인력": "hr", "수출": "export", "내수": "market", "창업": "startup",
-    "경영": "smallbiz", "사업화": "startup", "창업교육": "edu", "멘토링ㆍ컨설팅ㆍ교육": "edu",
+    "금융": "fund", "기술": "rnd", "인력": "hr", "수출": "export", "내수": "mgmt", "창업": "startup",
+    "경영": "mgmt", "사업화": "startup", "창업교육": "edu", "멘토링ㆍ컨설팅ㆍ교육": "edu",
     "시설ㆍ공간ㆍ보육": "startup", "행사ㆍ네트워크": "edu", "융자": "fund", "글로벌": "export",
     "기술개발(R&D)": "rnd", "인력": "hr",
 }
 REGIONS = ["서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"]
-REGION_FULL = {"서울특별시":"서울","부산광역시":"부산","대구광역시":"대구","인천광역시":"인천","광주광역시":"광주","대전광역시":"대전","울산광역시":"울산","세종특별자치시":"세종","경기도":"경기","강원특별자치도":"강원","강원도":"강원","충청북도":"충북","충청남도":"충남","전북특별자치도":"전북","전라북도":"전북","전라남도":"전남","경상북도":"경북","경상남도":"경남","제주특별자치도":"제주"}
+REGION_FULL = {"전남광주통합특별시":"전남","서울특별시":"서울","부산광역시":"부산","대구광역시":"대구","인천광역시":"인천","광주광역시":"광주","대전광역시":"대전","울산광역시":"울산","세종특별자치시":"세종","경기도":"경기","강원특별자치도":"강원","강원도":"강원","충청북도":"충북","충청남도":"충남","전북특별자치도":"전북","전라북도":"전북","전라남도":"전남","경상북도":"경북","경상남도":"경남","제주특별자치도":"제주"}
 
 def classify(title, field="", extra=""):
     text = f"{title} {extra}"
@@ -169,12 +169,24 @@ def kstartup_scrape(max_pages=60):
         time.sleep(0.6)
     return out
 
+def norm_title(t):
+    t = re.sub(r"^\s*\[[^\]]*\]", "", t or "")
+    t = re.sub(r"[\s.,·ㆍ\-_:;!?\"'’‘“”「」『』()\[\]<>《》]", "", t)
+    return re.sub(r"^20\d\d년?(도)?", "", t)
+
 def finalize(items):
-    res = []
+    res, seen = [], {}
     for it in items:
+        key = norm_title(it.get("title"))
+        first = seen.get(key)
+        if key and first is not None and first.get("src") != it.get("src"):
+            if it.get("url"): first["alt_url"] = it["url"]
+            continue
+        if key and first is None: seen[key] = it
         it["cats"] = classify(it["title"], it.get("field", ""), it.get("program", "") + " " + it.get("summary", "") + " " + it.get("hashtags", ""))
         it["region"] = region_of(it["title"], it.get("agency", ""), it.get("operator", ""))
-        it["level"] = "local" if it["region"] != "전국" or re.search(r"자치단체|시청|군청|구청|도청|테크노파크|진흥원\(재\)", (it.get("agency","")+it.get("operator",""))) else "national"
+        it["level"] = "local" if it["region"] != "전국" or re.search(r"자치단체|시청|군청|구청|도청|테크노파크", (it.get("agency","")+it.get("operator",""))) else "national"
+        it.pop("dday", None)
         if it.get("end"):
             try:
                 d = dt.date.fromisoformat(it["end"])
@@ -187,6 +199,12 @@ def finalize(items):
     return res
 
 def main():
+    if "--reclassify" in sys.argv:  # 수집 없이 기존 파일 재분류(오프라인 점검용)
+        prev = json.load(open(OUT, encoding="utf-8"))
+        items = finalize(prev.get("items", []))
+        prev.update({"count": len(items), "items": items})
+        json.dump(prev, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+        print(len(items)); return
     max_pages = int(sys.argv[sys.argv.index("--max-pages") + 1]) if "--max-pages" in sys.argv else 200
     prev = {}
     if os.path.exists(OUT):

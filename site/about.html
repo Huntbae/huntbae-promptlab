@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About·문의 | 배효수 Hunt Bae</title>
+<link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.prof{display:grid;grid-template-columns:360px 1fr;gap:56px;align-items:start}
+@media (max-width:860px){.prof{grid-template-columns:1fr}}
+.prof img{border-radius:var(--r-lg);border:1px solid var(--line);width:100%;aspect-ratio:4/5;object-fit:cover;background:#eee}
+.prof p{font-size:17px;color:var(--ink-2)}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:10px 18px;font-size:15px;margin-top:22px}
+.kv dt{font-weight:800;color:var(--gold);font-size:13px;letter-spacing:.08em;padding-top:2px}
+.kv dd{margin:0}
+.org .role{font-size:12px;font-weight:800;color:var(--gold);letter-spacing:.1em}
+.tl{position:relative;margin-left:8px;border-left:2px solid var(--line-2)}
+.tl-i{position:relative;padding:0 0 26px 30px}
+.tl-i::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--line-2);box-shadow:0 0 0 4px var(--bg)}
+.tl-i.now::before{background:var(--gold)}
+.tl-i .y{font-family:var(--mono);font-weight:800;color:var(--navy);font-size:14px}
+.tl-i h4{font-size:17px;margin:2px 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tl-i p{margin:0;color:var(--mute);font-size:14px}
+.ch{display:flex;gap:10px;flex-wrap:wrap}
+.biz{font-size:15px;line-height:1.9}
+</style>
+</head>
+<body data-page="about">
+<div class="topbar" data-topbar="about"></div>
+<header class="phero"><div class="wrap">
+  <span class="eyebrow">About</span>
+  <h1 class="h-xl">배효수 Hunt Bae</h1>
+  <p>클랜헌트 유한회사 대표 · 정부 R&amp;D 평가위원. 1996년부터 무역, 투자자문, 산업협회, 제조 스타트업을 거쳐 왔습니다.</p>
+</div></header>
+<main>
+<section><div class="wrap prof">
+  <img src="../hunt-sketch.jpg" alt="배효수 스케치 초상" class="rv">
+  <div class="rv">
+    <span class="eyebrow tone">01 / Profile</span>
+    <p style="margin-top:16px">1996년 무역회사에서 시작해 투자자문, 전자상거래 협회를 거쳐 2003년부터 텔레매틱스·전기차·이모빌리티 산업협회의 실무 책임자로 일해 왔습니다. 2011년 첫 회사를 세웠다가 접었고, 2023년 두 번째 회사 클랜헌트를 세워 국내 최초로 공도주행 인증을 받은 사이클카트를 출시했습니다.</p>
+    <p>과기부 인가 이모빌리티연구조합, 경찰청 인가 첨단교통인프라포럼(현 마실교통포럼), 산업부 인가 이모빌리티산업협회, 워케이션포럼을 운영하며, 정부 R&amp;D 평가위원으로 활동합니다.</p>
+    <p>지금은 이 모든 조직의 문서·회계·일정·콘텐츠를 AI와 함께 혼자 처리합니다. 그 방법을 1인 기업과 소상공인에게 나누는 것이 이 사이트의 목적입니다.</p>
+    <dl class="kv"><dt>AWARDS</dt><dd>정보통신부장관 표창 (2003)<br>강원도지사 표창 (2019)</dd><dt>CONTACT</dt><dd><a data-link="mail" href="#">huntbae@huntbae.com</a></dd></dl>
+  </div>
+</div></section>
+<section class="paper"><div class="wrap">
+  <div class="sec-head rv"><div><span class="eyebrow tone">02 / Organizations</span><h2 class="h-lg" style="margin-top:12px">운영 중인 법인·단체</h2><p class="lead">계약·결제는 클랜헌트 유한회사가 맡습니다.</p></div></div>
+  <div class="grid g3 org rv">
+    <a class="card hov" href="https://clanhunts.kr"><span class="role">대표이사</span><h3>클랜헌트 유한회사</h3><p>창업기업·중소기업 확인 · 이 사이트의 계약·결제 주체</p><span class="go">clanhunts.kr ↗</span></a>
+    <a class="card hov" href="https://emtra.huntbae.com"><span class="role">사무총장</span><h3>이모빌리티연구조합</h3><p>과학기술정보통신부 인가</p><span class="go">EMTRA ↗</span></a>
+    <a class="card hov" href="https://sites.google.com/huntbae.com/atif"><span class="role">사무총장</span><h3>(사)첨단교통인프라포럼<br><small class="muted">(마실교통포럼)</small></h3><p>경찰청 인가</p><span class="go">ATIF ↗</span></a>
+    <a class="card hov" href="https://sites.google.com/huntbae.com/emba"><span class="role">사무총장</span><h3>(사)이모빌리티산업협회</h3><p>산업통상자원부 인가</p><span class="go">EMBA ↗</span></a>
+    <div class="card"><span class="role">이사장</span><h3>워케이션포럼</h3><p>경기도 인가</p></div>
+  </div>
+</div></section>
+<section><div class="wrap">
+  <div class="grid g2" style="gap:56px;align-items:start">
+    <div class="rv"><span class="eyebrow tone">03 / Incorporation history</span><h2 class="h-lg" style="margin:12px 0">직접 세우고 운영한<br>법인·단체</h2><p class="lead">비영리 법인을 비롯한 다양한 법인 설립 컨설팅을 제공합니다.</p><a class="btn btn-navy arrow" data-link="diag" href="#" style="margin-top:14px">법인 설립 상담</a>
+      <div class="note red" style="margin-top:28px"><b>이해충돌 공지</b><br>저는 여러 정부기관의 R&amp;D·창업지원사업 평가위원으로 위촉됩니다. 당해 연도에 평가위원으로 위촉된 기관·사업의 과제는 유료 리뷰·코칭 대상에서 제외하며, 접수 시 과제명과 주관기관을 확인해 해당 건은 정중히 사양합니다. 정책자금(융자) 신청 대행과 성공수수료 계약은 하지 않습니다.</div></div>
+    <div class="tl rv" id="tl"></div>
+  </div>
+</div></section>
+<section class="paper"><div class="wrap">
+  <div class="grid g2" style="gap:56px;align-items:start">
+    <div class="rv"><span class="eyebrow tone">04 / Channels</span><h2 class="h-md" style="margin:12px 0 18px">채널</h2>
+      <div class="ch"><a class="btn btn-line btn-sm" href="https://www.youtube.com/@clanhunts">회사 유튜브 @clanhunts</a><a class="btn btn-line btn-sm" href="https://www.youtube.com/@HuntBae1">개인 유튜브 @HuntBae1</a><a class="btn btn-line btn-sm" href="https://www.instagram.com/clanhunts/">인스타그램 @clanhunts</a><a class="btn btn-line btn-sm" href="https://www.facebook.com/ClanHunts/">페이스북 ClanHunts</a><a class="btn btn-line btn-sm" href="https://www.threads.com/@clanhunts">스레드 @clanhunts</a></div>
+      <h2 class="h-md" style="margin:40px 0 12px">문의</h2><p class="lead">서비스 문의는 무료 AI 진단 신청서로, 강연·자문은 이메일로 받습니다.</p>
+      <div class="ch" style="margin-top:12px"><a class="btn btn-gold arrow" data-link="diag" href="#">무료 AI 진단</a><a class="btn btn-navy" data-link="mail" href="#">이메일 보내기</a></div>
+    </div>
+    <div class="rv"><span class="eyebrow tone">05 / Business info</span><h2 class="h-md" style="margin:12px 0 18px">사업자 정보·정책</h2>
+      <div class="card biz"><b>상호</b> 클랜헌트 유한회사<br><b>대표</b> 배효수<br><b>사업자등록번호</b> 687-81-03346<br><b>통신판매업신고</b> 제 2026-경남진주-0081호<br><b>주소</b> 경상남도 진주시 신평공원길75번길 14-1, 2층(신안동)<br><b>전화</b> 010-8881-3760 · <b>팩스</b> 0504-134-3760<br><b>이메일</b> huntbae@huntbae.com<br><b>개인정보보호책임자</b> 배효수</div>
+      <div class="card" style="margin-top:14px"><h3 style="font-size:18px;margin:0 0 8px">환불규정</h3><p>패키지 착수 전 전액, 착수 후 산출물 비율 공제<br>구독 당월 해지 시 익월부터 중단<br>디지털 상품 다운로드 후 환불 불가</p></div>
+    </div>
+  </div>
+</div></section>
+</main>
+<footer class="foot" data-footer></footer>
+<script src="assets/site.js"></script>
+<script>
+var TL=[["2001","텔레매틱스포럼","정보통신부","텔레매틱스 기술 및 산업 발전과 협력 기반 마련"],["2003","텔레매틱스산업협회 → 이모빌리티산업협회","정보통신부 · 창조경제혁신센터","차량IT융합산업협회, 이모빌리티IT융합산업협회를 거쳐 미래 모빌리티 산업 발전을 위해 진화·확장",1],["2006","한국오토캠핑협회","KACAO","오토캠핑 문화 확산과 건전한 캠핑 산업 육성"],["2008","차량IT융합혁신센터","지식경제부","차량 IT 융합 기술 혁신 및 산업 경쟁력 강화"],["2010","한국전기자동차산업협회","산업부 인가","전기자동차 산업 발전과 생태계 조성"],["2012","카셰어링포럼","국토부 인가","카셰어링 활성화 및 모빌리티 서비스 혁신"],["2012","주식회사 이모타","","이모빌리티 관련 사업 및 서비스 운영"],["2014","인포그래픽협회","과기부 인가","인포그래픽 산업 진흥 및 전문 인력 육성"],["2015","첨단교통인프라포럼","경찰청 인가","첨단 교통 인프라 개발 및 교통 안전 향상",1],["2018","이모빌리티연구조합","","이모빌리티 기술 연구 및 산업 협력 기반 구축",1],["2023","클랜헌트(유)","","모빌리티 및 레저 사업 개발·운영",1],["2023","워케이션포럼","경기도 인가","워케이션 문화 확산 및 지역 경제 활성화",1],["2025","(사)인구및지방소멸대응협회","행안부 인가","인구 감소 및 지방 소멸 대응 정책·산업·연구 협력"]];
+document.getElementById('tl').innerHTML=TL.map(function(t){return '<div class="tl-i'+(t[4]?' now':'')+'"><span class="y">'+t[0]+'</span><h4>'+t[1]+(t[4]?'<span class="badge gold">운영 중</span>':'')+(t[2]?'<span class="badge line">'+t[2]+'</span>':'')+'</h4><p>'+t[3]+'</p></div>'}).join('');
+</script>
+</body>
+</html>
