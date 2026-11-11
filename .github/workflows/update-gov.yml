@@ -1,0 +1,40 @@
+name: 정부지원사업 데이터 갱신
+
+on:
+  schedule:
+    - cron: "10 21 * * *"   # 매일 06:10 KST
+    - cron: "10 3 * * 1-5"  # 평일 12:10 KST
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["scripts/update_gov.py", ".github/workflows/update-gov.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-gov
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 수집 (기업마당 · K-Startup)
+        env:
+          BIZINFO_API_KEY: ${{ secrets.BIZINFO_API_KEY }}
+        run: python3 scripts/update_gov.py
+      - name: 변경분 커밋
+        run: |
+          git config user.name "huntbae-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add site/data/gov-live.json
+          if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
+          git commit -m "data: 정부지원사업 공고 자동 갱신 $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M')"
+          git pull --rebase origin main
+          git push
