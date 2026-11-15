@@ -1,8 +1,8 @@
 {
- "verified_at": "2026-11-12",
+ "verified_at": "2026-11-16",
  "meta": {
   "title": "정부지원사업 큐레이션 (창업·R&D·정책자금·바우처·인증·수출·인력·소상공인·AI)",
-  "verified_at": "2026-11-12",
+  "verified_at": "2026-11-16",
   "timezone": "KST",
   "scope": "전국 단위·반복 시행·고가치 사업 중심. 2026 공고 실적과 2027 정부 예산안(국회 심사 중) 반영.",
   "agency_naming_note": "2025년 정부조직 개편 반영: 산업통상자원부→산업통상부(일부 2026 초 공고는 구 명칭), 환경부→기후에너지환경부, 예산 업무는 기획예산처.",
@@ -32,17 +32,18 @@
    "status2026": "2026년 1·2차 진행 / 2027 정부안 4,411억(국회 심사중)",
    "url": "https://www.k-startup.go.kr",
    "source": "https://www.newsis.com/view/NISX20260522_0003640304",
-   "verified_at": "2026-11-12",
+   "verified_at": "2026-11-16",
    "tags": [
     "예비창업",
     "오디션형",
     "2027확대"
    ],
-   "note": "2027 예산안에서 예비창업패키지·도전!K-스타트업 등 예비창업 사업이 이 사업으로 일원화(정부안 기준).",
+   "note": "2027 예산안에서 예비창업패키지·도전!K-스타트업 등 예비창업 사업이 이 사업으로 일원화(정부안 기준). 2026.11 2차 참가자 지원용 AI 솔루션(로폼) 해킹으로 2만28명 정보 유출(참가자 818명 이름·연락처·이메일) → 중기부 해당 업체 선정취소·참여제한 검토, 나머지 AI 공급업체 49곳 긴급 보안점검(~11/20), 서비스 중단 시 대체 도구·지원기간 1개월 연장 안내.",
    "sources": [
     "https://www.newsis.com/view/NISX20260522_0003640304",
     "https://www.news1.kr/industry/sb-founded/6274912",
-    "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8"
+    "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8",
+    "https://ajunews.com/view/20261115150100232"
    ]
   },
   {
@@ -78,18 +79,19 @@
    "target": "창업 3년 이내 기업",
    "support": "사업화자금 평균 약 5,000만원, 최대 1억원 + 창업 프로그램",
    "schedule": "2026: 1/23 공고, 1/23~2/13 16:00 접수(통상 1월 공고)",
-   "status2026": "2026년 공고 마감 / 2027 공고 예정(통상 1월, 개편 여부 미확인)",
+   "status2026": "2026년 공고 마감 / 2027 사업 존속(신규 주관기관 모집 10/30~11/23) → 참여기업 공고 통상 1월",
    "url": "https://www.k-startup.go.kr",
    "source": "https://www.venturesquare.net/announcement/1035127",
-   "verified_at": "2026-11-12",
+   "verified_at": "2026-11-16",
    "tags": [
     "초기창업",
     "사업화자금"
    ],
-   "note": "선정 규모·자부담 비율은 첨부 공고문 미확인(null). 2027 존속·개편은 공식 발표 미확인.",
+   "note": "선정 규모·자부담 비율은 첨부 공고문 미확인(null). 2027 주관기관 모집 공고로 사업 존속은 확인, 지원 규모·개편 내용은 미확인.",
    "sources": [
     "https://www.venturesquare.net/announcement/1035127",
-    "https://www.nextunicorn.kr/insight/84f0a77ac6b126a3"
+    "https://www.nextunicorn.kr/insight/84f0a77ac6b126a3",
+    "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127641"
    ]
   },
   {
@@ -101,18 +103,19 @@
    "target": "창업 3년 초과~7년 이내(신산업 10년 이내)",
    "support": "일반형 300개사 최대 2억원(평균 1.2억), 투자연계형(비수도권) 50개사 최대 2억원",
    "schedule": "2026: 일반형 1/23~2/13, 투자연계형 5월 예정",
-   "status2026": "2026년 공고 마감 / 2027 공고 예정(통상 1월)",
+   "status2026": "2026년 공고 마감 / 2027 사업 존속(신규 주관기관 모집 10/30~11/23) → 참여기업 공고 통상 1월",
    "url": "https://www.k-startup.go.kr",
    "source": "https://www.venturesquare.net/announcement/1035128",
-   "verified_at": "2026-11-12",
+   "verified_at": "2026-11-16",
    "tags": [
     "도약기",
     "스케일업"
    ],
-   "note": "자부담: 특별지원지역 10%~지방우대 비해당 30% 이상(일반형, 민간 정리글 기준).",
+   "note": "자부담: 특별지원지역 10%~지방우대 비해당 30% 이상(일반형, 민간 정리글 기준). 2027 주관기관 모집 공고로 사업 존속 확인, 지원 규모는 미확인.",
    "sources": [
     "https://www.venturesquare.net/announcement/1035128",
-    "https://www.nextunicorn.kr/insight/84f0a77ac6b126a3"
+    "https://www.nextunicorn.kr/insight/84f0a77ac6b126a3",
+    "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127641"
    ]
   },
   {
@@ -148,20 +151,21 @@
    "target": "만 39세 이하, 창업 3년 이내 대표자",
    "support": "총사업비 70% 이내, 기본과정 최대 1억원·심화(딥테크·글로벌) 최대 2억원 + 공간·교육·코칭",
    "schedule": "2026(16기): 1/30~2/13 접수, 950명(기본 650·심화 300)",
-   "status2026": "2026년 공고 마감 / 2027 정부안 미편성 → 존속 논의 중(국회 심사)",
+   "status2026": "2026년 공고 마감 / 2027 정부안 미편성 → 존속 논의 중(국회 산자위 중기부 예산 의결 11/13 연기, 예결위 예산소위 11/16~)",
    "url": "https://www.kosmes.or.kr",
    "source": "https://www.etoday.co.kr/news/view/2551669",
-   "verified_at": "2026-11-12",
+   "verified_at": "2026-11-16",
    "tags": [
     "청년",
     "입주형",
     "2027쟁점"
    ],
-   "note": "2027 정부안은 청창사 대신 재도전성공학교(595억) 신설. 장관이 '명맥 유지' 언급(10월), 최종 여부는 국회 예산 확정 후.",
+   "note": "2027 정부안은 청창사 대신 재도전성공학교(595억) 신설. 장관이 '명맥 유지' 언급(10월), 운영 방식·재원 미확정. 국회 증액은 정부 동의 필요 — 최종 여부는 예산 확정(법정시한 12/2) 후.",
    "sources": [
     "https://www.etoday.co.kr/news/view/2551669",
     "https://ibtomato.com/ExternalView.aspx?no=19765&type=1",
-    "https://www.venturesquare.net/1117981/"
+    "https://www.venturesquare.net/1117981/",
+    "https://www.namdonews.com/news/articleView.html?idxno=929225"
    ]
   },
   {
@@ -2131,21 +2135,24 @@
    "agency": "중소벤처기업부",
    "operator": "스마트제조혁신추진단·주관기관",
    "target": "제조 중소기업",
-   "support": "유형별 차등(세부 한도 미확인)",
-   "schedule": "차년도 통합공고 통상 10월 말(2026분 '25.10.31), 2027 주관기관 모집 9/16~10/13",
-   "status2026": "2026년 진행 / 2027 정부안 4,682억",
+   "support": "2027 통합공고 기준: 정부일반형 428개 내외 회당 최대 2억(2회 합산 2.5억), 제조AI특화 500개 내외 AI공장 구축 최대 2억·데이터 수집·검증 최대 5천만(정부 50~70%), 자율형공장 30개 내외 총 6억(50%), 대중소 상생형 일반형 230개 1.2억(정부 30%)·AX선도모델 63개 최대 12억(정부 40%), 제조로봇 도입 191개 최대 2.5억·자동화공정 127개 최대 9,500만(50%)",
+   "schedule": "2027분 통합공고 '26.10.30(중기부 공고 제2026-620호). 정부일반형·제조AI특화·자율형: 11월 공고 → '27.1월까지 접수, 1~3월 선정. 제조로봇·자동화공정: 12월 공고 → '27.1월 접수. 클라우드 종합솔루션: 12월 공고 → '27.1~2월. 대중소 상생형 일반형: '27.4월 공고(AX선도모델은 11월/4월로 보도 엇갈림·미확인)",
+   "status2026": "2026년 진행 / 2027 통합공고 발표(10/30), 세부 공고 11~12월 / 2027 정부안 4,682억",
    "url": "https://www.smart-factory.kr",
-   "source": "https://www.koreabizreview.com/articles/kbr-legacy-7739",
-   "verified_at": "2026-11-12",
+   "source": "https://www.industrynews.co.kr/news/articleView.html?idxno=88779",
+   "verified_at": "2026-11-16",
    "tags": [
     "스마트공장",
     "제조AI"
    ],
-   "note": "2026 예산 4,036억. 유형·한도는 통합공고 원문 미확인(null).",
+   "note": "2026 예산 4,036억. 과제 수·일정은 2027 예산 확정에 따라 변동 가능(공고문 명시). 신청은 스마트공장 사업관리시스템(R&D는 IRIS).",
    "sources": [
     "https://www.koreabizreview.com/articles/kbr-legacy-7739",
     "https://aboda.kr/?p=30964",
-    "https://www.news1.kr/industry/sb-founded/6274912"
+    "https://www.news1.kr/industry/sb-founded/6274912",
+    "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127589",
+    "https://www.industrynews.co.kr/news/articleView.html?idxno=88779",
+    "https://www.dataeconomy.co.kr/news/articleView.html?idxno=43761"
    ]
   },
   {
@@ -2407,34 +2414,41 @@
    "month": "10월",
    "items": [
     "국회 예산 심사 본격화",
-    "차년도 스마트제조혁신 통합공고(전년 10/31 사례)",
+    "2027 스마트 제조혁신 지원사업 통합공고(2026: 10/30, 공고 제2026-620호)",
     "점프업 3단계 개편 발표(2026: 10/15)"
    ],
    "basis": [
     "https://www.kbmaeil.com/article/20261108500005",
     "https://www.koreabizreview.com/articles/kbr-legacy-7739",
-    "https://biz.sbs.co.kr/amp/article/20000340159"
+    "https://biz.sbs.co.kr/amp/article/20000340159",
+    "https://www.industrynews.co.kr/news/articleView.html?idxno=88779"
    ]
   },
   {
    "month": "11월",
    "items": [
-    "국회 예결위 심사(2026: 11/9~, 조정소위 11/16~)",
-    "차년도 혁신바우처 공고(전년 11/12 사례)"
+    "국회 예결위 심사(2026: 부별심사 11/9~12, 예산소위 11/16~27, 예결위 의결 목표 11/30)",
+    "차년도 혁신바우처 공고(전년 11/12 사례, 2027분 미게시·11~12월 예상)",
+    "2027 스마트공장 세부공고(정부일반형·제조AI특화·자율형, '27.1월까지 접수)",
+    "2027 초기·도약 패키지 신규 주관기관 모집 마감(11/23)"
    ],
    "basis": [
     "https://www.kbmaeil.com/article/20261108500005",
-    "https://m.korea.kr/news/policyNewsView.do?newsId=148954562"
+    "https://m.korea.kr/news/policyNewsView.do?newsId=148954562",
+    "https://www.polinews.co.kr/news/articleView.html?idxno=748254",
+    "https://www.dataeconomy.co.kr/news/articleView.html?idxno=43761",
+    "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127641"
    ]
   },
   {
    "month": "12월",
    "items": [
-    "예산안 국회 처리(여당 목표 12/2)",
+    "예산안 국회 처리(법정시한 12/2)",
     "수출지원사업 통합공고(전년 12/10)·수출바우처 1차(12/17~)",
     "창업지원사업 통합공고(전년 12/19, 제2025-648호)",
     "중기부·산업부 R&D 통합공고(전년 12/23)·정책자금 융자계획(12/21 발표)",
-    "소상공인 지원사업 통합공고(전년 12/29)·고용장려금 공고(12/31)"
+    "소상공인 지원사업 통합공고(전년 12/29)·고용장려금 공고(12/31)",
+    "스마트공장 제조로봇 도입·자동화공정·클라우드 종합솔루션 공고(2027분 12월 예정)"
    ],
    "basis": [
     "https://www.kbmaeil.com/article/20261108500005",
@@ -2444,17 +2458,21 @@
     "https://grant-documents.thevc.kr/285650_(%EC%A4%91%EA%B8%B0%EB%B6%80)_2026%EB%85%84_%EC%A4%91%EC%86%8C%EA%B8%B0%EC%97%85_%EA%B8%B0%EC%88%A0%EA%B0%9C%EB%B0%9C_%EC%A7%80%EC%9B%90%EC%82%AC%EC%97%85_%ED%86%B5%ED%95%A9_%EA%B3%B5%EA%B3%A0.pdf",
     "https://www.heraldk.com/article/2025122121000759164",
     "https://www.venturesquare.net/1029613",
-    "https://grant-documents.thevc.kr/286163_2026%EB%85%84+%EA%B3%A0%EC%9A%A9%EC%B0%BD%EC%B6%9C%EC%9E%A5%EB%A0%A4%EA%B8%88+%EB%B0%8F+%EA%B3%A0%EC%9A%A9%EC%95%88%EC%A0%95%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%82%AC%EC%97%85+%EA%B3%B5%EA%B3%A0%EB%AC%B8.pdf"
+    "https://grant-documents.thevc.kr/286163_2026%EB%85%84+%EA%B3%A0%EC%9A%A9%EC%B0%BD%EC%B6%9C%EC%9E%A5%EB%A0%A4%EA%B8%88+%EB%B0%8F+%EA%B3%A0%EC%9A%A9%EC%95%88%EC%A0%95%EC%9E%A5%EB%A0%A4%EA%B8%88+%EC%82%AC%EC%97%85+%EA%B3%B5%EA%B3%A0%EB%AC%B8.pdf",
+    "https://www.industrynews.co.kr/news/articleView.html?idxno=88779",
+    "https://www.khan.co.kr/article/202611151859001/"
    ]
   }
  ],
  "outlook2027": [
   {
-   "text": "2027 정부 총지출 820.9조원(+12.8%) 예산안이 9/1 국무회의 의결 → 국회 심사 중(조정소위 11/16~, 여당 처리 목표 12/2). 아래 수치는 모두 정부안이며 국회에서 변동 가능.",
+   "text": "2027 정부 총지출 820.9조원(+12.8%) 예산안이 9/1 국무회의 의결 → 국회 심사 중(산자위는 11/13 산업부·중기부 예비심사 의결 연기, 예결위 예산소위 11/16~27 증·감액 심사, 예결위 의결 11/30 목표, 본회의 법정시한 12/2). 아래 수치는 모두 정부안이며 국회에서 변동 가능.",
    "source": "https://www.mt.co.kr/tech/2026/09/01/2026090113230327407",
    "sources": [
     "https://www.mt.co.kr/tech/2026/09/01/2026090113230327407",
-    "https://www.kbmaeil.com/article/20261108500005"
+    "https://www.kbmaeil.com/article/20261108500005",
+    "https://www.polinews.co.kr/news/articleView.html?idxno=748254",
+    "https://www.namdonews.com/news/articleView.html?idxno=929225"
    ]
   },
   {
@@ -2744,6 +2762,14 @@
   "https://www.venturesquare.net/announcement/1035128",
   "https://www.venturesquare.net/announcement/1042906",
   "https://www.venturesquare.net/announcement/1060552",
-  "https://www.venturesquare.net/announcement/1076781"
+  "https://www.venturesquare.net/announcement/1076781",
+  "https://www.industrynews.co.kr/news/articleView.html?idxno=88779",
+  "https://www.dataeconomy.co.kr/news/articleView.html?idxno=43761",
+  "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127589",
+  "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127641",
+  "https://ajunews.com/view/20261115150100232",
+  "https://www.namdonews.com/news/articleView.html?idxno=929225",
+  "https://www.polinews.co.kr/news/articleView.html?idxno=748254",
+  "https://www.khan.co.kr/article/202611151859001/"
  ]
 }
