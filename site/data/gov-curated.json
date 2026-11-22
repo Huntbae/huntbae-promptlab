@@ -1,8 +1,8 @@
 {
- "verified_at": "2026-11-16",
+ "verified_at": "2026-11-23",
  "meta": {
   "title": "정부지원사업 큐레이션 (창업·R&D·정책자금·바우처·인증·수출·인력·소상공인·AI)",
-  "verified_at": "2026-11-16",
+  "verified_at": "2026-11-23",
   "timezone": "KST",
   "scope": "전국 단위·반복 시행·고가치 사업 중심. 2026 공고 실적과 2027 정부 예산안(국회 심사 중) 반영.",
   "agency_naming_note": "2025년 정부조직 개편 반영: 산업통상자원부→산업통상부(일부 2026 초 공고는 구 명칭), 환경부→기후에너지환경부, 예산 업무는 기획예산처.",
@@ -28,11 +28,11 @@
    "operator": "창업 운영기관(2차부터 200곳으로 확대)",
    "target": "예비창업자 중심(일반·기술/로컬 트랙). 2차부터 7년 이내 재창업자까지 확대",
    "support": "선발자 활동자금 200만원·멘토링 → 지역 오디션 통과 시 최대 2,000만원 → 대국민 경연 시 최대 1억원 후속자금",
-   "schedule": "2026: 1차 5/15 마감(6.3만명 지원), 2차 7월 초 개시(1만명). 2027: 2만명·단계별 상한 3,000만원",
+   "schedule": "2026: 1차 5/15 마감(6.3만명 지원), 2차 7월 초 개시(1만명). 1차 로컬트랙 전국예선 11/17~20(8개 권역, 600명 → 파이널 오디션 100명, 최종 우승 상금 1억원, 파이널 일자 미확인). 2027: 2만명·단계별 상한 3,000만원",
    "status2026": "2026년 1·2차 진행 / 2027 정부안 4,411억(국회 심사중)",
    "url": "https://www.k-startup.go.kr",
    "source": "https://www.newsis.com/view/NISX20260522_0003640304",
-   "verified_at": "2026-11-16",
+   "verified_at": "2026-11-23",
    "tags": [
     "예비창업",
     "오디션형",
@@ -43,7 +43,8 @@
     "https://www.newsis.com/view/NISX20260522_0003640304",
     "https://www.news1.kr/industry/sb-founded/6274912",
     "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8",
-    "https://ajunews.com/view/20261115150100232"
+    "https://ajunews.com/view/20261115150100232",
+    "https://www.korea.kr/news/policyNewsView.do?newsId=148975774"
    ]
   },
   {
@@ -151,21 +152,22 @@
    "target": "만 39세 이하, 창업 3년 이내 대표자",
    "support": "총사업비 70% 이내, 기본과정 최대 1억원·심화(딥테크·글로벌) 최대 2억원 + 공간·교육·코칭",
    "schedule": "2026(16기): 1/30~2/13 접수, 950명(기본 650·심화 300)",
-   "status2026": "2026년 공고 마감 / 2027 정부안 미편성 → 존속 논의 중(국회 산자위 중기부 예산 의결 11/13 연기, 예결위 예산소위 11/16~)",
+   "status2026": "2026년 공고 마감 / 2027 유지 전망(보도) — 정부안 '청년창업패키지'(300억, 200개사)에 포함, 예결위 500억 증액 추진·예결위 전체회의(11/30) 의결 시 확정",
    "url": "https://www.kosmes.or.kr",
-   "source": "https://www.etoday.co.kr/news/view/2551669",
-   "verified_at": "2026-11-16",
+   "source": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344",
+   "verified_at": "2026-11-23",
    "tags": [
     "청년",
     "입주형",
     "2027쟁점"
    ],
-   "note": "2027 정부안은 청창사 대신 재도전성공학교(595억) 신설. 장관이 '명맥 유지' 언급(10월), 운영 방식·재원 미확정. 국회 증액은 정부 동의 필요 — 최종 여부는 예산 확정(법정시한 12/2) 후.",
+   "note": "정부는 9월 예산안에서 청창사 사업비 0원·재도전성공학교(595억) 전환 방침을 냈으나, 이데일리(11/22) 보도에 따르면 예결위 예산소위(11/20)가 감액 안건에서 제외하고 소소위에서 증액 논의 예정. 중기부는 '청년창업패키지' 명칭으로 정부안에 편성됐다고 설명(창업 3년 이내·대표 39세 이하 기술기반 기업, 사업화자금·교육·창업시설). 2027 선발 인원·지원 한도·운영기관은 미확인. 최종 규모는 국회 의결(법정시한 12/2) 후 확정.",
    "sources": [
     "https://www.etoday.co.kr/news/view/2551669",
     "https://ibtomato.com/ExternalView.aspx?no=19765&type=1",
     "https://www.venturesquare.net/1117981/",
-    "https://www.namdonews.com/news/articleView.html?idxno=929225"
+    "https://www.namdonews.com/news/articleView.html?idxno=929225",
+    "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344"
    ]
   },
   {
@@ -204,16 +206,17 @@
    "status2026": "2027 정부안 595억(국회 심사중)",
    "url": "https://www.mss.go.kr",
    "source": "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8",
-   "verified_at": "2026-11-12",
+   "verified_at": "2026-11-23",
    "tags": [
     "재도전",
     "2027신설"
    ],
-   "note": "세부 자격·지원금은 미발표(null).",
+   "note": "세부 자격·지원금은 미발표(null). 2026.11.22 청창사 유지 방향 보도 — 재도전성공학교와의 병행·재원 조정 여부는 미확인.",
    "sources": [
     "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8",
     "https://ibtomato.com/ExternalView.aspx?no=19765&type=1",
-    "https://m.korea.kr/news/policyNewsView.do?newsId=148971047"
+    "https://m.korea.kr/news/policyNewsView.do?newsId=148971047",
+    "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344"
    ]
   },
   {
@@ -2427,17 +2430,20 @@
   {
    "month": "11월",
    "items": [
-    "국회 예결위 심사(2026: 부별심사 11/9~12, 예산소위 11/16~27, 예결위 의결 목표 11/30)",
+    "국회 예결위 심사(2026: 부별심사 11/9~12, 예산소위 11/16~·감액심사 11/20, 소소위 증액 논의 11/23주, 예결위 전체회의 의결 목표 11/30)",
     "차년도 혁신바우처 공고(전년 11/12 사례, 2027분 미게시·11~12월 예상)",
     "2027 스마트공장 세부공고(정부일반형·제조AI특화·자율형, '27.1월까지 접수)",
-    "2027 초기·도약 패키지 신규 주관기관 모집 마감(11/23)"
+    "2027 초기·도약 패키지 신규 주관기관 모집 마감(11/23)",
+    "모두의 창업 1차 로컬트랙 전국예선(11/17~20, 600명 → 파이널 100명)"
    ],
    "basis": [
     "https://www.kbmaeil.com/article/20261108500005",
     "https://m.korea.kr/news/policyNewsView.do?newsId=148954562",
     "https://www.polinews.co.kr/news/articleView.html?idxno=748254",
     "https://www.dataeconomy.co.kr/news/articleView.html?idxno=43761",
-    "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127641"
+    "https://www.bizinfo.go.kr/sii/siia/selectSIIA200Detail.do?pblancId=PBLN_000000000127641",
+    "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344",
+    "https://www.korea.kr/news/policyNewsView.do?newsId=148975774"
    ]
   },
   {
@@ -2466,13 +2472,17 @@
  ],
  "outlook2027": [
   {
-   "text": "2027 정부 총지출 820.9조원(+12.8%) 예산안이 9/1 국무회의 의결 → 국회 심사 중(산자위는 11/13 산업부·중기부 예비심사 의결 연기, 예결위 예산소위 11/16~27 증·감액 심사, 예결위 의결 11/30 목표, 본회의 법정시한 12/2). 아래 수치는 모두 정부안이며 국회에서 변동 가능.",
+   "text": "2027 정부 총지출 820.9조원(+12.8%) 예산안이 9/1 국무회의 의결 → 국회 심사 중. 10개 상임위가 11/17까지 예비심사를 마치며 약 24.8조 순증 의결(과방위 1조3,692억 순증 등), 산자위(산업부·중기부)는 11/13 의결 무산 후 11/17 기준 미의결. 예결위 예산소위 11/16~ 감액 심사(11/20), 소소위 증액 논의(11/23주), 예결위 전체회의 11/30 목표, 본회의 법정시한 12/2. 상임위 증액은 예결위 심사·정부 동의를 거쳐야 확정. 아래 수치는 모두 정부안이며 국회에서 변동 가능.",
    "source": "https://www.mt.co.kr/tech/2026/09/01/2026090113230327407",
    "sources": [
     "https://www.mt.co.kr/tech/2026/09/01/2026090113230327407",
     "https://www.kbmaeil.com/article/20261108500005",
     "https://www.polinews.co.kr/news/articleView.html?idxno=748254",
-    "https://www.namdonews.com/news/articleView.html?idxno=929225"
+    "https://www.namdonews.com/news/articleView.html?idxno=929225",
+    "https://www.news1.kr/politics/assembly/6357230",
+    "https://sateconomy.co.kr/news/view/1065576144166495",
+    "https://www.segye.com/newsView/20261113510513",
+    "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344"
    ]
   },
   {
@@ -2509,12 +2519,13 @@
    ]
   },
   {
-   "text": "청년창업사관학교 예산이 정부안에서 빠지고 재도전성공학교(595억, 19곳) 신설 — 장관이 '명맥 유지' 언급, 국회 심사 결과에 따라 확정. 재도전성공패키지는 320곳·최대 1.5억으로 확대.",
+   "text": "청년창업사관학교 예산이 정부안에서 빠지고 재도전성공학교(595억, 19곳) 신설 — 다만 11/22 보도에 따르면 청창사는 정부안 '청년창업패키지'(300억)에 포함돼 유지될 전망이며 예결위가 500억 증액 추진(11/30 예결위 의결 시 확정). 재도전성공패키지는 320곳·최대 1.5억으로 확대.",
    "source": "https://ibtomato.com/ExternalView.aspx?no=19765&type=1",
    "sources": [
     "https://ibtomato.com/ExternalView.aspx?no=19765&type=1",
     "https://www.venturesquare.net/1117981/",
-    "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8"
+    "https://supple.kr/news/cmti32g4v007n10keyyfqzyr8",
+    "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344"
    ]
   },
   {
@@ -2770,6 +2781,11 @@
   "https://ajunews.com/view/20261115150100232",
   "https://www.namdonews.com/news/articleView.html?idxno=929225",
   "https://www.polinews.co.kr/news/articleView.html?idxno=748254",
-  "https://www.khan.co.kr/article/202611151859001/"
+  "https://www.khan.co.kr/article/202611151859001/",
+  "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=01597366645648344",
+  "https://www.news1.kr/politics/assembly/6357230",
+  "https://sateconomy.co.kr/news/view/1065576144166495",
+  "https://www.segye.com/newsView/20261113510513",
+  "https://www.korea.kr/news/policyNewsView.do?newsId=148975774"
  ]
 }
